@@ -1,12 +1,14 @@
-package com.example.vplayed_test.activity
+package com.example.vplayed_test
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.vplayed_test.R
 
-class DashboardView : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_dashboard_view)
+        setContentView(R.layout.activity_main)
     }
+private fun test(){
+val a=30
+}
 }
