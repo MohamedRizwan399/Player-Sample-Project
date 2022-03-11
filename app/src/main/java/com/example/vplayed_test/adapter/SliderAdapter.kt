@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide
 import com.example.vplayed_test.data.DataItem
 import com.example.vplayed_test.R
 
-class SliderAdapter():RecyclerView.Adapter<SliderAdapter.SliderViewHolder>()
+class SliderAdapter( private var onClickListener: OnclickListener ):RecyclerView.Adapter<SliderAdapter.SliderViewHolder>()
 {
 
     private var viewpager: ViewPager2? =null
@@ -19,7 +19,7 @@ class SliderAdapter():RecyclerView.Adapter<SliderAdapter.SliderViewHolder>()
     fun setDataList(usersListData:MutableList<DataItem>?){
         this.imgList = usersListData
     }
-    inner class SliderViewHolder(var v:View):RecyclerView.ViewHolder(v){
+    inner class SliderViewHolder(v:View):RecyclerView.ViewHolder(v){
         val image=v.findViewById<ImageView>(R.id.imageslider)
     }
 
@@ -32,7 +32,7 @@ class SliderAdapter():RecyclerView.Adapter<SliderAdapter.SliderViewHolder>()
     override fun onBindViewHolder(holder: SliderViewHolder, position: Int) {
         val listimage= imgList?.get(position)
         holder.itemView.setOnClickListener{
-//            OnclickListener.onClick(position)
+            onClickListener.onclick(position)
         }
 //        holder.image.setImageResource(listimage.posterImage)
         Glide.with(holder.image
@@ -53,4 +53,8 @@ class SliderAdapter():RecyclerView.Adapter<SliderAdapter.SliderViewHolder>()
         }
 
     }
+}
+
+private fun View.OnClickListener.onClick(position: Int) {
+
 }

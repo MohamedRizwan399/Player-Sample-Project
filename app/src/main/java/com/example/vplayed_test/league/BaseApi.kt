@@ -1,13 +1,12 @@
 package com.example.vplayed_test.league
 import com.example.vplayed_test.data.Data
-import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 
 interface BaseApi {
     @GET("/api/v0/location")
-    fun searchLeague(): Call<Data>
+    fun searchLeague(): retrofit2.Call<Data>
 
     companion object{
 

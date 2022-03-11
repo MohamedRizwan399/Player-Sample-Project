@@ -1,13 +1,14 @@
 package com.example.vplayed_test.viewmodel
 
+import android.telecom.Call
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.vplayed_test.data.Data
 import com.example.vplayed_test.data.DataItem
 import com.example.vplayed_test.league.BaseApi
-import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.Response
+
+import javax.security.auth.callback.Callback
 
 class ViewModel: ViewModel() {
 
@@ -23,12 +24,12 @@ class ViewModel: ViewModel() {
         val retrofitInstance = BaseApi.getRetrofitInstance()
         val retroService = retrofitInstance.create(BaseApi::class.java)
         val call = retroService.searchLeague()
-        call.enqueue(object :Callback<Data>{
-            override fun onResponse(call: Call<Data>, response: Response<Data>) {
+        call.enqueue(object : retrofit2.Callback<Data> {
+            override fun onResponse(call: retrofit2.Call<Data>, response: Response<Data>) {
                 data.postValue(response.body())
             }
 
-            override fun onFailure(call: Call<Data>, t: Throwable) {
+            override fun onFailure(call: retrofit2.Call<Data>, t: Throwable) {
                 data.postValue(null)
             }
 
@@ -44,6 +45,4 @@ class ViewModel: ViewModel() {
 //    }
 }
 
-private fun <T> Call<T>.enqueue(callback: Callback<Data>) {
 
-}

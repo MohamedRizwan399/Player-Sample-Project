@@ -1,25 +1,26 @@
 package com.example.vplayed_test.activity
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
-import android.view.View
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
-import com.example.apivplayed.viewmodel.ViewModel
-import com.example.vplayed_test.adapter.SliderAdapter
 import com.example.vplayed_test.R
+import com.example.vplayed_test.adapter.OnclickListener
+import com.example.vplayed_test.adapter.SliderAdapter
 import com.example.vplayed_test.data.DataItem
+import com.example.vplayed_test.viewmodel.ViewModel
 import kotlin.math.abs
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(),OnclickListener {
     //    private val coroutineScope = CoroutineScope(Dispatchers.Main)
     private val viewModel by viewModels<ViewModel>()
-    private var sliderAdapter: SliderAdapter = SliderAdapter()
+    private var sliderAdapter: SliderAdapter = SliderAdapter(this)
     private lateinit var sliderhandler: Handler
     private lateinit var sliderRun: Runnable
     private lateinit var viewPager2: ViewPager2
@@ -105,6 +106,9 @@ class MainActivity : AppCompatActivity() {
 
         }
     }
-
+    override fun onclick(position: Int){
+        val intent=Intent(this,PlayerActivity::class.java)
+        startActivity(intent)
+    }
 
 }
