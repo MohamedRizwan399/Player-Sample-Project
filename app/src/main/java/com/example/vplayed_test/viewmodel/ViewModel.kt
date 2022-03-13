@@ -1,14 +1,11 @@
 package com.example.vplayed_test.viewmodel
 
-import android.telecom.Call
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.vplayed_test.data.Data
 import com.example.vplayed_test.data.DataItem
-import com.example.vplayed_test.league.BaseApi
+import com.example.vplayed_test.api.BaseApi
 import retrofit2.Response
-
-import javax.security.auth.callback.Callback
 
 class ViewModel: ViewModel() {
 

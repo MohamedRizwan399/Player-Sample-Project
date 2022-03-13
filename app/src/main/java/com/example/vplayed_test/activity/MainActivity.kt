@@ -1,5 +1,6 @@
 package com.example.vplayed_test.activity
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -30,9 +31,7 @@ class MainActivity : AppCompatActivity(),OnclickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         sliderItems()
-//        setUpViewModels()
         getResult()
-//        itemsliderview()
 
 
     }
@@ -96,6 +95,7 @@ class MainActivity : AppCompatActivity(),OnclickListener {
 
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun getResult() {
 //        coroutineScope.launch(Dispatchers.Main) {
         val results = viewModel.apiCall()

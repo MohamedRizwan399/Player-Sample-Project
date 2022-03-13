@@ -3,8 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/VPLAYEDProjects/Vplayed_Test/app/src/main/res/drawable/shape.xml" value="0.17962962962962964" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/VPLAYEDProjects/Vplayed_Test/app/src/main/res/layout/activity_main.xml" value="0.10157041540020263" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/VPLAYEDProjects/Vplayed_Test/app/src/main/res/layout/activity_player.xml" value="0.10157041540020263" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/VPLAYEDProjects/Vplayed_Test/app/src/main/res/layout/custom_alert.xml" value="0.12952898550724637" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/VPLAYEDProjects/Vplayed_Test/app/src/main/res/layout/custom_controller_view.xml" value="0.10157041540020263" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/VPLAYEDProjects/Vplayed_Test/app/src/main/res/layout/fragment_item_list_dialog_list_dialog.xml" value="0.12952898550724637" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/VPLAYEDProjects/Vplayed_Test/app/src/main/res/layout/fragment_item_list_dialog_list_dialog_item.xml" value="0.12952898550724637" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/VPLAYEDProjects/Vplayed_Test/app/src/main/res/layout/fragment_player_settings_bottom_sheet.xml" value="0.12952898550724637" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/VPLAYEDProjects/Vplayed_Test/app/src/main/res/layout/slider_items.xml" value="0.1" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/VPLAYEDProjects/Vplayed_Test/app/src/main/res/xml/root_preferences.xml" value="0.2" />
       </map>
     </option>
   </component>

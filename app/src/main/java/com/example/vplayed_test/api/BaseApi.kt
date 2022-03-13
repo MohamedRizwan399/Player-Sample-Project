@@ -1,4 +1,4 @@
-package com.example.vplayed_test.league
+package com.example.vplayed_test.api
 import com.example.vplayed_test.data.Data
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

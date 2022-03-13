@@ -1,9 +1,310 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.PlayerActivity">
 
+    <FrameLayout
+        android:id="@+id/video_layout"
+        android:layout_width="match_parent"
+        android:layout_height="230dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="#000000"
+        >
+        <com.google.android.exoplayer2.ui.PlayerView
+            android:id="@+id/video_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:resize_mode="fill"
+            app:use_controller="true"
+            app:controller_layout_id="@layout/custom_controller_view"
+            >
+
+            <ProgressBar
+                android:id="@+id/progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@android:style/Widget.ProgressBar"
+                android:layout_gravity="center"
+                android:indeterminateTint="#384241"
+                android:visibility="invisible"
+                />
+
+        </com.google.android.exoplayer2.ui.PlayerView>
+    </FrameLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/video_layout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@color/white">
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scroll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/black"
+                >
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline_start"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_begin="15dp"
+                    />
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline_end"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_end="15dp"
+                    />
+
+                <TextView
+                    android:id="@+id/title1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="TITLE"
+                    android:layout_marginTop="15dp"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    />
+
+
+                <TextView
+                    android:id="@+id/category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hollywood"
+                    android:textColor="#999999"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    app:layout_constraintTop_toBottomOf="@id/title1"
+                    android:layout_marginTop="5dp"
+
+                    />
+                <TextView
+                    android:id="@+id/bullet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="•"
+                    android:textColor="#999999"
+                    app:layout_constraintStart_toEndOf="@id/category"
+                    app:layout_constraintTop_toBottomOf="@id/title1"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="5dp"
+                    />
+                <TextView
+                    android:id="@+id/genre"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Action"
+                    android:textColor="#999999"
+                    app:layout_constraintStart_toEndOf="@id/bullet"
+                    app:layout_constraintTop_toBottomOf="@id/title1"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="5dp"
+                    />
+
+
+
+                <TextView
+                    android:id="@+id/title1_desc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Endgame is a 2019 American superhero film based on the Marvel Comics superhero team the Avengers. Produced by Marvel Studios and distributed by Walt Disney Studios Motion Pictures, it is the direct sequel to Avengers: Infinity War (2018) and the 22nd film in the Marvel Cinematic Universe (MCU). Directed by Anthony and Joe Russo and written by Christopher Markus and Stephen McFeely..."
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    app:layout_constraintTop_toBottomOf="@id/category"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                    android:textColor="@color/white"
+                    android:textSize="12.5sp"
+                    android:layout_marginTop="20dp"
+                    />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/like"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    app:layout_constraintTop_toBottomOf="@id/title1_desc"
+                    android:layout_margin="15dp"
+                    android:src="@drawable/like" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/like_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@id/like"
+                    app:layout_constraintTop_toBottomOf="@id/title1_desc"
+                    android:layout_centerHorizontal="true"
+                    android:text="5"
+                    android:layout_margin="15dp"
+                    android:textColor="#333333"
+                    android:textSize="14sp"
+                    />
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/unlike"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@id/like_count"
+                    app:layout_constraintTop_toBottomOf="@id/title1_desc"
+                    android:layout_margin="15dp"
+                    android:src="@drawable/dislike" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/unlike_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@id/unlike"
+                    app:layout_constraintTop_toBottomOf="@id/title1_desc"
+                    android:layout_margin="15dp"
+                    android:text="1"
+                    android:textColor="#333333"
+                    android:textSize="14sp"
+                    />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/publish_on"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    app:layout_constraintTop_toBottomOf="@id/like"
+                    android:layout_marginTop="15dp"
+                    android:text="published_on"
+                    android:textColor="#999999"
+                    android:textSize="14sp"
+                    />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/publish_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@id/publish_on"
+                    app:layout_constraintTop_toBottomOf="@id/like"
+                    android:text="Jan 26, 2022"
+
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="15dp"
+                    android:textColor="#3F3F3F"
+                    android:textSize="12sp"
+                    />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/views"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@id/publish_value"
+                    app:layout_constraintTop_toBottomOf="@id/like"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="20dp"
+                    android:text="views"
+                    android:textColor="#999999"
+                    android:textSize="14sp"
+                    />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/views_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@id/views"
+                    app:layout_constraintTop_toBottomOf="@id/like"
+                    android:text="3.8k"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="5dp"
+                    android:textColor="#3F3F3F"
+                    android:textSize="12sp"
+                    />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/title_starring"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Starring"
+                    android:textColor="#999999"
+                    android:textSize="13sp"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    app:layout_constraintTop_toBottomOf="@id/publish_on"
+                    />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/desc_starring"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="Robert Downey Jr., Chris Evans, Mark Ruffalo, Chris Hemsworth, Scarlett Johansson, Jeremy Renner, Don Cheadle, Paul Rudd, Brie Larson, Karen Gillan, Danai Gurira, Benedict Wong, Jon Favreau, Bradley Cooper, Gwyneth Paltrow, and Josh Brolin."
+                    android:textColor="@color/white"
+                    android:textSize="12.5sp"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    app:layout_constraintTop_toBottomOf="@id/title_starring"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                    />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/title_starring1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="crew members"
+                    android:textColor="#999999"
+                    android:textSize="13sp"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    app:layout_constraintTop_toBottomOf="@id/desc_starring"
+                    />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/desc_starring1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="VFX Team, Direction Team, Music Team, Casting Directors, Production Engineers, Assistant workers, Stunt workers, Animation team...."
+                    android:textColor="@color/white"
+                    android:textSize="12.5sp"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    app:layout_constraintTop_toBottomOf="@id/title_starring1"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                    />
+                <View
+                    android:id="@+id/viewline"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="#D9D7D7"
+                    app:layout_constraintTop_toBottomOf="@id/desc_starring1">
+
+                </View>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/recent_name_header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    app:layout_constraintTop_toBottomOf="@id/viewline"
+                    android:layout_marginTop="10dp"
+                    android:text="Related Videos"
+                    android:textColor="#EA1010"
+                    android:textSize="16sp"
+                    />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recy_videos"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                    app:layout_constraintTop_toBottomOf="@id/recent_name_header"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="8dp" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
