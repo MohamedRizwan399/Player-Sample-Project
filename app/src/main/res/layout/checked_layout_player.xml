@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheckedTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:background="@drawable/res_selector_track_dialog_background"
+    android:checkMark="@drawable/res_checked_checkbox_player"
+    android:checked="true"
+    android:fontFamily="@font/effra_std_regular"
+    android:gravity="center_vertical"
+    android:text="Auto"
+    android:textColor="@color/white"
+    android:textSize="14dp" />

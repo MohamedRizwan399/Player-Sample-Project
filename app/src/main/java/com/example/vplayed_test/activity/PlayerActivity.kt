@@ -15,10 +15,6 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.vplayed_test.R
-import com.google.android.exoplayer2.ExoPlayer
-import com.google.android.exoplayer2.MediaItem
-import com.google.android.exoplayer2.MediaMetadata
-import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.ui.DefaultTimeBar
 import com.google.android.exoplayer2.ui.PlayerView
 import com.google.common.collect.ImmutableList
@@ -32,8 +28,12 @@ import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 
 import android.R.string.no
-
-
+import com.example.vplayed_test.app.Utils
+import com.google.android.exoplayer2.*
+import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
+import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
+import com.google.android.exoplayer2.util.EventLogger
 
 
 class PlayerActivity : AppCompatActivity(),Player.Listener {
@@ -46,6 +46,8 @@ class PlayerActivity : AppCompatActivity(),Player.Listener {
     private lateinit var forward: ImageView
     private lateinit var settings: ImageView
     private var settingsBottomsheet=PlayerSettingsBottomSheet()
+    private var shoTrackSelector: DefaultTrackSelector? = null
+
 
     private var mLastClickTime: Long = 0
     private lateinit var seekbar: DefaultTimeBar
@@ -75,7 +77,8 @@ class PlayerActivity : AppCompatActivity(),Player.Listener {
         titleTv = findViewById(R.id.title1)
         reverse=findViewById(R.id.exo_rew)
         forward=findViewById(R.id.exo_ffwd)
-        settings=findViewById(R.id.exo_settings)
+        settings=findViewById(R.id.settings)
+
 
         setupPlayer()
         mediaFiles()
@@ -91,6 +94,7 @@ class PlayerActivity : AppCompatActivity(),Player.Listener {
         forward.setOnClickListener {
             player.seekTo(player.currentPosition+10000)
         }
+
 
 
 
@@ -165,13 +169,50 @@ class PlayerActivity : AppCompatActivity(),Player.Listener {
         player = ExoPlayer.Builder(this).build()
         playerView = findViewById(R.id.video_view)
         playerView.player = player
+        val factory = AdaptiveTrackSelection.Factory()
+        shoTrackSelector = DefaultTrackSelector(this, factory)
+        player = setSimpleExoPlayer(shoTrackSelector)
+        player?.addAnalyticsListener(EventLogger(shoTrackSelector, PlayerActivity::class.java.simpleName))
+
+
         player.addListener(this)
         player.currentPosition
 
     }
 
+    private fun setSimpleExoPlayer(
+        trackSelector: DefaultTrackSelector?,
+    ): ExoPlayer {
+        val bandwidthMeter = DefaultBandwidthMeter.Builder(this).build()
+
+        trackSelector!!.setParameters(trackSelector
+            .buildUponParameters()
+            .setMaxVideoSizeSd()
+        )
+
+        @DefaultRenderersFactory.ExtensionRendererMode
+        val extensionRendererMode = DefaultRenderersFactory.EXTENSION_RENDERER_MODE_ON
+
+        val renderersFactory = DefaultRenderersFactory(this)
+            .setExtensionRendererMode(extensionRendererMode)
+
+        val loadControl = DefaultLoadControl.Builder()
+            .setTargetBufferBytes(DefaultLoadControl.DEFAULT_TARGET_BUFFER_BYTES)
+            .setPrioritizeTimeOverSizeThresholds(true)
+            .build()
+
+
+        player = ExoPlayer.Builder(this, renderersFactory)
+            .setLoadControl(loadControl)
+            .setTrackSelector(trackSelector)
+            .setBandwidthMeter(bandwidthMeter)
+            .build()
+        playerView.player = player
+        return player!!
+    }
+
     private fun mediaFiles() {
-        val mediaItem = MediaItem.fromUri(getString(R.string.bigbuckbunny))
+        val mediaItem = MediaItem.fromUri(getString(R.string.elephant))
         val mediaItem1 = MediaItem.fromUri(getString(R.string.sintel))
 //        val mediaItem2 = MediaItem.fromUri(getString(R.string.elephant))
 
@@ -194,9 +235,10 @@ class PlayerActivity : AppCompatActivity(),Player.Listener {
             Player.STATE_READY -> {
                 progressBar.visibility = View.INVISIBLE
                 settings.visibility=View.VISIBLE
+
                 settings.setOnClickListener {
-                    player.pause()
-                    settingsBottomsheet.show(supportFragmentManager,"settings")
+                    showSelectionDialog(0)
+                playerView.hideController()
 
                 }
 
@@ -207,6 +249,19 @@ class PlayerActivity : AppCompatActivity(),Player.Listener {
                 alert()
 
             }
+        }
+    }
+
+    private fun showSelectionDialog(title:Int){
+        if (shoTrackSelector != null) {
+            player.pause()
+            val trackSelectionDialog = TrackSelectionDialog.createForTrackSelector(
+                title, shoTrackSelector)
+            {
+                Utils.hideSystemUI(this)
+                player.play()
+            }
+            trackSelectionDialog.show(supportFragmentManager,null)
         }
     }
 
@@ -264,5 +319,7 @@ fun playing(){
 
     }
 
-    }
+
+
+}
 

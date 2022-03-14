@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--    <item android:state_pressed="true">-->
+    <!--        <shape android:shape="rectangle">-->
+    <!--            <size android:width="@dimen/gd_size_16" android:height="@dimen/gd_size_16"/>-->
+    <!--            <solid android:color=""/>-->
+    <!--            <stroke android:color="@android:color/white" android:width="@dimen/gd_size_2"/>-->
+    <!--        </shape>-->
+    <!--    </item>&lt;!&ndash; pressed &ndash;&gt;-->
+
+    <item android:state_checked="true">
+        <shape android:shape="rectangle">
+            <corners android:radius="4dp" />
+            <padding android:bottom="6dp" android:left="11dp" android:right="11dp" android:top="6dp" />
+            <!--            <size android:width="@dimen/gd_size_16" android:height="@dimen/gd_size_16"/>-->
+            <solid android:color="#40424E" />
+            <!--            <stroke android:color="@android:color/white" android:width="@dimen/gd_size_2"/>-->
+        </shape>
+    </item> <!-- checked -->
+
+    <!--    <item>-->
+    <!--        <shape android:shape="rectangle" android:innerRadius="@dimen/gd_size_10">-->
+    <!--            <size android:width="@dimen/gd_size_16" android:height="@dimen/gd_size_16"/>-->
+    <!--&lt;!&ndash;            <stroke android:color="@android:color/white" android:width="@dimen/gd_size_1"/>&ndash;&gt;-->
+    <!--        </shape>-->
+    <!--    </item> &lt;!&ndash; default &ndash;&gt;-->
+
+</selector>

@@ -5,6 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
+import android.view.Window
+import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
@@ -29,6 +31,12 @@ class MainActivity : AppCompatActivity(),OnclickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        requestWindowFeature(Window.FEATURE_NO_TITLE)
+        this.window.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN
+        )
+        supportActionBar?.hide()
         setContentView(R.layout.activity_main)
         sliderItems()
         getResult()
@@ -69,13 +77,18 @@ class MainActivity : AppCompatActivity(),OnclickListener {
         sliderhandler = Handler()
         sliderRun = Runnable {
             viewPager2.currentItem = viewPager2.currentItem + 1
+            viewModel.getLiveDataObserver().observe(this@MainActivity) {
+                sliderAdapter.setDataList(it as MutableList<DataItem>)
+                sliderAdapter.notifyDataSetChanged()
+
+            }
         }
         viewPager2.registerOnPageChangeCallback(
             object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
                     sliderhandler.removeCallbacks(sliderRun)
-                    sliderhandler.postDelayed(sliderRun, 5000)
+                    sliderhandler.postDelayed(sliderRun, 3000)
 
                 }
             })
