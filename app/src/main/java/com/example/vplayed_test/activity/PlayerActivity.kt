@@ -171,8 +171,8 @@ class PlayerActivity : AppCompatActivity(),Player.Listener {
         playerView.player = player
         val factory = AdaptiveTrackSelection.Factory()
         shoTrackSelector = DefaultTrackSelector(this, factory)
-        player = setSimpleExoPlayer(shoTrackSelector)
-        player?.addAnalyticsListener(EventLogger(shoTrackSelector, PlayerActivity::class.java.simpleName))
+        player = setExoPlayertracks(shoTrackSelector)
+        player.addAnalyticsListener(EventLogger(shoTrackSelector, PlayerActivity::class.java.simpleName))
 
 
         player.addListener(this)
@@ -180,7 +180,7 @@ class PlayerActivity : AppCompatActivity(),Player.Listener {
 
     }
 
-    private fun setSimpleExoPlayer(
+    private fun setExoPlayertracks(
         trackSelector: DefaultTrackSelector?,
     ): ExoPlayer {
         val bandwidthMeter = DefaultBandwidthMeter.Builder(this).build()
@@ -190,7 +190,7 @@ class PlayerActivity : AppCompatActivity(),Player.Listener {
             .setMaxVideoSizeSd()
         )
 
-        @DefaultRenderersFactory.ExtensionRendererMode
+       
         val extensionRendererMode = DefaultRenderersFactory.EXTENSION_RENDERER_MODE_ON
 
         val renderersFactory = DefaultRenderersFactory(this)
@@ -237,7 +237,7 @@ class PlayerActivity : AppCompatActivity(),Player.Listener {
                 settings.visibility=View.VISIBLE
 
                 settings.setOnClickListener {
-                    showSelectionDialog(0)
+                    settingsBottomsheet.show(supportFragmentManager,"settings")
                 playerView.hideController()
 
                 }
@@ -252,7 +252,7 @@ class PlayerActivity : AppCompatActivity(),Player.Listener {
         }
     }
 
-    private fun showSelectionDialog(title:Int){
+    fun showSelectionDialog(title:Int){
         if (shoTrackSelector != null) {
             player.pause()
             val trackSelectionDialog = TrackSelectionDialog.createForTrackSelector(
@@ -317,6 +317,9 @@ fun playing(){
             player.playWhenReady = true
         }
 
+    }
+    fun pause(){
+        player.pause()
     }
 
 

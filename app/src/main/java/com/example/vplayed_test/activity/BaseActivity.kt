@@ -9,12 +9,11 @@ import com.google.android.exoplayer2.Player
 
 
 class BaseActivity :BroadcastReceiver(),Player.Listener{
-    private lateinit var player: ExoPlayer
-//    private val player1:PlayerActivity= PlayerActivity()
+    private var playerActivity=PlayerActivity()
     override fun onReceive(p0: Context?, intent: Intent?) {
          val receive= intent?.getStringExtra(TelephonyManager.EXTRA_STATE)
              .equals(TelephonyManager.EXTRA_STATE_RINGING)
-    player.pause()
+playerActivity.pause()
     }
 
 }

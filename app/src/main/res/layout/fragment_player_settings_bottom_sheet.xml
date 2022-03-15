@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:background="@color/black">
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn1"
+        android:id="@+id/quality"
         android:backgroundTint="#00000000"
         android:textColor="@color/white"
         android:layout_width="match_parent"
@@ -31,7 +31,7 @@
         android:text="Loop Video"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn1"
+        app:layout_constraintTop_toBottomOf="@id/quality"
         />
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn3"

@@ -24,6 +24,7 @@ private const val ARG_PARAM2 = "param2"
  */
 class PlayerSettingsBottomSheet : BottomSheetDialogFragment() {
     // TODO: Rename and change types of parameters
+    private var playerActivity=PlayerActivity()
     private var bindingSetting:FragmentPlayerSettingsBottomSheetBinding? = null
     private val binding get() =bindingSetting
 
@@ -43,6 +44,11 @@ class PlayerSettingsBottomSheet : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding?.quality?.setOnClickListener {
+            playerActivity.showSelectionDialog(0)
+
+        }
 
 
     }
