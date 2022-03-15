@@ -77,11 +77,7 @@ class MainActivity : AppCompatActivity(),OnclickListener {
         sliderhandler = Handler()
         sliderRun = Runnable {
             viewPager2.currentItem = viewPager2.currentItem + 1
-            viewModel.getLiveDataObserver().observe(this@MainActivity) {
-                sliderAdapter.setDataList(it as MutableList<DataItem>)
-                sliderAdapter.notifyDataSetChanged()
 
-            }
         }
         viewPager2.registerOnPageChangeCallback(
             object : ViewPager2.OnPageChangeCallback() {

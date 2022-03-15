@@ -1,8 +1,10 @@
 package com.example.vplayed_test.activity
 
 import android.Manifest
+import android.content.BroadcastReceiver
+import android.content.IntentFilter
+import android.content.pm.PackageManager
 import android.content.res.Configuration
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.util.DisplayMetrics
@@ -13,40 +15,35 @@ import android.view.Window
 import android.view.WindowManager
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.example.vplayed_test.R
-import com.google.android.exoplayer2.ui.DefaultTimeBar
-import com.google.android.exoplayer2.ui.PlayerView
-import com.google.common.collect.ImmutableList
-import kotlin.time.Duration.Companion.milliseconds
 import androidx.core.app.ActivityCompat
-
-import android.content.pm.PackageManager
-
 import androidx.core.content.ContextCompat
-
-import com.google.android.material.snackbar.Snackbar
-
-import android.R.string.no
+import com.example.vplayed_test.R
 import com.example.vplayed_test.app.Utils
 import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
+import com.google.android.exoplayer2.ui.DefaultTimeBar
+import com.google.android.exoplayer2.ui.PlayerView
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
 import com.google.android.exoplayer2.util.EventLogger
+import com.google.common.collect.ImmutableList
+import kotlin.time.Duration.Companion.milliseconds
 
 
-class PlayerActivity : AppCompatActivity(),Player.Listener {
+class PlayerActivity : AppCompatActivity() ,Player.Listener, TelephonyReceiver.OnCallReceive {
     private lateinit var player: ExoPlayer
     private lateinit var playerView: PlayerView
     private lateinit var progressBar: ProgressBar
     private lateinit var titleTv: TextView
+    private var boolean = false
     private lateinit var buttonShare: ImageButton
     private lateinit var reverse: ImageView
     private lateinit var forward: ImageView
     private lateinit var settings: ImageView
-    private var settingsBottomsheet=PlayerSettingsBottomSheet()
     private var shoTrackSelector: DefaultTrackSelector? = null
+    var telephonyReceiver = TelephonyReceiver(this)
 
 
     private var mLastClickTime: Long = 0
@@ -64,7 +61,12 @@ class PlayerActivity : AppCompatActivity(),Player.Listener {
         supportActionBar?.hide()
         setContentView(R.layout.activity_player)
 
-
+//        pause.setOnCallListener(object : BaseActivity.OnCallReceive {
+//            override fun callReceived(boolean: Boolean) {
+//                val a = "hello"
+//                player.pause()
+//            }
+//        })
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE)
             != PackageManager.PERMISSION_GRANTED)
@@ -166,17 +168,18 @@ class PlayerActivity : AppCompatActivity(),Player.Listener {
     }
 
     private fun setupPlayer() {
-        player = ExoPlayer.Builder(this).build()
+        player = ExoPlayer.Builder(this@PlayerActivity).build()
         playerView = findViewById(R.id.video_view)
         playerView.player = player
-        val factory = AdaptiveTrackSelection.Factory()
-        shoTrackSelector = DefaultTrackSelector(this, factory)
-        player = setExoPlayertracks(shoTrackSelector)
-        player.addAnalyticsListener(EventLogger(shoTrackSelector, PlayerActivity::class.java.simpleName))
+//        val factory = AdaptiveTrackSelection.Factory()
+//        shoTrackSelector = DefaultTrackSelector(this, factory)
+//        player = setExoPlayertracks(shoTrackSelector)
+//        player.addAnalyticsListener(EventLogger(shoTrackSelector, PlayerActivity::class.java.simpleName))
 
 
         player.addListener(this)
         player.currentPosition
+
 
     }
 
@@ -237,8 +240,9 @@ class PlayerActivity : AppCompatActivity(),Player.Listener {
                 settings.visibility=View.VISIBLE
 
                 settings.setOnClickListener {
-                    settingsBottomsheet.show(supportFragmentManager,"settings")
-                playerView.hideController()
+//                    showSelectionDialog(0)
+//                playerView.hideController()
+                    Toast.makeText(this, "clicked", Toast.LENGTH_SHORT).show()
 
                 }
 
@@ -287,19 +291,21 @@ class PlayerActivity : AppCompatActivity(),Player.Listener {
 
     override fun onResume() {
         super.onResume()
+        val telephonyFilter = IntentFilter("android.intent.action.PHONE_STATE")
+        registerReceiver(telephonyReceiver,telephonyFilter)
         player.currentPosition
         player.play()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        unregisterReceiver(telephonyReceiver)
     }
 
     override fun onStart() {
         super.onStart()
         player.play()
     }
-
-fun playing(){
-    player.play()
-}
-
 
     private fun alert() {
         val dialogview = LayoutInflater.from(this).inflate(R.layout.custom_alert, null)
@@ -318,11 +324,10 @@ fun playing(){
         }
 
     }
-    fun pause(){
+
+    override fun callReceived(boolean: Boolean) {
         player.pause()
     }
-
-
 
 }
 

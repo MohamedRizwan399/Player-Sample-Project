@@ -20,7 +20,7 @@ class ViewModel: ViewModel() {
     {
         val retrofitInstance = BaseApi.getRetrofitInstance()
         val retroService = retrofitInstance.create(BaseApi::class.java)
-        val call = retroService.searchLeague()
+        val call = retroService.searchData()
         call.enqueue(object : retrofit2.Callback<Data> {
             override fun onResponse(call: retrofit2.Call<Data>, response: Response<Data>) {
                 data.postValue(response.body())

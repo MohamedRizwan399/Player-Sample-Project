@@ -55,6 +55,4 @@ class SliderAdapter( private var onClickListener: OnclickListener ):RecyclerView
     }
 }
 
-private fun View.OnClickListener.onClick(position: Int) {
 
-}
