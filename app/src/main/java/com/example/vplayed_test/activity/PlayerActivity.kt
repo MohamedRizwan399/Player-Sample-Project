@@ -75,7 +75,7 @@ class PlayerActivity : AppCompatActivity() ,Player.Listener, TelephonyReceiver.O
                 1)
         }
 
-        progressBar = findViewById(R.id.progress)
+        progressBar = findViewById(R.id.progress_circular)
         titleTv = findViewById(R.id.title1)
         reverse=findViewById(R.id.exo_rew)
         forward=findViewById(R.id.exo_ffwd)

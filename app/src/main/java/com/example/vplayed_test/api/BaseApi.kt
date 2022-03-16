@@ -1,5 +1,6 @@
 package com.example.vplayed_test.api
 import com.example.vplayed_test.data.Data
+import com.example.vplayed_test.postApiDataclass.Movies
 import com.example.vplayed_test.postApiDataclass.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -11,7 +12,7 @@ interface BaseApi {
     fun searchData(): retrofit2.Call<Data>
 
     @POST("/medias/api/v2/browse")
-    fun postData():retrofit2.Call<Response>
+    fun postData():retrofit2.Call<Movies>
 
     companion object{
 

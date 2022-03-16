@@ -9,14 +9,17 @@ import android.view.Window
 import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import com.example.vplayed_test.R
 import com.example.vplayed_test.adapter.OnclickListener
+import com.example.vplayed_test.adapter.RecyclerAdapter
 import com.example.vplayed_test.adapter.SliderAdapter
 import com.example.vplayed_test.data.DataItem
+import com.example.vplayed_test.postApiDataclass.Data
 import com.example.vplayed_test.viewmodel.ViewModel
 import kotlin.math.abs
 
@@ -24,9 +27,15 @@ class MainActivity : AppCompatActivity(),OnclickListener {
     //    private val coroutineScope = CoroutineScope(Dispatchers.Main)
     private val viewModel by viewModels<ViewModel>()
     private var sliderAdapter: SliderAdapter = SliderAdapter(this)
+    private var recyclerAdapter: RecyclerAdapter = RecyclerAdapter()
+
     private lateinit var sliderhandler: Handler
     private lateinit var sliderRun: Runnable
     private lateinit var viewPager2: ViewPager2
+    private lateinit var recyclerview: RecyclerView
+    private var layoutManager: RecyclerView.LayoutManager? = null
+
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,8 +70,16 @@ class MainActivity : AppCompatActivity(),OnclickListener {
 
     private fun sliderItems() {
 //        sliderItemlist= ArrayList()
+
+        recyclerview=findViewById(R.id.recyclerView)
+        layoutManager = GridLayoutManager(applicationContext, 2)
+        recyclerview.layoutManager = layoutManager
+        recyclerAdapter = RecyclerAdapter()
+        recyclerview.adapter=recyclerAdapter
+
         viewPager2 = findViewById(R.id.viewPagerImgSlider)
         viewPager2.adapter = sliderAdapter
+
         viewPager2.clipToPadding = false
         viewPager2.clipChildren = false
         viewPager2.offscreenPageLimit = 3
@@ -108,10 +125,18 @@ class MainActivity : AppCompatActivity(),OnclickListener {
     private fun getResult() {
 //        coroutineScope.launch(Dispatchers.Main) {
         val results = viewModel.apiCall()
+
+
         Log.i("RESULTS", "$results")
         viewModel.getLiveDataObserver().observe(this@MainActivity) {
             sliderAdapter.setDataList(it as MutableList<DataItem>)
             sliderAdapter.notifyDataSetChanged()
+
+        }
+        val results1 = viewModel.apiCall1()
+        viewModel.getLiveDataObserver1().observe(this@MainActivity) {
+            recyclerAdapter.setDataList(it as MutableList<Data>)
+            recyclerAdapter.notifyDataSetChanged()
 
         }
     }

@@ -4,7 +4,11 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../.gradle/caches/transforms-3/891cbd948b6c2a11917e42e231718f52/transformed/jetified-exoplayer-ui-2.16.1/res/layout/exo_track_selection_dialog.xml" value="0.18" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/VPLAYEDProjects/Vplayed_Test/app/src/main/res/layout/activity_main.xml" value="0.10157041540020263" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/VPLAYEDProjects/Vplayed_Test/app/src/main/res/layout/activity_player.xml" value="0.10157041540020263" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/VPLAYEDProjects/Vplayed_Test/app/src/main/res/layout/fragment_player_settings_bottom_sheet.xml" value="0.22" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/VPLAYEDProjects/Vplayed_Test/app/src/main/res/layout/row_item.xml" value="0.17572463768115942" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/VPLAYEDProjects/Vplayed_Test/app/src/main/res/layout/slider_items.xml" value="0.10157041540020263" />
         <entry key="app/src/main/res/drawable-v24/ic_close_cross.xml" value="0.1155" />
         <entry key="app/src/main/res/drawable-v24/ic_done.xml" value="0.1155" />
         <entry key="app/src/main/res/drawable-v24/player_settings_background.xml" value="0.1155" />
@@ -17,9 +21,7 @@
         <entry key="app/src/main/res/layout/custom_controller_view.xml" value="0.18072916666666666" />
         <entry key="app/src/main/res/layout/exo_track_selection_dialog.xml" value="0.18072916666666666" />
         <entry key="app/src/main/res/layout/exo_track_selection_view.xml" value="0.18072916666666666" />
-        <entry key="app/src/main/res/layout/fragment_main.xml" value="0.18072916666666666" />
         <entry key="app/src/main/res/layout/fragment_player_settings_bottom_sheet.xml" value="0.18072916666666666" />
-        <entry key="app/src/main/res/layout/row_item.xml" value="0.18072916666666666" />
         <entry key="app/src/main/res/layout/slider_items.xml" value="0.18072916666666666" />
         <entry key="app/src/main/res/layout/trackselectiondialog.xml" value="0.18072916666666666" />
       </map>
