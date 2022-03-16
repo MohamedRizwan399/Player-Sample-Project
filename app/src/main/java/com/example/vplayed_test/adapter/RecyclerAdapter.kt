@@ -13,12 +13,16 @@ import com.example.vplayed_test.data.DataItem
 import com.example.vplayed_test.postApiDataclass.Data
 
 class RecyclerAdapter: RecyclerView.Adapter<RecyclerAdapter.myViewHolder>() {
+    private var viewpager: ViewPager2? =null
+
     private var dataList:MutableList<Data>? = null
 
     fun setDataList(usersListData:MutableList<Data>?){
         this.dataList = usersListData
     }
     inner class myViewHolder(v: View):RecyclerView.ViewHolder(v){
+        val image1=v.findViewById<ImageView>(R.id.poster_image)
+
         val image=v.findViewById<ImageView>(R.id.poster_image)
         val albumtitle=v.findViewById<TextView>(R.id.tv1)
         val artistname=v.findViewById<TextView>(R.id.tv2)
@@ -35,13 +39,20 @@ class RecyclerAdapter: RecyclerView.Adapter<RecyclerAdapter.myViewHolder>() {
     override fun onBindViewHolder(holder: myViewHolder, position: Int) {
         val listimage= dataList?.get(position)
 
-//        holder.image.setImageResource(listimage.posterImage)
+
         if (listimage != null) {
             holder.albumtitle.text=listimage.album_name
             holder.artistname.text=listimage.artist_name
+            if (listimage?.album_thumbnail.isNullOrEmpty()){
+                holder.image.setImageResource(R.drawable.union_1)
+            }else
+            Glide.with(holder.image
+                .context).load(listimage?.album_thumbnail).into(holder.image)
         }
-        Glide.with(holder.image
-            .context).load(listimage?.album_thumbnail).into(holder.image)
+        if (position== dataList?.size!! -2){
+            viewpager?.post(run)
+        }
+
 
     }
 
@@ -49,6 +60,10 @@ class RecyclerAdapter: RecyclerView.Adapter<RecyclerAdapter.myViewHolder>() {
         if(dataList==null) return 0
         else return dataList?.size!!
     }
-
-
+    private val run = object : Runnable {
+        override fun run() {
+            dataList!!.addAll(dataList!!)
+            notifyDataSetChanged()
+        }
+    }
 }

@@ -9,14 +9,15 @@ import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.example.vplayed_test.data.DataItem
 import com.example.vplayed_test.R
+import com.example.vplayed_test.postApiDataclass.Data
 
 class SliderAdapter( private var onClickListener: OnclickListener ):RecyclerView.Adapter<SliderAdapter.SliderViewHolder>()
 {
 
     private var viewpager: ViewPager2? =null
-    private var imgList:MutableList<DataItem>? = null
+    private var imgList:MutableList<Data>? = null
 
-    fun setDataList(usersListData:MutableList<DataItem>?){
+    fun setDataList(usersListData:MutableList<Data>?){
         this.imgList = usersListData
     }
     inner class SliderViewHolder(v:View):RecyclerView.ViewHolder(v){
@@ -34,9 +35,14 @@ class SliderAdapter( private var onClickListener: OnclickListener ):RecyclerView
         holder.itemView.setOnClickListener{
             onClickListener.onclick(position)
         }
+        if (listimage?.album_thumbnail.isNullOrEmpty()){
+            holder.image.setImageResource(R.drawable.union_1)
+        }else
+            Glide.with(holder.image
+                .context).load(listimage?.album_thumbnail).into(holder.image)
+
 //        holder.image.setImageResource(listimage.posterImage)
-        Glide.with(holder.image
-            .context).load(listimage?.img_url).into(holder.image)
+
     if (position== imgList?.size!! -2){
         viewpager?.post(run)
     }

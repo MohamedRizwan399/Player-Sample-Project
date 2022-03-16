@@ -14,11 +14,11 @@ import retrofit2.Response
 class ViewModel: ViewModel() {
 
 //    var repo : Repo? = null
-    var data : MutableLiveData<MutableList<DataItem>> = MutableLiveData()
+    var data : MutableLiveData<MutableList<com.example.vplayed_test.postApiDataclass.Data>> = MutableLiveData()
     var data1 : MutableLiveData<MutableList<com.example.vplayed_test.postApiDataclass.Data>> = MutableLiveData()
 
 
-    fun getLiveDataObserver():MutableLiveData<MutableList<DataItem>>{
+    fun getLiveDataObserver():MutableLiveData<MutableList<com.example.vplayed_test.postApiDataclass.Data>>{
         return data
     }
     fun getLiveDataObserver1():MutableLiveData<MutableList<com.example.vplayed_test.postApiDataclass.Data>>{
@@ -27,16 +27,18 @@ class ViewModel: ViewModel() {
 
     fun apiCall()
     {
-        val retrofitInstance = BaseApi.getRetrofitInstance()
+        val retrofitInstance = BaseApi.getRetrofitInstancePost()
         val retroService = retrofitInstance.create(BaseApi::class.java)
-        val call = retroService.searchData()
-        call.enqueue(object : retrofit2.Callback<Data> {
-            override fun onResponse(call: retrofit2.Call<Data>, response: Response<Data>) {
-                data.postValue(response.body())
+        val call = retroService.postData()
+        call.enqueue(object : retrofit2.Callback<Movies> {
+            override fun onResponse(call: Call<Movies>, response: Response<Movies>) {
+                data.postValue(response.body()?.response?.browse_data?.album_data?.data as MutableList<com.example.vplayed_test.postApiDataclass.Data>)
+
             }
 
-            override fun onFailure(call: retrofit2.Call<Data>, t: Throwable) {
+            override fun onFailure(call: Call<Movies>, t: Throwable) {
                 data.postValue(null)
+
             }
 
 
