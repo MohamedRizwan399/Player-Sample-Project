@@ -10,7 +10,7 @@
         android:layout_height="300dp"
         android:paddingTop="20dp"
         android:paddingBottom="20dp"
-        android:paddingStart="20dp"
+        android:paddingStart="25dp"
         android:paddingEnd="20dp"
         app:cardCornerRadius="16dp"
         app:layout_constraintStart_toStartOf="parent"

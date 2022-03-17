@@ -171,11 +171,10 @@ class PlayerActivity : AppCompatActivity() ,Player.Listener, TelephonyReceiver.O
         player = ExoPlayer.Builder(this@PlayerActivity).build()
         playerView = findViewById(R.id.video_view)
         playerView.player = player
-//        val factory = AdaptiveTrackSelection.Factory()
-//        shoTrackSelector = DefaultTrackSelector(this, factory)
-//        player = setExoPlayertracks(shoTrackSelector)
-//        player.addAnalyticsListener(EventLogger(shoTrackSelector, PlayerActivity::class.java.simpleName))
-
+        val factory = AdaptiveTrackSelection.Factory()
+        shoTrackSelector = DefaultTrackSelector(this, factory)
+        player = setExoPlayertracks(shoTrackSelector)
+        player.addAnalyticsListener(EventLogger(shoTrackSelector, PlayerActivity::class.java.simpleName))
 
         player.addListener(this)
         player.currentPosition
@@ -215,8 +214,8 @@ class PlayerActivity : AppCompatActivity() ,Player.Listener, TelephonyReceiver.O
     }
 
     private fun mediaFiles() {
-        val mediaItem = MediaItem.fromUri(getString(R.string.elephant))
-        val mediaItem1 = MediaItem.fromUri(getString(R.string.sintel))
+        val mediaItem = MediaItem.fromUri(getString(R.string.sintel))
+        val mediaItem1 = MediaItem.fromUri(getString(R.string.signature_title))
 //        val mediaItem2 = MediaItem.fromUri(getString(R.string.elephant))
 
 
@@ -240,7 +239,7 @@ class PlayerActivity : AppCompatActivity() ,Player.Listener, TelephonyReceiver.O
                 settings.visibility=View.VISIBLE
 
                 settings.setOnClickListener {
-//                    showSelectionDialog(0)
+                    showSelectionDialog(0)
 //                playerView.hideController()
                     Toast.makeText(this, "clicked", Toast.LENGTH_SHORT).show()
 

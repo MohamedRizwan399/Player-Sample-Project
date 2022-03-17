@@ -166,5 +166,15 @@ class MainActivity : AppCompatActivity() {
 //        }
     }
 
+    override fun onBackPressed() {
+        if(bottomNavigationView.selectedItemId==R.id.home) {
+            super.onBackPressed()
+            finish()
+        }
+        else {
+            bottomNavigationView.selectedItemId=R.id.home
+        }
+        }
+    }
 
-}
+

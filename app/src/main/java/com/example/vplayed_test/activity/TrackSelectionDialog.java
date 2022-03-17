@@ -167,17 +167,17 @@ public class TrackSelectionDialog extends DialogFragment {
     public View onCreateView(
             LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View dialogView = inflater.inflate(R.layout.trackselectiondialog, container, false);
-        ImageView closebutton = dialogView.findViewById(R.id.back);
+//        ImageView closebutton = dialogView.findViewById(R.id.back);
         ConstraintLayout parentSection = dialogView.findViewById(R.id.parent_section);
 
         parentSection.setOnClickListener(v -> {
             onDismissListener.onDismiss(dialog);
             dialog.dismiss();
         });
-        closebutton.setOnClickListener(v -> {
-            onDismissListener.onDismiss(dialog);
-            dialog.dismiss();
-        });
+//        closebutton.setOnClickListener(v -> {
+//            onDismissListener.onDismiss(dialog);
+//            dialog.dismiss();
+//        });
         return dialogView;
     }
 
@@ -186,7 +186,7 @@ public class TrackSelectionDialog extends DialogFragment {
         super.onViewCreated(view, savedInstanceState);
 
 
-        LinearLayout qualitySection = view.findViewById(R.id.ll_quality_section);
+        ConstraintLayout qualitySection = view.findViewById(R.id.ll_quality_section);
 
 
         if (tabName == 0) {
