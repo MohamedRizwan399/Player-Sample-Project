@@ -34,10 +34,7 @@ class MainActivity : AppCompatActivity() {
     private val homeFragment=HomeFragment()
     private val searchFragment=SearchFragment()
     private val promosFragment=PromosFragment()
-
     private lateinit var bottomNavigationView: BottomNavigationView
-
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,6 +60,7 @@ class MainActivity : AppCompatActivity() {
             return@setOnItemSelectedListener true
         }
 
+
         replacefragment(homeFragment)
 
 
@@ -70,9 +68,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun replacefragment(fragment: Fragment) {
-        if(fragment!=null){
-            val transaction=supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.container,fragment)
+        if(fragment!=null) {
+            val transaction = supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.container, fragment)
             transaction.commit()
         }
 
@@ -176,5 +174,7 @@ class MainActivity : AppCompatActivity() {
         }
         }
     }
+
+
 
 

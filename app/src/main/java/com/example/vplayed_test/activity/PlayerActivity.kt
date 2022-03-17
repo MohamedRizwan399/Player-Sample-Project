@@ -3,6 +3,7 @@ package com.example.vplayed_test.activity
 import android.Manifest
 import android.content.BroadcastReceiver
 import android.content.IntentFilter
+import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.os.Bundle
@@ -39,6 +40,7 @@ class PlayerActivity : AppCompatActivity() ,Player.Listener, TelephonyReceiver.O
     private lateinit var titleTv: TextView
     private var boolean = false
     private lateinit var buttonShare: ImageButton
+    private lateinit var fullscreenclick:ImageView
     private lateinit var reverse: ImageView
     private lateinit var forward: ImageView
     private lateinit var settings: ImageView
@@ -49,7 +51,7 @@ class PlayerActivity : AppCompatActivity() ,Player.Listener, TelephonyReceiver.O
     private var mLastClickTime: Long = 0
     private lateinit var seekbar: DefaultTimeBar
     private var handler: Handler = Handler()
-    var fullscreen: Boolean = false
+    var isLandscapeview: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,6 +82,7 @@ class PlayerActivity : AppCompatActivity() ,Player.Listener, TelephonyReceiver.O
         reverse=findViewById(R.id.exo_rew)
         forward=findViewById(R.id.exo_ffwd)
         settings=findViewById(R.id.settings)
+        fullscreenclick=findViewById(R.id.exo_fullscreen)
 
 
         setupPlayer()
@@ -95,6 +98,9 @@ class PlayerActivity : AppCompatActivity() ,Player.Listener, TelephonyReceiver.O
         }
         forward.setOnClickListener {
             player.seekTo(player.currentPosition+10000)
+        }
+        fullscreenclick.setOnClickListener {
+fullscreenLayout()
         }
 
 
@@ -133,8 +139,37 @@ class PlayerActivity : AppCompatActivity() ,Player.Listener, TelephonyReceiver.O
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
+        var view = findViewById<ConstraintLayout>(R.id.constraint1)
+
 //        window.decorView.systemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN)
-        updateLayout(newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE)
+//        updateLayout(newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE)
+        if (newConfig.orientation === Configuration.ORIENTATION_LANDSCAPE) {
+            view.visibility = View.INVISIBLE
+//            View.SYSTEM_UI_FLAG_FULLSCREEN
+
+
+            val metrics = DisplayMetrics()
+            windowManager.defaultDisplay.getMetrics(metrics)
+            val videoView = findViewById<FrameLayout>(R.id.video_layout)
+            val params = videoView.getLayoutParams()
+            params.width = metrics.widthPixels
+            params.height = metrics.heightPixels
+
+            videoView.setLayoutParams(params)
+            Toast.makeText(this, "landscape", Toast.LENGTH_SHORT).show()
+        } else {
+            if (newConfig.orientation === Configuration.ORIENTATION_PORTRAIT) {
+                view.visibility = View.VISIBLE
+                val metrics = DisplayMetrics()
+                windowManager.defaultDisplay.getMetrics(metrics)
+                val videoView = findViewById<FrameLayout>(R.id.video_layout)
+                val params = videoView.getLayoutParams()
+                params.width = metrics.widthPixels
+                params.height = (230 * metrics.density).toInt()
+                videoView.setLayoutParams(params)
+                Toast.makeText(this, "portrait", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun updateLayout(isLandscape: Boolean) {
@@ -155,6 +190,7 @@ class PlayerActivity : AppCompatActivity() ,Player.Listener, TelephonyReceiver.O
 
 
         } else {
+
             view.visibility = View.VISIBLE
             val metrics = DisplayMetrics()
             windowManager.defaultDisplay.getMetrics(metrics)
@@ -163,6 +199,42 @@ class PlayerActivity : AppCompatActivity() ,Player.Listener, TelephonyReceiver.O
             params.width = metrics.widthPixels
             params.height = (230 * metrics.density).toInt()
             videoView.setLayoutParams(params)
+
+        }
+    }
+
+    private fun fullscreenLayout() {
+        var view = findViewById<ConstraintLayout>(R.id.constraint1)
+        if (isLandscapeview) {
+            isLandscapeview=false
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE)
+            view.visibility = View.INVISIBLE
+
+//            View.SYSTEM_UI_FLAG_FULLSCREEN
+
+
+            val metrics = DisplayMetrics()
+            windowManager.defaultDisplay.getMetrics(metrics)
+            val videoView = findViewById<FrameLayout>(R.id.video_layout)
+            val params = videoView.getLayoutParams()
+            params.width = metrics.widthPixels
+            params.height = metrics.heightPixels
+
+            videoView.setLayoutParams(params)
+
+
+
+        } else {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT)
+            view.visibility = View.VISIBLE
+            val metrics = DisplayMetrics()
+            windowManager.defaultDisplay.getMetrics(metrics)
+            val videoView = findViewById<FrameLayout>(R.id.video_layout)
+            val params = videoView.getLayoutParams()
+            params.width = metrics.widthPixels
+            params.height = (230 * metrics.density).toInt()
+            videoView.setLayoutParams(params)
+            isLandscapeview=true
 
         }
     }
@@ -214,12 +286,14 @@ class PlayerActivity : AppCompatActivity() ,Player.Listener, TelephonyReceiver.O
     }
 
     private fun mediaFiles() {
-        val mediaItem = MediaItem.fromUri(getString(R.string.sintel))
-        val mediaItem1 = MediaItem.fromUri(getString(R.string.signature_title))
+        val mediaItem1 = MediaItem.fromUri(getString(R.string.sintel))
+        val mediaItem2 = MediaItem.fromUri(getString(R.string.tearsofsteel))
+        val mediaItem3 = MediaItem.fromUri(getString(R.string.tearsofsteel))
+
 //        val mediaItem2 = MediaItem.fromUri(getString(R.string.elephant))
 
 
-        val newItems: List<MediaItem> = ImmutableList.of(mediaItem,mediaItem1)
+        val newItems: List<MediaItem> = ImmutableList.of(mediaItem1,mediaItem2,mediaItem3)
         player.addMediaItems(newItems)
         player.prepare()
 
