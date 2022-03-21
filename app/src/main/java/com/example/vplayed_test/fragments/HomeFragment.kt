@@ -9,14 +9,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.RelativeLayout
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import com.example.vplayed_test.R
+import com.example.vplayed_test.activity.MainActivity
 import com.example.vplayed_test.activity.PlayerActivity
+import com.example.vplayed_test.adapter.CircularAdapter
 import com.example.vplayed_test.adapter.OnclickListener
 import com.example.vplayed_test.adapter.RecyclerAdapter
 import com.example.vplayed_test.adapter.SliderAdapter
@@ -35,14 +40,19 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class HomeFragment : Fragment() ,OnclickListener{
+    private lateinit var mainActivity: MainActivity
     private val viewModel=ViewModel()
     private var sliderAdapter: SliderAdapter = SliderAdapter(this)
     private var recyclerAdapter: RecyclerAdapter = RecyclerAdapter()
+    private var circularadapter:CircularAdapter= CircularAdapter()
 
     private lateinit var sliderhandler: Handler
     private lateinit var sliderRun: Runnable
     private lateinit var viewPager2: ViewPager2
     private lateinit var recyclerview: RecyclerView
+    private lateinit var recyclerview1: RecyclerView
+
+    private lateinit var navdrawer:ImageView
     private var layoutManager: RecyclerView.LayoutManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,7 +71,16 @@ class HomeFragment : Fragment() ,OnclickListener{
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recyclerview=view.findViewById(R.id.recyclerView)
+        recyclerview1=view.findViewById(R.id.recyclerView1)
+
         viewPager2 = view.findViewById(R.id.viewPagerImgSlider)
+        navdrawer=view.findViewById(R.id.nav_drawer)
+        navdrawer.setOnClickListener {
+            if(activity is MainActivity) {
+                val dashboardView=activity as MainActivity
+                dashboardView.openDrawer()
+            }
+        }
 
 
         sliderItems()
@@ -72,9 +91,13 @@ class HomeFragment : Fragment() ,OnclickListener{
 //        sliderItemlist= ArrayList()
 
         layoutManager = GridLayoutManager(requireContext(), 2)
-        recyclerview.layoutManager = layoutManager
+        recyclerview1.layoutManager = layoutManager
         recyclerAdapter = RecyclerAdapter()
-        recyclerview.adapter=recyclerAdapter
+        recyclerview1.adapter=recyclerAdapter
+
+        recyclerview.layoutManager=LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
+        recyclerview.adapter=circularadapter
+
 
         viewPager2.adapter = sliderAdapter
 
@@ -129,8 +152,10 @@ class HomeFragment : Fragment() ,OnclickListener{
         viewModel.getLiveDataObserver().observe(viewLifecycleOwner) {
             sliderAdapter.setDataList(it as MutableList<Data>)
             recyclerAdapter.setDataList(it as MutableList<Data>)
+            circularadapter.setDataList(it)
             recyclerAdapter.notifyDataSetChanged()
             sliderAdapter.notifyDataSetChanged()
+            circularadapter.notifyDataSetChanged()
 
 
         }

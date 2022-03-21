@@ -14,6 +14,8 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -40,7 +42,7 @@ class MainActivity : AppCompatActivity() {
     private val searchFragment=SearchFragment()
     private val promosFragment=PromosFragment()
     private lateinit var bottomNavigationView: BottomNavigationView
-    private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
+    private lateinit var drawerLayout: DrawerLayout
     private lateinit var fragmentBackStack:FragmentBackStack
     private lateinit var bundle:Bundle
 
@@ -57,6 +59,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         replacefragment(homeFragment)
         bottomNavigationView=findViewById(R.id.bottomnav)
+        drawerLayout=findViewById(R.id.drawerLayout)
 
         if (savedInstanceState == null) {
             bundle=Bundle()
@@ -89,8 +92,9 @@ class MainActivity : AppCompatActivity() {
 
 //        replacefragment(homeFragment)
 
-
-
+    }
+    fun openDrawer(){
+        drawerLayout.openDrawer(GravityCompat.START)
     }
 
 

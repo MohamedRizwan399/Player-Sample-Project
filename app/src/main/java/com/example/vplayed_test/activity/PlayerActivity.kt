@@ -83,6 +83,7 @@ class PlayerActivity : AppCompatActivity() ,Player.Listener, TelephonyReceiver.O
         forward=findViewById(R.id.exo_ffwd)
         settings=findViewById(R.id.settings)
         fullscreenclick=findViewById(R.id.exo_fullscreen)
+        buttonShare=findViewById(R.id.share)
 
 
         setupPlayer()
