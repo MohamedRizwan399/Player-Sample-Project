@@ -6,6 +6,7 @@ import android.content.IntentFilter
 import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
 import android.content.res.Configuration
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.util.DisplayMetrics
@@ -101,8 +102,12 @@ class PlayerActivity : AppCompatActivity() ,Player.Listener, TelephonyReceiver.O
             player.seekTo(player.currentPosition+10000)
         }
         fullscreenclick.setOnClickListener {
-fullscreenLayout()
+              fullscreenLayout()
         }
+//        val newDeepLink = dynamicshare.buildDeepLink(Uri.parse(DEEP_LINK_URL))
+//        buttonShare.setOnClickListener {
+//            dynamicshare.shareDeepLink(newDeepLink.toString())
+//        }
 
 
 

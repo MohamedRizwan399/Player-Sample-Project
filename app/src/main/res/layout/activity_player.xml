@@ -90,6 +90,8 @@
                     android:id="@+id/share"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:background="@android:color/transparent"
                     app:layout_constraintStart_toEndOf="@id/title1"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:src="@drawable/ic_baseline_share_24"
