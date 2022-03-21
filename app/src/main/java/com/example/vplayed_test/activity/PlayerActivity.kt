@@ -142,35 +142,10 @@ fullscreenLayout()
         var view = findViewById<ConstraintLayout>(R.id.constraint1)
 
 //        window.decorView.systemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN)
-//        updateLayout(newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE)
-        if (newConfig.orientation === Configuration.ORIENTATION_LANDSCAPE) {
-            view.visibility = View.INVISIBLE
-//            View.SYSTEM_UI_FLAG_FULLSCREEN
+        updateLayout(newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE)
 
-
-            val metrics = DisplayMetrics()
-            windowManager.defaultDisplay.getMetrics(metrics)
-            val videoView = findViewById<FrameLayout>(R.id.video_layout)
-            val params = videoView.getLayoutParams()
-            params.width = metrics.widthPixels
-            params.height = metrics.heightPixels
-
-            videoView.setLayoutParams(params)
-            Toast.makeText(this, "landscape", Toast.LENGTH_SHORT).show()
-        } else {
-            if (newConfig.orientation === Configuration.ORIENTATION_PORTRAIT) {
-                view.visibility = View.VISIBLE
-                val metrics = DisplayMetrics()
-                windowManager.defaultDisplay.getMetrics(metrics)
-                val videoView = findViewById<FrameLayout>(R.id.video_layout)
-                val params = videoView.getLayoutParams()
-                params.width = metrics.widthPixels
-                params.height = (230 * metrics.density).toInt()
-                videoView.setLayoutParams(params)
-                Toast.makeText(this, "portrait", Toast.LENGTH_SHORT).show()
-            }
         }
-    }
+
 
     private fun updateLayout(isLandscape: Boolean) {
         var view = findViewById<ConstraintLayout>(R.id.constraint1)

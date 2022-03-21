@@ -13,23 +13,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Vplayed_Test">
-
         <activity
-            android:name=".activity.PlayerActivity"
-            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
-            android:exported="true" />
-
+            android:name=".activity.DashboardView"
+            android:exported="false" />
         <activity
-            android:name=".activity.MainActivity"
-            android:screenOrientation="sensorPortrait"
-            android:exported="true">
+            android:name=".activity.SplashScreen"
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity
+            android:name=".activity.PlayerActivity"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+            android:exported="true" />
+        <activity
+            android:name=".activity.MainActivity"
+            android:exported="true"
+            android:screenOrientation="sensorPortrait" />
     </application>
 
 </manifest>

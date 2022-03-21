@@ -5,10 +5,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
+import android.view.MenuItem
 import android.view.Window
 import android.view.WindowManager
+import android.widget.ScrollView
+import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -35,6 +40,10 @@ class MainActivity : AppCompatActivity() {
     private val searchFragment=SearchFragment()
     private val promosFragment=PromosFragment()
     private lateinit var bottomNavigationView: BottomNavigationView
+    private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
+    private lateinit var fragmentBackStack:FragmentBackStack
+    private lateinit var bundle:Bundle
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,33 +57,53 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         replacefragment(homeFragment)
         bottomNavigationView=findViewById(R.id.bottomnav)
-        bottomNavigationView.setOnItemSelectedListener{
-            when(it.itemId){
-                R.id.home->replacefragment(homeFragment)
-                R.id.search->replacefragment(searchFragment)
-                R.id.promos->replacefragment(promosFragment)
-                R.id.watchlist->replacefragment(searchFragment)
-                R.id.settings->replacefragment(promosFragment)
 
-            }
-            return@setOnItemSelectedListener true
+        if (savedInstanceState == null) {
+            bundle=Bundle()
+
+            fragmentBackStack = FragmentBackStack.Builder()
+                .bottomMaxCount(5)
+                .container_id(R.id.container)
+                .lastFragmentToStay(HomeFragment::class.java)
+                .build(this)
+
+
+            fragmentBackStack.updateFrag(HomeFragment::class.java,bundle)
         }
 
+        bottomNavigationView.setOnNavigationItemSelectedListener(object :BottomNavigationView.OnNavigationItemSelectedListener{
+            override fun onNavigationItemSelected(item: MenuItem): Boolean {
+                when(item.itemId){
+                    R.id.home->replacefragment(homeFragment)
+                    R.id.search->replacefragment(searchFragment)
+                    R.id.promos->replacefragment(promosFragment)
+                    R.id.watchlist->replacefragment(searchFragment)
+                    R.id.settings->replacefragment(promosFragment)
 
-        replacefragment(homeFragment)
+                }
+                return true
+            }
+
+        })
+
+
+//        replacefragment(homeFragment)
 
 
 
     }
+
 
     private fun replacefragment(fragment: Fragment) {
         if(fragment!=null) {
             val transaction = supportFragmentManager.beginTransaction()
             transaction.replace(R.id.container, fragment)
+            transaction.addToBackStack(null)
             transaction.commit()
         }
-
     }
+
+
 
     //    private fun itemsliderview() {
 //        sliderItemlist.add(SliderItem(R.drawable.ic_launcher_background))
@@ -165,13 +194,37 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if(bottomNavigationView.selectedItemId==R.id.home) {
+//        if(bottomNavigationView.selectedItemId==R.id.home) {
+//            super.onBackPressed()
+//            finish()
+//        }
+//        else {
+//            bottomNavigationView.selectedItemId=R.id.home
+//        }
+
+        val returnedtag=fragmentBackStack.backHandling()
+        if (returnedtag.equals(FragmentBackStack.CHILDTAG)) {
+            return
+        }
+        if (returnedtag.equals(FragmentBackStack.DOBACKSTACK)) {
             super.onBackPressed()
-            finish()
+            Toast.makeText(this, "its home", Toast.LENGTH_SHORT).show()
+
         }
-        else {
-            bottomNavigationView.selectedItemId=R.id.home
-        }
+//        else if (returnedtag.equals(HomeFragment::class.java.canonicalName))
+//        {
+//            bottomNavigationView.selectedItemId=R.id.home
+//        }else if (returnedtag.equals(SearchFragment::class.java.canonicalName)){
+//            bottomNavigationView.selectedItemId=R.id.search
+//        }else if (returnedtag.equals(PromosFragment::class.java.canonicalName)){
+//            bottomNavigationView.selectedItemId=R.id.promos
+//        }else if (returnedtag.equals(SearchFragment::class.java.canonicalName)){
+//            bottomNavigationView.selectedItemId=R.id.watchlist
+//        }else if (returnedtag.equals(PromosFragment::class.java.canonicalName)){
+//            bottomNavigationView.selectedItemId=R.id.settings
+//        }
+
+
         }
     }
 
