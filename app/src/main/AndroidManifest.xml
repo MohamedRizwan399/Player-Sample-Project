@@ -14,13 +14,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Vplayed_Test">
         <activity
+            android:name=".activity.ProfileBaseActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.DashboardView"
             android:exported="false" />
-
         <activity
             android:name=".activity.SplashScreen"
-            android:exported="true"
-            >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,11 +31,23 @@
         <activity
             android:name=".activity.PlayerActivity"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
-            android:exported="true" />
+            android:exported="true">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="vplayedtestapp"
+                    android:scheme="https" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".activity.MainActivity"
             android:exported="true"
             android:screenOrientation="sensorPortrait" />
+        <activity
+            android:name=".activity.DynamicLinkShare"
+            android:exported="true" />
     </application>
 
 </manifest>

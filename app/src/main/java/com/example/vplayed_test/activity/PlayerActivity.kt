@@ -2,6 +2,7 @@ package com.example.vplayed_test.activity
 
 import android.Manifest
 import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.IntentFilter
 import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
@@ -22,6 +23,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.vplayed_test.R
+import com.example.vplayed_test.activity.DynamicLinkShare.Companion.DEEP_LINK_URL
 import com.example.vplayed_test.app.Utils
 import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection
@@ -40,13 +42,14 @@ class PlayerActivity : AppCompatActivity() ,Player.Listener, TelephonyReceiver.O
     private lateinit var progressBar: ProgressBar
     private lateinit var titleTv: TextView
     private var boolean = false
-    private lateinit var buttonShare: ImageButton
+    private lateinit var buttonShare: ImageView
     private lateinit var fullscreenclick:ImageView
     private lateinit var reverse: ImageView
     private lateinit var forward: ImageView
     private lateinit var settings: ImageView
     private var shoTrackSelector: DefaultTrackSelector? = null
     var telephonyReceiver = TelephonyReceiver(this)
+    var dynamicshare:DynamicLinkShare=DynamicLinkShare()
 
 
     private var mLastClickTime: Long = 0
@@ -63,6 +66,7 @@ class PlayerActivity : AppCompatActivity() ,Player.Listener, TelephonyReceiver.O
         )
         supportActionBar?.hide()
         setContentView(R.layout.activity_player)
+
 
 //        pause.setOnCallListener(object : BaseActivity.OnCallReceive {
 //            override fun callReceived(boolean: Boolean) {
@@ -104,10 +108,14 @@ class PlayerActivity : AppCompatActivity() ,Player.Listener, TelephonyReceiver.O
         fullscreenclick.setOnClickListener {
               fullscreenLayout()
         }
-//        val newDeepLink = dynamicshare.buildDeepLink(Uri.parse(DEEP_LINK_URL))
-//        buttonShare.setOnClickListener {
-//            dynamicshare.shareDeepLink(newDeepLink.toString())
-//        }
+
+
+        buttonShare.setOnClickListener {
+            val newDeepLink = dynamicshare.buildDeepLink(Uri.parse(DEEP_LINK_URL))
+            Log.i("newDeepLink","$newDeepLink")
+                dynamicshare.shareDeepLink(newDeepLink.toString(),applicationContext)
+
+        }
 
 
 

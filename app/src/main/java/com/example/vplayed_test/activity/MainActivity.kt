@@ -3,37 +3,22 @@ package com.example.vplayed_test.activity
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.util.Log
 import android.view.MenuItem
 import android.view.Window
 import android.view.WindowManager
-import android.widget.ScrollView
+import android.widget.ImageView
 import android.widget.Toast
-import androidx.activity.viewModels
-import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager2.widget.CompositePageTransformer
-import androidx.viewpager2.widget.MarginPageTransformer
-import androidx.viewpager2.widget.ViewPager2
 import com.example.vplayed_test.R
-import com.example.vplayed_test.adapter.OnclickListener
-import com.example.vplayed_test.adapter.RecyclerAdapter
-import com.example.vplayed_test.adapter.SliderAdapter
-import com.example.vplayed_test.data.DataItem
 import com.example.vplayed_test.fragments.HomeFragment
 import com.example.vplayed_test.fragments.PromosFragment
 import com.example.vplayed_test.fragments.SearchFragment
-import com.example.vplayed_test.postApiDataclass.Data
-import com.example.vplayed_test.viewmodel.ViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlin.math.abs
+import com.google.android.material.navigation.NavigationView
+
 
 class MainActivity : AppCompatActivity() {
     //    private val coroutineScope = CoroutineScope(Dispatchers.Main)
@@ -43,8 +28,10 @@ class MainActivity : AppCompatActivity() {
     private val promosFragment=PromosFragment()
     private lateinit var bottomNavigationView: BottomNavigationView
     private lateinit var drawerLayout: DrawerLayout
+    private lateinit var navigationView: NavigationView
     private lateinit var fragmentBackStack:FragmentBackStack
     private lateinit var bundle:Bundle
+    private var signin:ImageView?=null
 
 
 
@@ -60,6 +47,18 @@ class MainActivity : AppCompatActivity() {
         replacefragment(homeFragment)
         bottomNavigationView=findViewById(R.id.bottomnav)
         drawerLayout=findViewById(R.id.drawerLayout)
+        navigationView=findViewById(R.id.nav)
+        signin=findViewById(R.id.iv_edit_profile)
+
+
+
+        signin?.setOnClickListener {
+            startActivity(Intent(this, ProfileBaseActivity::class.java))
+            drawerLayout.close()
+        }
+        
+
+
 
         if (savedInstanceState == null) {
             bundle=Bundle()
@@ -95,6 +94,9 @@ class MainActivity : AppCompatActivity() {
     }
     fun openDrawer(){
         drawerLayout.openDrawer(GravityCompat.START)
+
+
+
     }
 
 
