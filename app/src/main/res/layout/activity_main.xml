@@ -8,17 +8,7 @@
     android:layout_height="match_parent"
     tools:context=".activity.MainActivity"
     >
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/nav"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:clickable="true"
-        app:headerLayout="@layout/drawer_header"
-        app:menu="@menu/drawer_menu"
-        >
 
-    </com.google.android.material.navigation.NavigationView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -47,7 +37,18 @@
         app:itemIconTint="#B1B8B7"
         app:itemTextColor="#B1B8B7"
         />
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/nav"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:visibility="gone"
+            android:clickable="true"
+            app:headerLayout="@layout/drawer_header"
+            app:menu="@menu/drawer_menu"
+            tools:ignore="MissingConstraints">
 
+        </com.google.android.material.navigation.NavigationView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -3,10 +3,13 @@ package com.example.vplayed_test.activity
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -32,6 +35,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var fragmentBackStack:FragmentBackStack
     private lateinit var bundle:Bundle
     private var signin:ImageView?=null
+    private lateinit var tv:TextView
 
 
 
@@ -48,14 +52,56 @@ class MainActivity : AppCompatActivity() {
         bottomNavigationView=findViewById(R.id.bottomnav)
         drawerLayout=findViewById(R.id.drawerLayout)
         navigationView=findViewById(R.id.nav)
-        signin=findViewById(R.id.iv_edit_profile)
 
+        val view:View
+        view=navigationView.getHeaderView(0)
+        signin=view.findViewById(R.id.iv_edit_profile)
+        tv=view.findViewById(R.id.textView)
+        tv.setText("Mohamed Rizwan")
 
+        tv.setOnClickListener(object :View.OnClickListener {
+            override fun onClick(p0: View?) {
+                val a=10
+                Log.i("msg","$a")
+            }
+
+        })
 
         signin?.setOnClickListener {
-            startActivity(Intent(this, ProfileBaseActivity::class.java))
-            drawerLayout.close()
+            val a=10
+            Log.i("msg","$a")
+            navigationView.visibility=View.GONE
+           Toast.makeText(this, "dhsjhdsjd", Toast.LENGTH_SHORT).show()
+
+            startActivity(Intent(this,ProfileBaseActivity::class.java))
         }
+
+
+
+        navigationView.setNavigationItemSelectedListener(object :NavigationView.OnNavigationItemSelectedListener{
+            override fun onNavigationItemSelected(item: MenuItem): Boolean {
+                when(item.itemId){
+                    R.id.fav->{
+                        Toast.makeText(this@MainActivity, "playlists", Toast.LENGTH_SHORT).show()
+                    }
+                    R.id.playlists->{
+                        Toast.makeText(this@MainActivity, "playlists", Toast.LENGTH_SHORT).show()
+                    }
+                    R.id.savedcards->{
+                        Toast.makeText(this@MainActivity, "savedcards", Toast.LENGTH_SHORT).show()
+                    }
+                    R.id.settings->{
+                        Toast.makeText(this@MainActivity, "settings", Toast.LENGTH_SHORT).show()
+                    }
+                    R.id.rating->{
+                        Toast.makeText(this@MainActivity, "rating", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                return true
+            }
+
+        })
         
 
 
@@ -82,6 +128,9 @@ class MainActivity : AppCompatActivity() {
                     R.id.watchlist->replacefragment(searchFragment)
                     R.id.settings->replacefragment(promosFragment)
 
+
+
+
                 }
                 return true
             }
@@ -92,6 +141,11 @@ class MainActivity : AppCompatActivity() {
 //        replacefragment(homeFragment)
 
     }
+    fun visible(){
+        navigationView.visibility=View.VISIBLE
+    }
+
+
     fun openDrawer(){
         drawerLayout.openDrawer(GravityCompat.START)
 
@@ -232,7 +286,12 @@ class MainActivity : AppCompatActivity() {
 
 
         }
+
+
     }
+
+
+
 
 
 

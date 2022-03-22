@@ -78,7 +78,8 @@ class HomeFragment : Fragment() ,OnclickListener{
         navdrawer.setOnClickListener {
             if(activity is MainActivity) {
                 val dashboardView=activity as MainActivity
-                dashboardView.openDrawer()
+                dashboardView.visible()
+//                dashboardView.openDrawer()
             }
         }
 

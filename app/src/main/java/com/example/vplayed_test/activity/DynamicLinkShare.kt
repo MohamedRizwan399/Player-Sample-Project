@@ -8,7 +8,6 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.dynamiclinks.DynamicLink
-import com.google.firebase.dynamiclinks.DynamicLink.SocialMetaTagParameters
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
 
 class DynamicLinkShare:AppCompatActivity() {
@@ -80,4 +79,4 @@ class DynamicLinkShare:AppCompatActivity() {
         const val DEEP_LINK_URL = "https://vplayedtestapp/"
     }
 
-}
+    }

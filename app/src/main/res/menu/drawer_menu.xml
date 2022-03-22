@@ -2,10 +2,21 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="My Favourites" />
-    <item android:title="My Playlists" />
-    <item android:title="Saved Cards" />
-    <item android:title="Settings" />
-    <item android:title="Rate Us" />
+    <item android:title="My Favourites"
+        android:id="@+id/fav"
+        android:icon="@drawable/ic_baseline_favorite_24"/>
+    <item android:title="My Playlists"
+        android:id="@+id/playlists"
+        android:icon="@drawable/ic_baseline_playlist_add_24"/>
+    <item android:title="Saved Cards"
+        android:id="@+id/savedcards"
+        android:icon="@drawable/ic_baseline_credit_card_24"/>
+    <item android:title="Settings"
+        android:id="@+id/settings"
+        android:icon="@drawable/ic_baseline_settings_24"
+        android:iconTint="#E61B1B"/>
+    <item android:title="Rate Us"
+        android:id="@+id/rating"
+        android:icon="@drawable/ic_baseline_star_rate_24"/>
 
 </menu>
