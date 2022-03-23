@@ -99,6 +99,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textview3"/>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginStart="50dp"
+        app:cornerRadius="20dp"
+        android:visibility="gone"
+        android:text="Sign In"
+        android:backgroundTint="#C83737"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textview3"/>
 
     <TextView
         android:id="@+id/txt_view"
@@ -111,9 +125,21 @@
         android:text="Already have an account ?"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn"/>
+    <TextView
+        android:id="@+id/txt_viewNew"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textSize="20dp"
+        android:visibility="gone"
+        android:textColor="@color/black"
+        android:layout_marginStart="40dp"
+        android:text="Don't have an account ?"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnn"/>
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/btn2"
+    <TextView
+        android:id="@+id/signIntext"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginTop="13dp"
@@ -126,18 +152,34 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn"
         android:layout_marginEnd="50dp"/>
+    <TextView
+        android:id="@+id/signUptext"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginStart="10dp"
+        app:cornerRadius="20dp"
+        android:text="Register here"
+        android:visibility="gone"
+        android:textColor="#B30404"
+        android:backgroundTint="@color/white"
+        app:layout_constraintStart_toEndOf="@id/txt_viewNew"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnn"
+        android:layout_marginEnd="50dp"/>
 
     <TextView
         android:id="@+id/or_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/txt_view"
         android:text="-------------or------------"
         android:textSize="30dp"
+        app:layout_constraintTop_toBottomOf="@id/txt_view"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
         android:textColor="@color/black"/>
+
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/sign_in_button"
@@ -152,9 +194,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/or_view"
-        app:layout_constraintBottom_toTopOf="@id/facebook_signin">
-
-    </androidx.appcompat.widget.AppCompatImageButton>
+        app:layout_constraintBottom_toTopOf="@id/facebook_signin"/>
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/facebook_signin"
@@ -168,5 +208,49 @@
         app:layout_constraintCircleRadius="20dp"
         android:background="@drawable/fb_signin"
         app:layout_constraintTop_toBottomOf="@id/sign_in_button"/>
+
+    <TextView
+        android:id="@+id/or_view1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="-------------or------------"
+        android:textSize="30dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/txt_viewNew"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/black"/>
+
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/sign_in_button1"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/google_signin"
+        android:visibility="gone"
+        android:layout_gravity="center"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="10dp"
+        android:foregroundGravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/or_view1"
+        app:layout_constraintBottom_toTopOf="@id/facebook_signin1"/>
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/facebook_signin1"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="10dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintCircleRadius="20dp"
+        android:background="@drawable/fb_signin"
+        app:layout_constraintTop_toBottomOf="@id/sign_in_button1"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

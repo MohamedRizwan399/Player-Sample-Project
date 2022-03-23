@@ -28,12 +28,12 @@
                android:scaleY="0.8" />
            <KeyAttribute
                motion:motionTarget="@+id/splashImg"
-               motion:framePosition="50"
-               android:scaleX="50" />
+               motion:framePosition="10"
+               android:scaleX="10" />
            <KeyAttribute
                motion:motionTarget="@+id/splashImg"
-               motion:framePosition="50"
-               android:scaleY="50" />
+               motion:framePosition="10"
+               android:scaleY="10" />
        </KeyFrameSet>
     </Transition>
 

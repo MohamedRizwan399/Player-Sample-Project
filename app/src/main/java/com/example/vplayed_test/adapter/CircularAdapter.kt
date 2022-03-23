@@ -21,11 +21,8 @@ class CircularAdapter:RecyclerView.Adapter<CircularAdapter.myViewHolder>() {
     }
     inner class myViewHolder(v: View):RecyclerView.ViewHolder(v){
         val image1=v.findViewById<ImageView>(R.id.image_shape)
-
         val image=v.findViewById<ImageView>(R.id.image_shape)
         val albumtitle=v.findViewById<TextView>(R.id.textview1)
-
-
 
     }
 
@@ -42,11 +39,13 @@ class CircularAdapter:RecyclerView.Adapter<CircularAdapter.myViewHolder>() {
         if (listimage != null) {
 
             holder.albumtitle.text=listimage.album_name
-            if (listimage?.album_thumbnail.isNullOrEmpty()){
-                holder.image.setImageResource(R.drawable.union_1)
-            }else
+//            if (listimage?.album_thumbnail.isNullOrEmpty()){
+//                holder.image.setImageResource(R.drawable.union_1)
+//            }else
                 Glide.with(holder.image
-                    .context).load(listimage?.album_thumbnail).into(holder.image)
+                    .context).load(listimage?.album_thumbnail)
+                    .placeholder(R.drawable.union_1)
+                    .into(holder.image)
 
         }
 //        if (position== dataList?.size!! -2){
