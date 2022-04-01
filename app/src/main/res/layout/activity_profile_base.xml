@@ -63,6 +63,29 @@
 
 
     </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textview2Signinpage"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="50dp"
+        app:endIconMode="clear_text"
+        android:visibility="gone"
+        app:startIconDrawable="@drawable/ic_baseline_email_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textview1">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/emailtxtSiginPage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:inputType="textEmailAddress" />
+
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textview3"
@@ -80,6 +103,29 @@
         <com.google.android.material.textfield.TextInputEditText
 
             android:id="@+id/logintext3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password(min 6 characters)"
+            android:inputType="textPassword" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textview3Signinpage"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="50dp"
+        android:visibility="gone"
+        app:endIconMode="clear_text"
+        app:startIconDrawable="@drawable/ic_baseline_lock_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textview2">
+
+        <com.google.android.material.textfield.TextInputEditText
+
+            android:id="@+id/passwordtextSiginPage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Password(min 6 characters)"

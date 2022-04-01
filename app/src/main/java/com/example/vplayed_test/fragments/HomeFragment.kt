@@ -71,7 +71,7 @@ class HomeFragment : Fragment() ,OnclickListener{
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recyclerview=view.findViewById(R.id.recyclerView)
-        recyclerview1=view.findViewById(R.id.recyclerView1)
+        recyclerview1=view.findViewById(R.id.recy_view)
 
         viewPager2 = view.findViewById(R.id.viewPagerImgSlider)
         navdrawer=view.findViewById(R.id.nav_drawer)

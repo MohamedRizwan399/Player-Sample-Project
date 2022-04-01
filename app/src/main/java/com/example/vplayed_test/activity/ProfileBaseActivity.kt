@@ -26,6 +26,12 @@ class ProfileBaseActivity : AppCompatActivity() {
     private lateinit var signUptext:TextView
 
     private lateinit var textview1:TextInputLayout
+//    private lateinit var textView2Signup:TextInputLayout
+//    private lateinit var textView3Signup:TextInputLayout
+//    private lateinit var textView2:TextInputLayout
+//    private lateinit var textView3:TextInputLayout
+
+
     private lateinit var signUpButton:MaterialButton
     private lateinit var signInButton: MaterialButton
 
@@ -38,7 +44,13 @@ class ProfileBaseActivity : AppCompatActivity() {
 
         textviewHaveAcc=findViewById(R.id.txt_view)
         textviewdontHaveAcc=findViewById(R.id.txt_viewNew)
+
         textview1=findViewById(R.id.textview1)
+//        textView2Signup=findViewById(R.id.textview2)
+//        textView3Signup=findViewById(R.id.textview3)
+//        textView2=findViewById(R.id.textview2Signinpage)
+//        textView3=findViewById(R.id.textview3Signinpage)
+
         signUpButton=findViewById(R.id.btn)
         signInButton=findViewById(R.id.btnn)
 
@@ -68,6 +80,11 @@ class ProfileBaseActivity : AppCompatActivity() {
         }
         signUptext.setOnClickListener {
             textview1.visibility=View.VISIBLE
+//            textView2Signup.visibility=View.GONE
+//            textView2.visibility=View.VISIBLE
+//            textView3Signup.visibility=View.GONE
+//            textView3.visibility=View.VISIBLE
+
             signUpButton.visibility=View.VISIBLE
             signInButton.visibility=View.GONE
             textviewHaveAcc.visibility=View.VISIBLE
