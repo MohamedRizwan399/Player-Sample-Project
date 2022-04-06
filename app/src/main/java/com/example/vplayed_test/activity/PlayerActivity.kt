@@ -1,6 +1,8 @@
 package com.example.vplayed_test.activity
 
 import android.Manifest
+import android.content.Context
+import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
@@ -111,8 +113,8 @@ class PlayerActivity : AppCompatActivity() ,Player.Listener, TelephonyReceiver.O
         buttonShare.setOnClickListener {
             val newDeepLink = dynamicshare.buildDeepLink(Uri.parse(DEEP_LINK_URL))
             Log.i("newDeepLink","$newDeepLink")
-                dynamicshare.shareDeepLink(newDeepLink.toString(),applicationContext)
-
+                shareDeepLink(newDeepLink.toString())
+            player.pause()
         }
 
 
@@ -147,6 +149,15 @@ class PlayerActivity : AppCompatActivity() ,Player.Listener, TelephonyReceiver.O
             }
         }
         handler.post(run)
+    }
+
+    fun shareDeepLink(deepLink: String) {
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.type = "text/plain"
+        intent.putExtra(Intent.EXTRA_SUBJECT, "FirebaseDeepLink")
+        intent.putExtra(Intent.EXTRA_TEXT, deepLink)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(Intent.createChooser(intent,"Share Via"))
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {

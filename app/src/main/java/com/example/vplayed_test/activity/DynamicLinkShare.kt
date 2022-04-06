@@ -41,10 +41,10 @@ class DynamicLinkShare:AppCompatActivity() {
                     Toast.makeText(getApplicationContext(),"FoundDeepLink!", Toast.LENGTH_LONG).show()
 //                    linkViewReceive.text = deepLink.toString()
                 } else {
-                    Log.d(TAG, "getDynamicLink: no link found")
+                    Log.d("error", "getDynamicLink: no link found")
                 }
             }
-            .addOnFailureListener(this) { e -> Log.w(TAG, "getDynamicLink:onFailure", e) }
+            .addOnFailureListener(this) { e -> Log.w("TAG", "getDynamicLink:onFailure", e) }
     }
 
     fun buildDeepLink(deepLink: Uri): Uri {
@@ -64,18 +64,17 @@ class DynamicLinkShare:AppCompatActivity() {
         return dynamicLinkUri;
     }
 
-    fun shareDeepLink(deepLink: String,context: Context) {
-        val intent = Intent(Intent.ACTION_SEND)
-        intent.type = "text/plain"
-        intent.putExtra(Intent.EXTRA_SUBJECT, "FirebaseDeepLink")
-        intent.putExtra(Intent.EXTRA_TEXT, deepLink)
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        context.startActivity(Intent.createChooser(intent,"Share Via"))
-    }
+//    fun shareDeepLink(deepLink: String,context: Context) {
+//        val intent = Intent(Intent.ACTION_SEND)
+//        intent.type = "text/plain"
+//        intent.putExtra(Intent.EXTRA_SUBJECT, "FirebaseDeepLink")
+//        intent.putExtra(Intent.EXTRA_TEXT, deepLink)
+////        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+//        context.startActivity(Intent.createChooser(intent,"Share Via"))
+//    }
 
     companion object {
 
-        const val TAG = "MainActivity"
         const val DEEP_LINK_URL = "https://vplayedtestapp/"
     }
 

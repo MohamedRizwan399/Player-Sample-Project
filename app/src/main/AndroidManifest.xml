@@ -31,6 +31,7 @@
         <activity
             android:name=".activity.PlayerActivity"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+            android:screenOrientation="fullSensor"
             android:exported="true">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
