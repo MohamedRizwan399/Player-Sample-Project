@@ -1,15 +1,35 @@
 package com.example.vplayed_test.activity
 
+import android.app.Dialog
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import com.example.vplayed_test.R
+import com.google.android.gms.auth.api.Auth
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.auth.api.signin.GoogleSignInResult
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.api.GoogleApiClient
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.auth.*
 
-class ProfileBaseActivity : AppCompatActivity() {
+class ProfileBaseActivity : AppCompatActivity(),GoogleApiClient.OnConnectionFailedListener {
+
+    private var googlesignInButton: ImageButton? = null
+    private var googlesignUpButton1: ImageButton? = null
+
+    private var googleApiClient: GoogleApiClient? = null
+    private val RC_SIGN_IN = 1
+//    var mGoogleSignInClient: GoogleSignInClient? = null
+    private var mAuth: FirebaseAuth? = null
+    var dialog: Dialog? = null
 
     private lateinit var textviewHaveAcc:TextView
     private lateinit var textviewdontHaveAcc:TextView
@@ -42,6 +62,66 @@ class ProfileBaseActivity : AppCompatActivity() {
         setupViews()
         onclickSignInText()
         onclickSignUpText()
+        //for google signin
+        mAuth = FirebaseAuth.getInstance()
+
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestEmail()
+            .requestIdToken("927650860397-h309mrejjd6cen3d0rf3r2fptsa30bt8.apps.googleusercontent.com")
+            .build()
+        googleApiClient = GoogleApiClient.Builder(this)
+            .enableAutoManage(this, this)
+            .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+            .build()
+
+        googlesignInButton = findViewById<View>(R.id.sign_in_button) as ImageButton
+        googlesignUpButton1=findViewById<View>(R.id.sign_in_button1) as ImageButton
+      googlesignInButton!!.setOnClickListener {
+          val intent:Intent=Auth.GoogleSignInApi.getSignInIntent(googleApiClient)
+          startActivityForResult(intent,RC_SIGN_IN)
+      }
+        googlesignUpButton1?.setOnClickListener {
+            val intent:Intent=Auth.GoogleSignInApi.getSignInIntent(googleApiClient)
+            startActivityForResult(intent,RC_SIGN_IN)
+        }
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode==RC_SIGN_IN) {
+            val result = Auth.GoogleSignInApi.getSignInResultFromIntent(data)
+            if (result!!.isSuccess) {
+                val account = result.signInAccount
+                handleSignInResult(result)
+                firebaseAuthWithGoogle(account?.getIdToken()!!)
+            } else {
+                Toast.makeText(applicationContext, "Sign in again", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun handleSignInResult(result: GoogleSignInResult) {
+        if (result.isSuccess()) {
+            finish()
+
+        } else {
+            Toast.makeText(applicationContext, "Sign in cancel", Toast.LENGTH_LONG).show()
+        }
+    }
+    private fun firebaseAuthWithGoogle(idToken: String) {
+        val credential = GoogleAuthProvider.getCredential(idToken, null)
+        mAuth!!.signInWithCredential(credential)
+            .addOnCompleteListener(this
+            ) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    val user = mAuth!!.currentUser
+                } else {
+                    dialog!!.dismiss()
+                    Toast.makeText(this, "Login failed", Toast.LENGTH_SHORT).show()
+                }
+            }
     }
 
     private fun setupViews(){
@@ -116,5 +196,9 @@ class ProfileBaseActivity : AppCompatActivity() {
             gLogin1.visibility=View.GONE
             fbLogin1.visibility=View.GONE
         })
+    }
+
+    override fun onConnectionFailed(p0: ConnectionResult) {
+        TODO("Not yet implemented")
     }
 }
