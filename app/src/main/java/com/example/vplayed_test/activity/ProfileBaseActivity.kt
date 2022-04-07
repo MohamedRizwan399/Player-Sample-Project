@@ -77,11 +77,11 @@ class ProfileBaseActivity : AppCompatActivity(),GoogleApiClient.OnConnectionFail
         googlesignInButton = findViewById<View>(R.id.sign_in_button) as ImageButton
         googlesignUpButton1=findViewById<View>(R.id.sign_in_button1) as ImageButton
       googlesignInButton!!.setOnClickListener {
-          val intent:Intent=Auth.GoogleSignInApi.getSignInIntent(googleApiClient)
+          val intent:Intent=Auth.GoogleSignInApi.getSignInIntent(googleApiClient!!)
           startActivityForResult(intent,RC_SIGN_IN)
       }
         googlesignUpButton1?.setOnClickListener {
-            val intent:Intent=Auth.GoogleSignInApi.getSignInIntent(googleApiClient)
+            val intent:Intent=Auth.GoogleSignInApi.getSignInIntent(googleApiClient!!)
             startActivityForResult(intent,RC_SIGN_IN)
         }
 
@@ -90,7 +90,7 @@ class ProfileBaseActivity : AppCompatActivity(),GoogleApiClient.OnConnectionFail
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode==RC_SIGN_IN) {
-            val result = Auth.GoogleSignInApi.getSignInResultFromIntent(data)
+            val result = data?.let { Auth.GoogleSignInApi.getSignInResultFromIntent(it) }
             if (result!!.isSuccess) {
                 val account = result.signInAccount
                 handleSignInResult(result)
@@ -104,7 +104,7 @@ class ProfileBaseActivity : AppCompatActivity(),GoogleApiClient.OnConnectionFail
     private fun handleSignInResult(result: GoogleSignInResult) {
         if (result.isSuccess()) {
             finish()
-
+            Toast.makeText(applicationContext, "Successful", Toast.LENGTH_LONG).show()
         } else {
             Toast.makeText(applicationContext, "Sign in cancel", Toast.LENGTH_LONG).show()
         }

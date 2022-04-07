@@ -198,4 +198,5 @@ class HomeFragment : Fragment() ,OnclickListener{
                 }
             }
     }
+
 }

@@ -18,5 +18,9 @@
     <item android:title="Rate Us"
         android:id="@+id/rating"
         android:icon="@drawable/ic_baseline_star_rate_24"/>
+    <item android:title="Logout"
+        android:id="@+id/logout"
+        android:visible="false"
+        android:icon="@drawable/ic_baseline_power_settings_new_24"/>
 
 </menu>

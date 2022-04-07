@@ -18,7 +18,6 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:src="@drawable/ic_baseline_person_24"
-        android:background="@drawable/person_image"
         android:backgroundTint="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

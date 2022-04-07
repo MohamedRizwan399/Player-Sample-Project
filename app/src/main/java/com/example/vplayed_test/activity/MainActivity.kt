@@ -1,29 +1,37 @@
 package com.example.vplayed_test.activity
 
 import android.annotation.SuppressLint
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.MenuItem
-import android.view.View
-import android.view.Window
-import android.view.WindowManager
+import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.graphics.toColorInt
 import androidx.core.view.GravityCompat
+import androidx.core.view.isVisible
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.example.vplayed_test.R
 import com.example.vplayed_test.fragments.HomeFragment
 import com.example.vplayed_test.fragments.PromosFragment
 import com.example.vplayed_test.fragments.SearchFragment
+import com.google.android.gms.auth.api.Auth
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.api.GoogleApiClient
+import com.google.android.gms.common.api.ResultCallback
+import com.google.android.gms.common.api.Status
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(),GoogleApiClient.OnConnectionFailedListener{
     //    private val coroutineScope = CoroutineScope(Dispatchers.Main)
 
     private val homeFragment=HomeFragment()
@@ -36,6 +44,14 @@ class MainActivity : AppCompatActivity() {
     private lateinit var bundle:Bundle
     private var signin:ImageView?=null
     private lateinit var tv:TextView
+    private lateinit var image:ImageView
+
+    private var logoutbutton:MenuItem?=null
+
+    //for Glogin
+    private lateinit var googleApiClient: GoogleApiClient
+    private lateinit var gso: GoogleSignInOptions
+    private  lateinit var mAuth: FirebaseAuth
 
 
 
@@ -48,6 +64,17 @@ class MainActivity : AppCompatActivity() {
         )
         supportActionBar?.hide()
         setContentView(R.layout.activity_main)
+        mAuth= FirebaseAuth.getInstance()
+        gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestEmail()
+            .requestProfile()
+            .build()
+
+        googleApiClient = GoogleApiClient.Builder(this)
+            .enableAutoManage(this,this)
+            .addApi(Auth.GOOGLE_SIGN_IN_API, gso!!)
+            .build()
+
         replacefragment(homeFragment)
         bottomNavigationView=findViewById(R.id.bottomnav)
         drawerLayout=findViewById(R.id.drawerLayout)
@@ -57,19 +84,18 @@ class MainActivity : AppCompatActivity() {
         view=navigationView.getHeaderView(0)
         signin=view.findViewById(R.id.iv_edit_profile)
         tv=view.findViewById(R.id.textView)
-        tv.setText("Mohamed Rizwan")
+        image=view.findViewById(R.id.imageView)
 
-        tv.setOnClickListener(object :View.OnClickListener {
-            override fun onClick(p0: View?) {
-                val a=10
-                Log.i("msg","$a")
-            }
+        val view1:Menu
+        view1=navigationView.menu
+        logoutbutton=view1.findItem(R.id.logout)
 
-        })
+        if (tv!=null){
+            logoutbutton?.setVisible(true)
+        }
+
 
         signin?.setOnClickListener {
-            val a=10
-            Log.i("msg","$a")
             navigationView.visibility=View.GONE
            Toast.makeText(this, "dhsjhdsjd", Toast.LENGTH_SHORT).show()
 
@@ -95,6 +121,34 @@ class MainActivity : AppCompatActivity() {
                     }
                     R.id.rating->{
                         Toast.makeText(this@MainActivity, "rating", Toast.LENGTH_SHORT).show()
+                    }
+                    R.id.logout->{
+                        navigationView.visibility=View.GONE
+                        val alert=this.let {
+                            AlertDialog.Builder(this@MainActivity)
+                                .setTitle("Do you Want to logout?")
+                                .setCancelable(true)
+                                .setPositiveButton("Ok", DialogInterface.OnClickListener { dialog, id ->
+                                    Auth.GoogleSignInApi.signOut(googleApiClient!!).setResultCallback(object :ResultCallback<Status>{
+                                        override fun onResult(p0: Status) {
+                                            if (p0.isSuccess()){
+                                                navigationView.visibility=View.GONE
+                                                tv.text=""
+                                            }
+                                            else{
+                                                Toast.makeText(this@MainActivity, "id not fetched", Toast.LENGTH_SHORT).show()
+                                            }
+                                        }
+                                    })
+                                    dialog.dismiss()
+                                })
+                                .setNegativeButton("Cancel",DialogInterface.OnClickListener {dialog,id->
+                                    dialog.dismiss()
+                                })
+                                .show()
+                        }
+
+
                     }
                 }
 
@@ -137,10 +191,31 @@ class MainActivity : AppCompatActivity() {
 
         })
 
-
-//        replacefragment(homeFragment)
-
     }
+    override fun onStart() {
+        super.onStart()
+
+        val data = Auth.GoogleSignInApi.silentSignIn(googleApiClient!!)
+        if(data.isDone)
+        {
+
+            val result = data.get()
+            val account = result.signInAccount
+            if(account!=null){
+                tv.setText(account.email)
+                image.setImageURI(account.photoUrl)
+                signin?.visibility=View.VISIBLE
+
+            }
+
+        }
+        else{
+            data.setResultCallback {
+                Toast.makeText(applicationContext, "Sign in again", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
     fun visible(){
         navigationView.visibility=View.VISIBLE
     }
@@ -254,6 +329,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
+        if(navigationView.isVisible){
+            navigationView.visibility=View.GONE
+        }
 //        if(bottomNavigationView.selectedItemId==R.id.home) {
 //            super.onBackPressed()
 //            finish()
@@ -287,8 +365,12 @@ class MainActivity : AppCompatActivity() {
 
         }
 
+    override fun onConnectionFailed(p0: ConnectionResult) {
 
     }
+
+
+}
 
 
 
