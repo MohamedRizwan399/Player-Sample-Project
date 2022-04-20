@@ -49,7 +49,6 @@
             tools:ignore="MissingConstraints">
 
         </com.google.android.material.navigation.NavigationView>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
-
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.drawerlayout.widget.DrawerLayout>
+
