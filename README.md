@@ -47,7 +47,7 @@ You need to setup the Android Sdk for proper gradle sync to launch the applicati
 ### Steps
 **Step 1:** Clone the repo
 ```bash
- - link available here
+ - https://github.com/MohamedRizwan399/Player-Sample-Project.git
 ```
 
 **Step 2:** Sync gradle and build the project
