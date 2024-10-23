@@ -1,10 +1,160 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FFFFFFFF</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-</resources>
+    <resources>
+        <color name="purple_200">#FFBB86FC</color>
+        <color name="purple_500">#FF6200EE</color>
+        <color name="purple_700">#FFFFFFFF</color>
+        <color name="teal_200">#FF03DAC5</color>
+        <color name="teal_700">#FF018786</color>
+        <color name="black">#FF000000</color>
+        <color name="white">#FFFFFFFF</color>
+
+    <color name="colorPrimary1">#0F9D58</color>
+    <color name="colorPrimaryDark">#0F9D58</color>
+    <color name="colorAccent">#05af9b</color>
+
+        <color name="blue">#4c70ac</color>
+        <color name="light_black">#22000000</color>
+        <color name="medium_black">#75000000</color>
+        <color name="you_may_like_header">#A9A9A9</color>
+        <color name="boarder_color">#40514E4E</color>
+        <color name="video_title">#0C0C0C</color>
+        <color name="read_more_text_color">#1d8ebc</color>
+        <color name="divider">#686868</color>
+        <color name="light_blue">#1d8ebc</color>
+        <color name="statusBarColor">#FFFFFF</color>
+        <color name="navigationBarColor">@android:color/black</color>
+        <color name="drawerArrowColor">@android:color/white</color>
+        <color name="colorPrimary">#1d8ebc</color>
+        <color name="continueWatchingTint">#1248a1</color>
+        <color name="green">#07d158</color>
+        <color name="red">#1d8ebc</color>
+        <color name="dark_grey">#acaaaa</color>
+        <color name="dark_white">#FFFFFF</color>
+        <color name="progress_loader_color">#66000000</color>
+        <color name="tab_unselected">#a4a4a4</color>
+        <color name="login_text_hint">#010101</color>
+        <color name="login_text_color">#7b7b7b</color>
+        <color name="genre_color">#999999</color>
+        <color name="progress_blue">#f5cdce</color>
+
+        <color name="comment_name_color">#333333</color>
+        <color name="line_color">#a5a5a5</color>
+        <color name="premium_color">#fcbd28</color>
+        <color name="premium_end_color">#ffd545</color>
+        <color name="premium_text_color">#945d22</color>
+        <color name="subscription_success_color">#3A3A3A</color>
+        <color name="view_line_color">#7B7B7B</color>
+        <color name="view_count_bg_color">#1d8ebc</color>
+        <color name="view_count_stroke_color">#1d8ebc</color>
+        <color name="view_count_eye_color">#1d8ebc</color>
+        <color name="progress_bar_color">#1d8ebc</color>
+
+
+        <!--Light Theme Colors -->
+        <color name="home_background_color">#F1F1F1</color>
+        <color name="home_background_color2">#F1F1F1</color>
+        <color name="home_title_color">#000000</color>
+        <color name="home_toolbar_color">#FFFFFF</color>
+        <color name="icon_color">#a4a4a4</color>
+        <color name="detail_page_color">#F1F1F1</color>
+        <color name="detail_page_related_color">#FFFFFF</color>
+        <color name="detail_page_desc_color">#222222</color>
+        <color name="comment_color">#979797</color>
+        <color name="comment_color_text">#000000</color>
+
+        <color name="comment_text">#727272</color>
+        <color name="color_text_publish">#3f3f3f</color>
+        <color name="reply_color">#f0f0f0</color>
+        <color name="reply_comment">#fafafa</color>
+        <color name="reply_close">#2d2d2d</color>
+        <color name="subscribe_item_color">#ffffff</color>
+        <color name="toolbar_color">#ffffff</color>
+        <color name="toolbar_text_color">#7b7b7b</color>
+        <color name="like_color">#333333</color>
+        <color name="transaction_color">#ffffff</color>
+        <color name="card_color">#424242</color>
+        <color name="plan_color">#5C5C5C</color>
+        <color name="plan_date">#757575</color>
+        <color name="plan_amount">#5C5C5C</color>
+        <color name="date_color">#505050</color>
+        <color name="edit_text_color">#010101</color>
+        <color name="check_out_title">#404040</color>
+        <color name="check_out_items">#383838</color>
+        <color name="line_color_theme">#d5d8d8</color>
+        <color name="queue_popup_bg">#cb000000</color>
+        <color name="menu_icon_color">#434347</color>
+        <color name="menu_text_color">#29292A</color>
+        <color name="menu_bg_color">#F1F1F1</color>
+        <color name="menu_bg_top_color">#FFFFFF</color>
+        <color name="switch_color">#6A6B6B</color>
+        <color name="settings_desc_color">#6C6C77</color>
+        <color name="section_divider">#D9D7D7</color>
+        <color name="thumbnail_color">#B8B8B8</color>
+        <color name="comment_tv_color">#333333</color>
+        <color name="checkout_purchase_video_title_color">#1f1d1e</color>
+        <color name="checkout_purchase_video_desc_color">#444444</color>
+        <color name="checkout_purchase_video_amount_color">#1d8ebc</color>
+        <color name="checkout_purchase_view_count_text_color">#105968</color>
+        <color name="message_name_color">#7B7B7B</color>
+        <color name="message_text_color">#101010</color>
+        <color name="message_time_color">#9E9E9E</color>
+        <color name="message_bg_color">#D0FFFFFF</color>
+        <color name="message_icon_close_color">#7d7d7d</color>
+        <color name="message_layout_background">#FFFFFF</color>
+        <color name="chat_line_color">#aaa</color>
+
+
+        <!--Dark Theme Colors -->
+        <color name="dark_transparent">@android:color/transparent</color>
+        <color name="home_background_color_dark">#000000</color>
+        <color name="home_background_color_dark2">#1C1F24</color>
+        <color name="home_title_color_dark">#ffffff</color>
+        <color name="home_toolbar_color_dark">#181A1F</color>
+        <color name="icon_color_dark">#ffffff</color>
+        <color name="detail_page_color_dark">#1C1F24</color>
+        <color name="detail_page_related_color_dark">#27292D</color>
+        <color name="detail_page_desc_color_dark">#ffffff</color>
+        <color name="comment_color_dark">#727272</color>
+        <color name="comment_text_dark">#FFFFFF</color>
+        <color name="color_text_publish_dark">#ECECEC</color>
+        <color name="reply_color_dark">#2D3137</color>
+        <color name="reply_comment_dark">#1D2127</color>
+        <color name="reply_close_dark">#ffffff</color>
+        <color name="subscribe_item_color_dark">#1E2C3E</color>
+        <color name="toolbar_color_dark">#1B1E23</color>
+        <color name="toolbar_text_color_dark">#ffffff</color>
+        <color name="like_color_dark">#ffffff</color>
+        <color name="transaction_color_dark">#2A2F36</color>
+        <color name="card_color_dark">#F2F2F2</color>
+        <color name="plan_color_dark">#FFFFFF</color>
+        <color name="plan_date_dark">#F2F2F2</color>
+        <color name="plan_amount_dark">#F2F2F2</color>
+        <color name="date_color_dark">#C9C9C9</color>
+        <color name="edit_text_color_dark">#F2F2F2</color>
+        <color name="check_out_title_dark">#ffffff</color>
+        <color name="check_out_items_dark">#ffffff</color>
+        <color name="line_color_theme_dark">#2A2F36</color>
+        <color name="menu_icon_color_dark">#ECECEC</color>
+        <color name="menu_text_color_dark">#ffffff</color>
+        <color name="comment_color_text_dark">#ffffff</color>
+        <color name="menu_bg_color_dark">#17222E</color>
+        <color name="menu_bg_top_color_dark">#1B1E23</color>
+        <color name="comment_name_color_dark">#FFFFFF</color>
+        <color name="switch_color_dark">#6A6B6B</color>
+        <color name="settings_desc_color_dark">#8A939B</color>
+        <color name="section_divider_dark">#323439</color>
+        <color name="thumbnail_color_dark">#323439</color>
+        <color name="comment_tv_color_dark">#FFFFFF</color>
+        <color name="view_count_bg_color_dark">#1d8ebc</color>
+        <color name="checkout_purchase_video_amount_color_dark">#1d8ebc</color>
+        <color name="message_name_color_dark">#BBBBBB</color>
+        <color name="message_text_color_dark">#FFFFFF</color>
+        <color name="message_time_color_dark">#B1B1B1</color>
+        <color name="message_bg_color_dark">#D2202020</color>
+        <color name="message_icon_close_color_dark">#FFFFFF</color>
+        <color name="message_layout_background_dark">#000000</color>
+        <color name="chat_line_color_dark">#1C1F24</color>
+        <color name="watch_trailer_color">#EEEEEE87</color>
+
+
+    </resources>
