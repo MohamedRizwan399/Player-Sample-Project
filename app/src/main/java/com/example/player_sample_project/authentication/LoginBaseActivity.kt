@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ImageButton
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -38,6 +39,7 @@ class LoginBaseActivity : AppCompatActivity() {
     private lateinit var textview1:TextInputLayout
     private lateinit var textView2:TextInputLayout
     private lateinit var textView3:TextInputLayout
+    private lateinit var progress: ProgressBar
 
     companion object {
         private const val RC_SIGN_IN = 9001
@@ -49,6 +51,7 @@ class LoginBaseActivity : AppCompatActivity() {
         Log.i("Login-", "signInLauncher resultCode-- ${result.resultCode} +\n intent is--$intent")
 
         if (result.resultCode == RESULT_OK && intent != null) {
+            progress.visibility = View.VISIBLE
             val task = GoogleSignIn.getSignedInAccountFromIntent(intent)
             try {
                 val account = task.getResult(ApiException::class.java)
@@ -57,6 +60,7 @@ class LoginBaseActivity : AppCompatActivity() {
                 Log.i("Login-", "ApiException--${e.message}")
             }
         } else {
+            progress.visibility = View.GONE
             Log.i("Login-", "GoogleSignInFailed--${result.resultCode}")
         }
     }
@@ -77,6 +81,7 @@ class LoginBaseActivity : AppCompatActivity() {
 
         // onClick for GoogleLogin
         googleLoginButton.setOnClickListener {
+            progress.visibility = View.VISIBLE
             enableGoogleSignIn()
         }
 
@@ -99,6 +104,7 @@ class LoginBaseActivity : AppCompatActivity() {
 
     override fun onStop() {
         super.onStop()
+        progress.visibility = View.GONE
         Log.i("Login-", "LoginPage onStop")
     }
 
@@ -146,7 +152,9 @@ class LoginBaseActivity : AppCompatActivity() {
                         Log.i("Login-", "user-->${user.uid} \n ${user.displayName}" + "\n" + "photoUrl is--${user.photoUrl}")
                         appController.storeLoginStatus("userId", user.uid, "userName", user.displayName.toString())
                         Toast.makeText(this, "Signed in as ${user.displayName}", Toast.LENGTH_LONG).show()
-                        startActivity(Intent(this, MainActivity::class.java)) // Navigate to MainScreen
+                        val intent = Intent(this, MainActivity::class.java)
+                        startActivity(intent) // Navigate to MainScreen
+                        progress.visibility = View.GONE
                         finish()
                     }
                 } else {
@@ -158,6 +166,7 @@ class LoginBaseActivity : AppCompatActivity() {
 
     // View Initialization is handled in this method
     private fun setupViews() {
+        progress = findViewById(R.id.login_progress)
         signIn_text = findViewById(R.id.signIn_text)
         signUp_text = findViewById(R.id.signUp_text)
         textviewHaveAcc = findViewById(R.id.txt_view)
