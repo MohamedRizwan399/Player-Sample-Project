@@ -45,10 +45,8 @@
                         android:layout_height="wrap_content"
                         android:padding="5dp">
 
-
-
                             <ImageView
-                                android:id="@+id/nav_drawer"
+                                android:id="@+id/nav_drawer_button"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="20dp"
@@ -59,17 +57,28 @@
 
                         <ImageView
                             android:id="@+id/app_logo"
-                            android:layout_width="wrap_content"
-                            android:layout_height="25dp"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/ic_logo_black" />
+                            app:srcCompat="@drawable/union_1" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.appcompat.widget.Toolbar>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmer1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:visibility="visible">
+
+                <include layout="@layout/home_shimmer"/>
+            </com.facebook.shimmer.ShimmerFrameLayout>
 
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/viewPagerImgSlider"
@@ -82,17 +91,46 @@
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 />
+            <com.google.android.gms.ads.admanager.AdManagerAdView
+                xmlns:ads="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/adManagerAdView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                ads:adSize="BANNER"
+                ads:adUnitId="/6499/example/banner"
+                android:layout_marginTop="10dp"
+                android:visibility="visible"
+                ads:layout_constraintStart_toStartOf="parent"
+                ads:layout_constraintEnd_toEndOf="parent"
+                ads:layout_constraintTop_toBottomOf="@id/viewPagerImgSlider"
+                />
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="15dp"
+                android:paddingTop="5dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/viewPagerImgSlider"
-                android:text="Trending Musics"
+                app:layout_constraintTop_toBottomOf="@id/adManagerAdView"
+                android:text="@string/trending_musics"
                 android:textStyle="bold"
                 android:textSize="20sp"
                 android:textColor="@color/white"
+                android:visibility="invisible"
+                />
+            <ImageView
+                android:id="@+id/see_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/adManagerAdView"
+                app:srcCompat="@drawable/ic_baseline_arrow_forward_24"
+                android:paddingEnd="4dp"
+                android:paddingTop="5dp"
+                android:visibility="invisible"
                 />
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
@@ -112,10 +150,11 @@
                 android:paddingStart="15dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/recyclerView"
-                android:text="Latest Movies"
+                android:text="@string/latest_movies"
                 android:textStyle="bold"
                 android:textSize="20sp"
                 android:textColor="@color/white"
+                android:visibility="invisible"
                 />
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recy_view"

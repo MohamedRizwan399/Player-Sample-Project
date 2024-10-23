@@ -24,7 +24,6 @@
             app:use_controller="true"
             app:controller_layout_id="@layout/custom_controller_view"
             >
-
             <ProgressBar
                 android:id="@+id/progress_circular"
                 android:layout_width="wrap_content"
@@ -34,7 +33,52 @@
                 android:indeterminateTint="#384241"
                 android:visibility="invisible"
                 />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+                <TextView
+                    android:id="@+id/watermark"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/app_name"
+                    android:textSize="12sp"
+                    android:textStyle="normal"
+                    android:alpha="0.50"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:visibility="gone"
+                    app:drawableStartCompat="@drawable/ic_baseline_power_settings_new_24"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="100dp"
+                    android:layout_marginEnd="30dp"
+                    />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+                <TextView
+                    android:id="@+id/watermark_landscape"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/app_name"
+                    android:textSize="12sp"
+                    android:textStyle="normal"
+                    android:alpha="0.50"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    app:drawableStartCompat="@drawable/ic_baseline_power_settings_new_24"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginBottom="60dp"
+                    android:layout_marginEnd="30dp"
+                    />
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.exoplayer2.ui.PlayerView>
     </FrameLayout>
 
@@ -78,38 +122,49 @@
                     android:id="@+id/title1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="TITLE"
+                    android:text="@string/video_title"
                     android:layout_marginTop="15dp"
-                    app:layout_constraintStart_toStartOf="@id/guideline_start"
-                    app:layout_constraintTop_toTopOf="parent"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:textColor="@color/white"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
+                <Button
+                    android:id="@+id/buy_product"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Buy $1"
+                    android:backgroundTint="@color/divider"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginEnd="10dp"
+                    app:layout_constraintStart_toEndOf="@id/title1"
+                    app:layout_constraintEnd_toStartOf="@id/share"
+                    app:layout_constraintTop_toTopOf="parent"
                     />
                 <ImageView
                     android:id="@+id/share"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_marginTop="15dp"
                     android:background="@android:color/transparent"
-                    app:layout_constraintStart_toEndOf="@id/title1"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    android:contentDescription="@string/share"
                     android:src="@drawable/ic_baseline_share_24"
+                    android:layout_marginEnd="10dp"
+                    app:layout_constraintStart_toEndOf="@id/buy_product"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:layout_marginEnd="-200dp"/>
-
-
-
+                    />
                 <TextView
                     android:id="@+id/category"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Hollywood"
                     android:textColor="#999999"
+                    android:layout_marginTop="5dp"
                     app:layout_constraintStart_toStartOf="@id/guideline_start"
                     app:layout_constraintTop_toBottomOf="@id/title1"
-                    android:layout_marginTop="5dp"
-
                     />
                 <TextView
                     android:id="@+id/bullet"
@@ -117,10 +172,10 @@
                     android:layout_height="wrap_content"
                     android:text="•"
                     android:textColor="#999999"
-                    app:layout_constraintStart_toEndOf="@id/category"
-                    app:layout_constraintTop_toBottomOf="@id/title1"
                     android:layout_marginTop="5dp"
                     android:layout_marginStart="5dp"
+                    app:layout_constraintStart_toEndOf="@id/category"
+                    app:layout_constraintTop_toBottomOf="@id/title1"
                     />
                 <TextView
                     android:id="@+id/genre"
@@ -128,146 +183,141 @@
                     android:layout_height="wrap_content"
                     android:text="Action"
                     android:textColor="#999999"
-                    app:layout_constraintStart_toEndOf="@id/bullet"
-                    app:layout_constraintTop_toBottomOf="@id/title1"
                     android:layout_marginTop="5dp"
                     android:layout_marginStart="5dp"
+                    app:layout_constraintStart_toEndOf="@id/bullet"
+                    app:layout_constraintTop_toBottomOf="@id/title1"
                     />
-
-
-
                 <TextView
                     android:id="@+id/title1_desc"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Endgame is a 2019 American superhero film based on the Marvel Comics superhero team the Avengers. Produced by Marvel Studios and distributed by Walt Disney Studios Motion Pictures, it is the direct sequel to Avengers: Infinity War (2018) and the 22nd film in the Marvel Cinematic Universe (MCU). Directed by Anthony and Joe Russo and written by Christopher Markus and Stephen McFeely..."
-                    app:layout_constraintStart_toStartOf="@id/guideline_start"
-                    app:layout_constraintTop_toBottomOf="@id/category"
-                    app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                    android:text="@string/player_about_desc"
                     android:textColor="@color/white"
                     android:textSize="12.5sp"
                     android:layout_marginTop="20dp"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    app:layout_constraintTop_toBottomOf="@id/category"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_end"
                     />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/like"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="@id/guideline_start"
-                    app:layout_constraintTop_toBottomOf="@id/title1_desc"
                     android:layout_margin="15dp"
-                    android:src="@drawable/like" />
+                    android:src="@drawable/like"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    app:layout_constraintTop_toBottomOf="@id/title1_desc" />
+
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/like_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintStart_toEndOf="@id/like"
-                    app:layout_constraintTop_toBottomOf="@id/title1_desc"
                     android:layout_centerHorizontal="true"
                     android:text="5"
                     android:layout_margin="15dp"
                     android:textColor="#333333"
                     android:textSize="14sp"
-                    />
+                    app:layout_constraintStart_toEndOf="@id/like"
+                    app:layout_constraintTop_toBottomOf="@id/title1_desc" />
+
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/unlike"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintStart_toEndOf="@id/like_count"
-                    app:layout_constraintTop_toBottomOf="@id/title1_desc"
                     android:layout_margin="15dp"
-                    android:src="@drawable/dislike" />
+                    android:src="@drawable/dislike"
+                    app:layout_constraintStart_toEndOf="@id/like_count"
+                    app:layout_constraintTop_toBottomOf="@id/title1_desc" />
+
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/unlike_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintStart_toEndOf="@id/unlike"
-                    app:layout_constraintTop_toBottomOf="@id/title1_desc"
                     android:layout_margin="15dp"
                     android:text="1"
                     android:textColor="#333333"
                     android:textSize="14sp"
-                    />
+                    app:layout_constraintStart_toEndOf="@id/unlike"
+                    app:layout_constraintTop_toBottomOf="@id/title1_desc" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/publish_on"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="@id/guideline_start"
-                    app:layout_constraintTop_toBottomOf="@id/like"
                     android:layout_marginTop="15dp"
                     android:text="published_on"
                     android:textColor="#999999"
                     android:textSize="14sp"
-                    />
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    app:layout_constraintTop_toBottomOf="@id/like" />
+
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/publish_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintStart_toEndOf="@id/publish_on"
-                    app:layout_constraintTop_toBottomOf="@id/like"
                     android:text="Jan 26, 2022"
-
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="15dp"
                     android:textColor="#3F3F3F"
                     android:textSize="12sp"
-                    />
+                    app:layout_constraintStart_toEndOf="@id/publish_on"
+                    app:layout_constraintTop_toBottomOf="@id/like" />
+
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/views"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintStart_toEndOf="@id/publish_value"
-                    app:layout_constraintTop_toBottomOf="@id/like"
                     android:layout_marginTop="15dp"
                     android:layout_marginStart="20dp"
                     android:text="views"
                     android:textColor="#999999"
                     android:textSize="14sp"
-                    />
+                    app:layout_constraintStart_toEndOf="@id/publish_value"
+                    app:layout_constraintTop_toBottomOf="@id/like" />
+
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/views_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintStart_toEndOf="@id/views"
-                    app:layout_constraintTop_toBottomOf="@id/like"
                     android:text="3.8k"
                     android:layout_marginTop="15dp"
                     android:layout_marginStart="5dp"
                     android:textColor="#3F3F3F"
                     android:textSize="12sp"
-                    />
+                    app:layout_constraintStart_toEndOf="@id/views"
+                    app:layout_constraintTop_toBottomOf="@id/like" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/title_starring"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="Starring"
+                    android:text="@string/starring"
                     android:textColor="#999999"
                     android:textSize="13sp"
                     app:layout_constraintStart_toStartOf="@id/guideline_start"
-                    app:layout_constraintTop_toBottomOf="@id/publish_on"
-                    />
+                    app:layout_constraintTop_toBottomOf="@id/publish_on" />
+
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/desc_starring"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:text="Robert Downey Jr., Chris Evans, Mark Ruffalo, Chris Hemsworth, Scarlett Johansson, Jeremy Renner, Don Cheadle, Paul Rudd, Brie Larson, Karen Gillan, Danai Gurira, Benedict Wong, Jon Favreau, Bradley Cooper, Gwyneth Paltrow, and Josh Brolin."
+                    android:text="@string/player_starring_artists"
                     android:textColor="@color/white"
                     android:textSize="12.5sp"
                     app:layout_constraintStart_toStartOf="@id/guideline_start"
                     app:layout_constraintTop_toBottomOf="@id/title_starring"
-                    app:layout_constraintEnd_toEndOf="@id/guideline_end"
-                    />
+                    app:layout_constraintEnd_toEndOf="@id/guideline_end" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/title_starring1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="crew members"
+                    android:text="@string/crew_members"
                     android:textColor="#999999"
                     android:textSize="13sp"
                     app:layout_constraintStart_toStartOf="@id/guideline_start"
@@ -278,7 +328,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:text="VFX Team, Direction Team, Music Team, Casting Directors, Production Engineers, Assistant workers, Stunt workers, Animation team...."
+                    android:text="@string/player_crew_members"
                     android:textColor="@color/white"
                     android:textSize="12.5sp"
                     app:layout_constraintStart_toStartOf="@id/guideline_start"
@@ -292,29 +342,30 @@
                     android:layout_marginTop="5dp"
                     android:background="#D9D7D7"
                     app:layout_constraintTop_toBottomOf="@id/desc_starring1">
-
                 </View>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/recent_name_header"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="@id/guideline_start"
-                    app:layout_constraintTop_toBottomOf="@id/viewline"
                     android:layout_marginTop="10dp"
                     android:text="Related Videos"
                     android:textColor="#EA1010"
                     android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    app:layout_constraintTop_toBottomOf="@id/viewline"
                     />
+
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recy_videos"
+                    android:id="@+id/related_recycler"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="8dp"
                     app:layout_constraintStart_toStartOf="@id/guideline_start"
                     app:layout_constraintEnd_toEndOf="@id/guideline_end"
                     app:layout_constraintTop_toBottomOf="@id/recent_name_header"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginBottom="8dp" />
+                    />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>

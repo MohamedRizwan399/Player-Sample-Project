@@ -1,54 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.vplayed_test">
+    package="com.example.player_sample_project">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="com.android.vending.BILLING" />
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/union_1"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Vplayed_Test">
+        android:theme="@style/Theme.player_sample_project">
         <activity
-            android:name=".activity.ProfileBaseActivity"
-            android:exported="false" />
+            android:name=".ads.AdsactivityDemo"
+            android:exported="true" />
         <activity
-            android:name=".activity.DashboardView"
-            android:exported="false" />
+            android:name=".ads.AdsActivity"
+            android:exported="true" />
+        <activity
+            android:name=".subscription.SubscriptionActivity"
+            android:exported="true" />
+        <activity
+            android:name=".seeallpage.view.SeeAllActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".authentication.LoginBaseActivity"
+            android:exported="true" />
         <activity
             android:name=".activity.SplashScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".activity.PlayerActivity"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
-            android:screenOrientation="fullSensor"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="fullSensor">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="vplayedtestapp"
+                    android:host="playersampleproject"
                     android:scheme="https" />
             </intent-filter>
         </activity>
         <activity
             android:name=".activity.MainActivity"
-            android:exported="true"
-            android:screenOrientation="sensorPortrait" />
+            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"
+            android:screenOrientation="sensorPortrait"
+            android:exported="true">
+        </activity>
         <activity
             android:name=".activity.DynamicLinkShare"
             android:exported="true" />
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-3940256099942544~3347511713" />
+        <!--<meta-data
+            android:name="com.google.android.gms.auth.api.credentials.CREDENTIAL_PICKER_ENABLED"
+            android:value="true"
+            />-->
     </application>
 
 </manifest>

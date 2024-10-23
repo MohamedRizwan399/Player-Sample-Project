@@ -2,25 +2,42 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="My Favourites"
+    <item
         android:id="@+id/fav"
+        android:title="@string/my_favourites"
+        android:enabled="true"
         android:icon="@drawable/ic_baseline_favorite_24"/>
-    <item android:title="My Playlists"
+    <item
         android:id="@+id/playlists"
+        android:title="My Playlists"
+        android:enabled="true"
         android:icon="@drawable/ic_baseline_playlist_add_24"/>
-    <item android:title="Saved Cards"
-        android:id="@+id/savedcards"
+    <item
+        android:id="@+id/savedCards"
+        android:title="Saved Cards"
+        android:enabled="true"
         android:icon="@drawable/ic_baseline_credit_card_24"/>
-    <item android:title="Settings"
+    <item
         android:id="@+id/settings"
+        android:title="Settings"
+        android:enabled="true"
         android:icon="@drawable/ic_baseline_settings_24"
         android:iconTint="#E61B1B"/>
-    <item android:title="Rate Us"
+    <item
         android:id="@+id/rating"
+        android:title="Rate Us"
+        android:enabled="true"
         android:icon="@drawable/ic_baseline_star_rate_24"/>
-    <item android:title="Logout"
+    <item
+        android:id="@+id/subscription"
+        android:title="Subscription"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_monetization_on_24"
+        />
+    <item
         android:id="@+id/logout"
-        android:visible="false"
+        android:title="Logout"
+        android:enabled="true"
         android:icon="@drawable/ic_baseline_power_settings_new_24"/>
 
 </menu>

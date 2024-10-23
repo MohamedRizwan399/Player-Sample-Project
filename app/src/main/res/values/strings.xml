@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Vplayed_Test</string>
+    <string name="app_name">Player sample</string>
     <string name="audio_url_mp3">"https://storage.googleapis.com/exoplayer-test-media-0/play.mp3"</string>
     <string name="myTestMp4">"https://download.blender.org/demo/movies/BBB/bbb_sunflower_1080p_30fps_normal.mp4"</string>
     <string name="bigbuckbunny">"https://storage.googleapis.com/exoplayer-test-media-0/BigBuckBunny_320x180.mp4"</string>
@@ -22,9 +22,8 @@
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="latest_movies">Latest Movies</string>
-    <string name="vplayed">Vplayed</string>
+    <string name="player_sample_project">player_sample_project</string>
     <string name="title_activity_dashboard_view">DashboardView</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -37,12 +36,61 @@
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="title_activity_dynamic_link_share">DynamicLinkShare</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
+    <!-- Strings used for fragments for navigation -->
+    <string name="downloads_default_text">No Downloads Yet</string>
+    <string name="hello_menu_fragment">Hello Menu fragment</string>
+    <string name="hello_new_fragment">Hello New fragment</string>
+
+
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <string name="check_internet">Unable to connect internet. Please check your internet and try again</string>
+    <string name="media_route_menu_title">PLAY ON</string>
+    <string name="sampleProject">SampleProject</string>
+    <string name="trending_musics">Trending Musics</string>
+    <string name="see_all">See All</string>
+    <string name="home">Home</string>
+    <string name="search">Search</string>
+    <string name="downloads">Downloads</string>
+    <string name="watchlist">WatchList</string>
+    <string name="menu">Menu</string>
+    <string name="show_video_ads_rewards">Show Video Ads-Rewards</string>
+    <string name="show_video_ads_rewards_interstitial">Show Video Ads-Rewards Interstitial</string>
+    <string name="my_favourites">My Favourites</string>
+    <string name="register_here">Register Here</string>
+    <string name="sign_in">Sign In</string>
+    <string name="don_t_have_an_account">Don\'t have an account ?</string>
+    <string name="already_have_an_account">Already have an account ?</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="or">-------------or------------</string>
+    <string name="email">Email</string>
+    <string name="name">Name</string>
+    <string name="password_hint">Password(min 6 characters)</string>
+    <string name="web_client_id">660483396450-lqncq5u1810878p5g5kmleg8q2mlnab5.apps.googleusercontent.com</string>
+
+    <string name="welcome_message">Welcome! %1$s</string>
+    <string name="video_title">Video Title</string>
+    <string name="share">Share</string>
+    <string name="player_about_desc">Endgame is a 2019 American superhero film based on the Marvel Comics superhero team the Avengers. Produced by Marvel Studios and distributed by Walt Disney Studios Motion Pictures, it is the direct sequel to Avengers: Infinity War (2018) and the 22nd film in the Marvel Cinematic Universe (MCU). Directed by Anthony and Joe Russo and written by Christopher Markus and Stephen McFeely...</string>
+    <string name="player_starring_artists">Robert Downey Jr., Chris Evans, Mark Ruffalo, Chris Hemsworth, Scarlett Johansson, Jeremy Renner, Don Cheadle, Paul Rudd, Brie Larson, Karen Gillan, Danai Gurira, Benedict Wong, Jon Favreau, Bradley Cooper, Gwyneth Paltrow, and Josh Brolin.</string>
+    <string name="crew_members">Crew members</string>
+    <string name="starring">Starring</string>
+    <string name="player_crew_members">VFX Team, Direction Team, Music Team, Casting Directors, Production Engineers, Assistant workers, Stunt workers, Animation team....</string>
+    <string name="player_settings">player settings</string>
+    <string name="player_previous">player previous</string>
+    <string name="player_rewind">Player rewind</string>
+    <string name="player_play">player play</string>
+    <string name="player_pause">player pause</string>
+    <string name="player_forward">player forward</string>
+    <string name="player_next">player next</string>
+    <string name="player_play_pause">player Play/Pause</string>
+    <string name="player_fullscreen">player fullscreen</string>
+    <string name="player_subtitle">player subtitle</string>
+    <string name="subscribe">Subscribe</string>
+    <string name="not_subscribed">Not Subscribed</string>
+
 </resources>

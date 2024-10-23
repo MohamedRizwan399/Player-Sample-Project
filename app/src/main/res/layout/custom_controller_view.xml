@@ -5,19 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <ImageView
         android:id="@+id/settings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="15dp"
+        android:contentDescription="@string/player_settings"
         android:drawablePadding="5dp"
         android:gravity="center"
         android:padding="8dp"
         android:visibility="gone"
         android:textColor="@color/white"
-       android:src="@drawable/ic_baseline_settings_24"
+        android:src="@drawable/ic_baseline_settings_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -28,6 +28,7 @@
         android:layout_centerVertical="true"
         android:layout_marginStart="30dp"
         android:adjustViewBounds="true"
+        android:contentDescription="@string/player_previous"
         android:scaleType="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -43,6 +44,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:adjustViewBounds="true"
+        android:contentDescription="@string/player_rewind"
         android:scaleType="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/exo_prev"
@@ -56,24 +58,28 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:adjustViewBounds="true"
+        android:contentDescription="@string/player_play"
         android:scaleType="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_play_arrow_24" />
+
     <ImageView
         android:id="@+id/exo_pause"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:adjustViewBounds="true"
+        android:contentDescription="@string/player_pause"
         android:scaleType="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_baseline_pause_24" />
+
     <View
         android:id="@+id/view"
         android:layout_width="18dp"
@@ -85,14 +91,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <ImageView
-        android:id="@+id/exo_ffwd"
+        android:id="@+id/exo_fwd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginStart="10dp"
         android:adjustViewBounds="true"
+        android:contentDescription="@string/player_forward"
         android:scaleType="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/exo_next"
@@ -107,9 +113,10 @@
         android:layout_centerVertical="true"
         android:layout_marginEnd="30dp"
         android:adjustViewBounds="true"
+        android:contentDescription="@string/player_next"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/exo_ffwd"
+        app:layout_constraintStart_toEndOf="@+id/exo_fwd"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_skip_next_24" />
 
@@ -120,25 +127,23 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
-
         <LinearLayout
             android:id="@+id/progress_holder"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center_vertical"
             app:layout_constraintBottom_toTopOf="@+id/relativeLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
-
             <com.google.android.exoplayer2.ui.DefaultTimeBar
                 android:id="@+id/exo_progress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 app:played_color="#E40B0B"
                 app:scrubber_drawable="@drawable/ic_seek_thumb" />
-
         </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -156,13 +161,13 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:adjustViewBounds="true"
+                android:contentDescription="@string/player_play_pause"
                 android:scaleType="center"
                 android:layout_marginStart="15dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_baseline_play_arrow_24" />
-
 
             <TextView
                 android:id="@id/exo_position"
@@ -171,7 +176,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="25dp"
                 android:textColor="@color/white"
-                android:textSize="12dp"
+                android:textSize="12sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/exo_play_pause"
@@ -182,11 +187,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/exo_position"
+                android:layout_toEndOf="@+id/exo_position"
                 android:includeFontPadding="true"
                 android:text="/"
                 android:textColor="@color/white"
-                android:textSize="12dp"
+                android:textSize="12sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/exo_position"
                 app:layout_constraintStart_toEndOf="@+id/exo_position" />
@@ -196,16 +201,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/exo_position_separator"
+                android:layout_toEndOf="@+id/exo_position_separator"
                 android:includeFontPadding="true"
                 android:textColor="@color/white"
-                android:textSize="12dp"
+                android:textSize="12sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/exo_position_separator"
                 app:layout_constraintTop_toTopOf="parent" />
-
-
 
             <ImageView
                 android:id="@+id/exo_fullscreen"
@@ -217,6 +220,8 @@
                 android:layout_marginEnd="16dp"
                 android:background="@null"
                 android:clickable="true"
+                android:focusable="true"
+                android:contentDescription="@string/player_fullscreen"
                 android:drawablePadding="5dp"
                 android:gravity="center_vertical"
                 android:src="@drawable/ic_baseline_fullscreen_24"
@@ -226,8 +231,6 @@
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintTop_toTopOf="parent" />
 
-
-
             <ImageView
                 android:id="@+id/exo_subtitle_audio"
                 android:layout_width="wrap_content"
@@ -236,6 +239,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="34dp"
                 android:background="@null"
+                android:contentDescription="@string/player_subtitle"
                 android:drawablePadding="5dp"
                 android:gravity="center_vertical"
                 android:textColor="@color/white"
@@ -244,8 +248,6 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/exo_fullscreen"
                 app:layout_constraintTop_toTopOf="parent" />
-
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

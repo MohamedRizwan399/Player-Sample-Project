@@ -9,9 +9,9 @@
     app:layout_constraintTop_toTopOf="parent"
     android:layout_height="match_parent">
 
-    <com.example.vplayed_test.activity.CustomTrackSelectionView
+    <!--<com.example.player_sample_project.activity.CustomTrackSelectionView
         android:id="@+id/exo_track_selection_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content" />-->
 
 </ScrollView>

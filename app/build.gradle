@@ -2,26 +2,34 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'com.google.gms.google-services'
-
+    id 'com.google.firebase.crashlytics'
 }
 
 android {
-    compileSdk 31
+    compileSdk 34
+    useLibrary 'org.apache.http.legacy'
+
 
     defaultConfig {
-        applicationId "com.example.vplayed_test"
-        minSdk 21
-        targetSdk 31
+        applicationId "com.example.player_sample_project"
+        minSdkVersion 24
+        targetSdkVersion 34
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-
+    namespace "com.example.player_sample_project"
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            debuggable false
+        }
+        debug {
+            minifyEnabled false
+            debuggable false
         }
     }
     compileOptions {
@@ -31,7 +39,7 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    buildFeatures(){
+    buildFeatures() {
         viewBinding true
     }
 }
@@ -50,7 +58,6 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:1.2.1"
     implementation "com.github.bumptech.glide:glide:4.12.0"
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'com.google.android.exoplayer:exoplayer:2.17.1'
     implementation 'androidx.preference:preference:1.2.0'
 
     implementation 'com.google.android.exoplayer:exoplayer-hls:2.17.1'
@@ -59,11 +66,27 @@ dependencies {
     implementation 'com.google.android.exoplayer:exoplayer-dash:2.17.1'
     implementation 'com.google.android.exoplayer:exoplayer:2.17.1'
     implementation 'com.google.android.exoplayer:exoplayer-ui:2.17.1'
-    implementation 'com.google.firebase:firebase-dynamic-links-ktx:21.0.1'
-    implementation 'com.google.firebase:firebase-auth-ktx:21.0.3'
-    implementation 'com.google.firebase:firebase-auth:21.0.3'
-    implementation 'com.google.firebase:firebase-analytics-ktx:20.1.2'
-    implementation 'com.google.android.gms:play-services-auth:19.0.0'
+
+    implementation(platform("com.google.firebase:firebase-bom:33.4.0"))
+
+    implementation 'com.google.firebase:firebase-auth'
+    implementation 'com.google.android.gms:play-services-auth:21.2.0'
+    implementation 'com.google.firebase:firebase-dynamic-links-ktx'
+    implementation 'com.google.firebase:firebase-auth-ktx'
+    implementation 'com.google.firebase:firebase-crashlytics'
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+
+    implementation 'com.facebook.shimmer:shimmer:0.3.0'
+    implementation 'com.android.support:multidex:1.0.3'
+
+    implementation 'com.google.android.gms:play-services-ads:21.0.0'
+    implementation 'com.google.android.gms:play-services-cast-framework:19.0.0'
+    implementation 'com.google.android.gms:play-services-cast:19.0.0'
+    implementation 'com.android.support:mediarouter-v7:27.0.2'
+
+    implementation("com.android.billingclient:billing:5.0.0")
+    implementation 'com.google.android.play:app-update:2.1.0'
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

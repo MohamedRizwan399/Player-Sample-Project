@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/splashLayout"
@@ -14,7 +15,7 @@
         android:layout_height="80dp"
         android:layout_marginBottom="110dp"
         android:background="@android:color/transparent"
-        android:src="@drawable/vplayedlogo"
+        android:src="@drawable/union_1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,7 +25,7 @@
         android:id="@+id/materialTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/vplayed"
+        android:text="@string/sampleProject"
         android:textColor="@color/black"
         android:textSize="35sp"
         android:textStyle="bold"
