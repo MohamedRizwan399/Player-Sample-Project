@@ -92,5 +92,8 @@
     <string name="player_subtitle">player subtitle</string>
     <string name="subscribe">Subscribe</string>
     <string name="not_subscribed">Not Subscribed</string>
+    <string name="logout_cancel">CANCEL</string>
+    <string name="logout_ok">OK</string>
+    <string name="logout_title">Are you sure want to logout?</string>
 
 </resources>

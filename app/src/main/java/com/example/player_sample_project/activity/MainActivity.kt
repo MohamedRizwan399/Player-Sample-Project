@@ -137,7 +137,7 @@ class MainActivity : AppCompatActivity() {
                     this.let {
                         Log.i("connection--","Alert Builder executes")
                         AlertDialog.Builder(this@MainActivity)
-                            .setTitle("Do you Want to logout?")
+                            .setTitle(getString(R.string.logout_title))
                             .setCancelable(true)
                             .setPositiveButton("Ok", DialogInterface.OnClickListener { dialog, id ->
                                 dialog.dismiss()
@@ -190,7 +190,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     // Handles SignOut action in this function
-    private fun signOutGoogle() {
+    fun signOutGoogle() {
         auth.signOut()
         googleSignInClient.signOut().addOnCompleteListener(this) {
             Log.i("Login-", "SignOut Done-")
