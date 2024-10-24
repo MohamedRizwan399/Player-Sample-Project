@@ -28,21 +28,29 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.player_sample_project.R
 import com.example.player_sample_project.activity.DynamicLinkShare.Companion.DEEP_LINK_URL
+import com.example.player_sample_project.app.CacheManagerInstance
 import com.google.android.exoplayer2.DefaultLoadControl
 import com.google.android.exoplayer2.DefaultRenderersFactory
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.MediaMetadata
+import com.google.android.exoplayer2.PlaybackException
 import com.google.android.exoplayer2.Player
+import com.google.android.exoplayer2.source.MediaSource
+import com.google.android.exoplayer2.source.ProgressiveMediaSource
+import com.google.android.exoplayer2.source.hls.HlsMediaSource
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.ui.DefaultTimeBar
 import com.google.android.exoplayer2.ui.PlayerView
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
+import com.google.android.exoplayer2.upstream.cache.CacheDataSource
+import com.google.android.exoplayer2.util.MimeTypes
+import com.google.android.exoplayer2.util.Util
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.admanager.AdManagerAdRequest
 import com.google.android.gms.ads.admanager.AdManagerInterstitialAd
 import com.google.android.gms.ads.admanager.AdManagerInterstitialAdLoadCallback
-import com.google.common.collect.ImmutableList
 import kotlin.time.Duration.Companion.milliseconds
 
 
@@ -51,7 +59,8 @@ class PlayerActivity : AppCompatActivity() ,Player.Listener, TelephonyReceiver.O
     private lateinit var playerView: PlayerView
     private lateinit var progressBar: ProgressBar
     private lateinit var titleTv: TextView
-    private var boolean = false
+    private lateinit var purchaseButton: Button
+    private var buyProductAdShown: Boolean = false
     private lateinit var buttonShare: ImageView
     private lateinit var fullscreenclick:ImageView
     private lateinit var reverse: ImageView
@@ -64,8 +73,6 @@ class PlayerActivity : AppCompatActivity() ,Player.Listener, TelephonyReceiver.O
     private lateinit var watermark_Landscape: TextView
 
     private var mAdManagerInterstitialAd: AdManagerInterstitialAd? = null
-    private var mLastClickTime: Long = 0
-    private lateinit var seekbar: DefaultTimeBar
     private var handler: Handler = Handler()
     var isLandscapeview: Boolean = true
 
@@ -85,10 +92,13 @@ class PlayerActivity : AppCompatActivity() ,Player.Listener, TelephonyReceiver.O
 
         progressBar = findViewById(R.id.progress_circular)
         titleTv = findViewById(R.id.title1)
-        reverse = findViewById(R.id.exo_rew)
-        forward = findViewById(R.id.exo_fwd)
-        settings = findViewById(R.id.settings)
-        fullscreenclick = findViewById(R.id.exo_fullscreen)
+        purchaseButton = findViewById(R.id.buy_product)
+        val playerView = findViewById<PlayerView>(R.id.video_view)
+
+        reverse = playerView.findViewById(R.id.exo_rew)
+        forward = playerView.findViewById(R.id.exo_fwd)
+        settings = playerView.findViewById(R.id.settings)
+        fullscreenclick = playerView.findViewById(R.id.exo_fullscreen)
         buttonShare = findViewById(R.id.share)
         watermark = findViewById(R.id.watermark)
         watermark_Landscape = findViewById(R.id.watermark_landscape)
@@ -109,6 +119,10 @@ class PlayerActivity : AppCompatActivity() ,Player.Listener, TelephonyReceiver.O
         }
         fullscreenclick.setOnClickListener {
             fullscreenLayout()
+        }
+        purchaseButton.setOnClickListener {
+            if (!buyProductAdShown) loadFullScreenAds()
+            else Toast.makeText(this, "InApp Purchase not implemented", Toast.LENGTH_LONG).show()
         }
         buttonShare.setOnClickListener {
             val newDeepLink = dynamicshare.buildDeepLink(Uri.parse(DEEP_LINK_URL))
@@ -134,15 +148,51 @@ class PlayerActivity : AppCompatActivity() ,Player.Listener, TelephonyReceiver.O
         handler.post(run)
     }
 
+    override fun onStart() {
+        super.onStart()
+        Log.i("player-","onStart")
+        player.play()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.i("player-","onResume")
+        val telephonyFilter = IntentFilter("android.intent.action.PHONE_STATE")
+        registerReceiver(telephonyReceiver,telephonyFilter)
+        player.currentPosition
+        player.play()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.i("player-","onPause")
+        unregisterReceiver(telephonyReceiver)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.i("player-","onStop")
+        player.pause()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.i("player-","onDestroy")
+        buyProductAdShown = false
+        player.removeListener(this)
+    }
+
     // Using this function to show the interstitial(fullscreen) ads after player ends
     private fun loadFullScreenAds() {
         var adRequest = AdManagerAdRequest.Builder().build()
         AdManagerInterstitialAd.load(this,"/6499/example/interstitial",
-            adRequest,object :AdManagerInterstitialAdLoadCallback(){
+            adRequest,object :AdManagerInterstitialAdLoadCallback() {
                 override fun onAdLoaded(interstitialAd: AdManagerInterstitialAd) {
                     super.onAdLoaded(interstitialAd)
-                    mAdManagerInterstitialAd=interstitialAd
+                    player.pause()
+                    mAdManagerInterstitialAd = interstitialAd
                     mAdManagerInterstitialAd!!.show(this@PlayerActivity)
+                    buyProductAdShown = true // Shown 1 time
                 }
 
                 override fun onAdFailedToLoad(p0: LoadAdError) {
@@ -221,8 +271,20 @@ class PlayerActivity : AppCompatActivity() ,Player.Listener, TelephonyReceiver.O
         }
     }
 
+    /**
+     * Handled initial player setup in this function and setBufferDurationsMs to customize the LoadControl
+     */
     private fun setupPlayer() {
-        player = ExoPlayer.Builder(this@PlayerActivity).build()
+        val loadControl = DefaultLoadControl.Builder()
+            .setBufferDurationsMs(
+                3000,  // Minimum buffer before start or to keep
+                10000, // Maximum buffer to keep
+                2500,
+                2000
+            ).build()
+        player = ExoPlayer.Builder(this@PlayerActivity)
+            .setLoadControl(loadControl)
+            .build()
         playerView = findViewById(R.id.video_view)
         playerView.player = player
 
@@ -236,6 +298,10 @@ class PlayerActivity : AppCompatActivity() ,Player.Listener, TelephonyReceiver.O
         watermark.visibility = View.VISIBLE
     }
 
+    /**
+     * Handled Player tracks(like Auto, 144p, 240p, etc) in this function
+     * Currently not implemented
+     */
     private fun setExoPlayerTracks(trackSelector: DefaultTrackSelector?): ExoPlayer {
         val bandwidthMeter = DefaultBandwidthMeter.Builder(this).build()
         trackSelector!!.setParameters(trackSelector
@@ -260,13 +326,32 @@ class PlayerActivity : AppCompatActivity() ,Player.Listener, TelephonyReceiver.O
         return player
     }
 
+    /**
+     *  Handled the MediaItems and add it to player and prepare to stream
+     *  Cache setup when large files/high traffic to improve performance and reduce load time
+     */
     private fun mediaFiles() {
-        val mediaItem1 = MediaItem.fromUri(getString(R.string.bigbuckbunny))
-        val mediaItem2 = MediaItem.fromUri(getString(R.string.audio_url_mp3))
-        val mediaItem3 = MediaItem.fromUri(getString(R.string.tearsofsteel))
+        val cache = CacheManagerInstance.getMediaCache(this) // use the global cache to manage single instance
+        val dataSourceFactory = DefaultDataSourceFactory(this, Util.getUserAgent(this, getString(R.string.app_name)))
+        val cacheDataSourceFactory = CacheDataSource.Factory()
+            .setCache(cache)
+            .setUpstreamDataSourceFactory(dataSourceFactory)
 
-        val newItems: List<MediaItem> = ImmutableList.of(mediaItem1,mediaItem2,mediaItem3)
-        player.addMediaItems(newItems)
+        val mediaItem1 = MediaItem.Builder().setUri(getString(R.string.tearsOfSteelHls)) // its HLS file
+            .setMimeType(MimeTypes.APPLICATION_M3U8) // set MIME type for HLS
+            .build()
+        val mediaItem2 = MediaItem.fromUri(getString(R.string.audio_url_mp3))
+        val mediaItem3 = MediaItem.fromUri(getString(R.string.sintel))
+
+        // MediaSource objects creation for each mediaItem to use cache
+        val mediaSource1: MediaSource = HlsMediaSource.Factory(cacheDataSourceFactory).createMediaSource(mediaItem1)
+        val mediaSource2: MediaSource = ProgressiveMediaSource.Factory(cacheDataSourceFactory).createMediaSource(mediaItem2)
+        val mediaSource3: MediaSource = ProgressiveMediaSource.Factory(cacheDataSourceFactory).createMediaSource(mediaItem3)
+
+        /*val newItems: List<MediaItem> = ImmutableList.of(mediaItem1, mediaItem2, mediaItem3)
+        player.addMediaItems(newItems)*/
+
+        player.setMediaSources(listOf(mediaSource1, mediaSource2, mediaSource3))
         player.prepare()
     }
 
@@ -306,6 +391,11 @@ class PlayerActivity : AppCompatActivity() ,Player.Listener, TelephonyReceiver.O
         }
     }
 
+    override fun onPlayerError(error: PlaybackException) {
+        super.onPlayerError(error)
+        Toast.makeText(this, "Media Player has a ${error.message}", Toast.LENGTH_LONG).show()
+    }
+
     override fun onMediaMetadataChanged(mediaMetadata: MediaMetadata) {
         titleTv.text = mediaMetadata.title ?: mediaMetadata.displayTitle ?: "no title"
     }
@@ -317,29 +407,6 @@ class PlayerActivity : AppCompatActivity() ,Player.Listener, TelephonyReceiver.O
         outState.putLong("SeekTime", player.currentPosition)
         // current mediaItem
         outState.putInt("mediaItem", player.currentMediaItemIndex)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        player.pause()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        val telephonyFilter = IntentFilter("android.intent.action.PHONE_STATE")
-        registerReceiver(telephonyReceiver,telephonyFilter)
-        player.currentPosition
-        player.play()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        unregisterReceiver(telephonyReceiver)
-    }
-
-    override fun onStart() {
-        super.onStart()
-        player.play()
     }
 
     private fun alert() {
