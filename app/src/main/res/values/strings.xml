@@ -95,5 +95,6 @@
     <string name="logout_cancel">CANCEL</string>
     <string name="logout_ok">OK</string>
     <string name="logout_title">Are you sure want to logout?</string>
+    <string name="poster_image">Poster_image</string>
 
 </resources>

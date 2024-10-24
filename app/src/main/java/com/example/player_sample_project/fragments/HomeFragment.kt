@@ -62,6 +62,7 @@ class HomeFragment : Fragment() ,OnclickListener, NetworkObserveReceiver.Network
     private lateinit var recyclerview: RecyclerView
     private lateinit var recyclerview1: RecyclerView
     private lateinit var seeAll: ImageView
+    private lateinit var seeAll1: ImageView
     private lateinit var title: TextView
     private lateinit var title1: TextView
 
@@ -70,7 +71,6 @@ class HomeFragment : Fragment() ,OnclickListener, NetworkObserveReceiver.Network
 
     private lateinit var mShimmer:ShimmerFrameLayout
     private lateinit var adManagerAdView: AdManagerAdView
-
     //private var storedData: Bundle? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -95,7 +95,6 @@ class HomeFragment : Fragment() ,OnclickListener, NetworkObserveReceiver.Network
         val isFetchedApi = appController.getPreferenceApiData("homePageResponse", "") ?: false
         if (isConnect) {
             if ((isFetchedApi == "" || isFetchedApi == false) && !isApiCalled) {
-                Log.i("connection-","AGAIN API HITS")
                 coroutineScope.launch {
                     getResult(false)
                     showAds()
@@ -111,10 +110,11 @@ class HomeFragment : Fragment() ,OnclickListener, NetworkObserveReceiver.Network
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        recyclerview=view.findViewById(R.id.recyclerView)
-        recyclerview1=view.findViewById(R.id.recy_view)
-        mShimmer=view.findViewById(R.id.shimmer1)
-        seeAll=view.findViewById(R.id.see_all)
+        recyclerview = view.findViewById(R.id.recyclerView)
+        recyclerview1 = view.findViewById(R.id.recy_view)
+        mShimmer = view.findViewById(R.id.shimmer1)
+        seeAll = view.findViewById(R.id.see_all)
+        seeAll1 = view.findViewById(R.id.see_all1)
         title=view.findViewById(R.id.title)
         title1=view.findViewById(R.id.title1)
         viewPager2 = view.findViewById(R.id.viewPagerImgSlider)
@@ -133,6 +133,11 @@ class HomeFragment : Fragment() ,OnclickListener, NetworkObserveReceiver.Network
         seeAll.setOnClickListener {
           val intent = Intent(activity, SeeAllActivity::class.java)
             intent.putExtra("title", getString(R.string.trending_musics))
+            startActivity(intent)
+        }
+        seeAll1.setOnClickListener {
+            val intent = Intent(activity, SeeAllActivity::class.java)
+            intent.putExtra("title", getString(R.string.latest_movies))
             startActivity(intent)
         }
 
@@ -201,7 +206,7 @@ class HomeFragment : Fragment() ,OnclickListener, NetworkObserveReceiver.Network
 
     override fun onStop() {
         super.onStop()
-        Log.i("connection-", "onStop after onPause")
+        Log.i("connection-", "onStop")
         sliderhandler.removeCallbacks(sliderRun)
 
     }
@@ -224,7 +229,6 @@ class HomeFragment : Fragment() ,OnclickListener, NetworkObserveReceiver.Network
             override fun onAdLoaded() {
                 super.onAdLoaded()
                 Log.i("loaded","Ad loaded success")
-//                Toast.makeText(context, "Ad Successfully Loaded", Toast.LENGTH_SHORT).show()
             }
 
             override fun onAdOpened() {
@@ -234,14 +238,13 @@ class HomeFragment : Fragment() ,OnclickListener, NetworkObserveReceiver.Network
 
             override fun onAdClosed() {
                 super.onAdClosed()
-                Log.i("closed","Ad closed")
+                adManagerAdView.visibility=View.GONE
                 Toast.makeText(context, "Ad Closed", Toast.LENGTH_LONG).show()
             }
 
             override fun onAdClicked() {
                 super.onAdClicked()
                 adManagerAdView.visibility=View.GONE
-                Log.i("clicked","Ad clicked")
             }
 
             override fun onAdFailedToLoad(p0: LoadAdError) {
@@ -314,6 +317,7 @@ class HomeFragment : Fragment() ,OnclickListener, NetworkObserveReceiver.Network
                 title.visibility = View.VISIBLE
                 seeAll.visibility = View.VISIBLE
                 title1.visibility = View.VISIBLE
+                seeAll1.visibility = View.VISIBLE
             } else {
                 enableShimmer(true)
                 Log.i("connection-","UI something is null")
@@ -339,11 +343,11 @@ class HomeFragment : Fragment() ,OnclickListener, NetworkObserveReceiver.Network
     */
     private fun enableShimmer(isEnabled: Boolean) {
         if (isEnabled) {
-            mShimmer.visibility=View.VISIBLE
+            mShimmer.visibility = View.VISIBLE
             mShimmer.startShimmer()
         } else {
             mShimmer.stopShimmer()
-            mShimmer.visibility=View.GONE
+            mShimmer.visibility = View.GONE
         }
     }
 

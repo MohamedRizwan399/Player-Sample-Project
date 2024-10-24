@@ -157,6 +157,17 @@
                 android:textColor="@color/white"
                 android:visibility="invisible"
                 />
+            <ImageView
+                android:id="@+id/see_all1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/recyclerView"
+                app:srcCompat="@drawable/ic_baseline_arrow_forward_24"
+                android:paddingEnd="4dp"
+                android:paddingTop="5dp"
+                android:visibility="invisible"
+                />
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recy_view"
                 android:layout_width="match_parent"
