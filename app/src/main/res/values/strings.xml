@@ -1,12 +1,12 @@
 <resources>
     <string name="app_name">Player sample</string>
     <string name="audio_url_mp3">"https://storage.googleapis.com/exoplayer-test-media-0/play.mp3"</string>
+    <string name="elephantDreams">"http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"</string>
     <string name="myTestMp4">"https://download.blender.org/demo/movies/BBB/bbb_sunflower_1080p_30fps_normal.mp4"</string>
     <string name="bigbuckbunny">"https://storage.googleapis.com/exoplayer-test-media-0/BigBuckBunny_320x180.mp4"</string>
-    <string name="elephant">"https://multiplatform-f.akamaihd.net/i/multi/will/bunny/big_buck_bunny_,640x360_400,640x360_700,640x360_1000,950x540_1500,.f4v.csmil/master.m3u8"</string>
-    <string name="elephantDreams">"http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"</string>
     <string name="sintel">"https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4"</string>
     <string name="tearsofsteel">"https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4"</string>
+    <string name="tearsOfSteelHls">https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8</string>
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
     <string name="sync_header">Sync</string>

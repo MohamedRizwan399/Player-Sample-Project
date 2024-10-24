@@ -66,6 +66,8 @@ class PlayerActivity : AppCompatActivity() ,Player.Listener, TelephonyReceiver.O
     private lateinit var reverse: ImageView
     private lateinit var forward: ImageView
     private lateinit var settings: ImageView
+    private lateinit var footerPlay: ImageView
+    private lateinit var footerPause: ImageView
     //private var shoTrackSelector: DefaultTrackSelector? = null
     private var telephonyReceiver = TelephonyReceiver(this)
     private var dynamicshare: DynamicLinkShare = DynamicLinkShare()
@@ -99,6 +101,8 @@ class PlayerActivity : AppCompatActivity() ,Player.Listener, TelephonyReceiver.O
         forward = playerView.findViewById(R.id.exo_fwd)
         settings = playerView.findViewById(R.id.settings)
         fullscreenclick = playerView.findViewById(R.id.exo_fullscreen)
+        footerPlay = playerView.findViewById(R.id.exo_play_footer)
+        footerPause = playerView.findViewById(R.id.exo_pause_footer)
         buttonShare = findViewById(R.id.share)
         watermark = findViewById(R.id.watermark)
         watermark_Landscape = findViewById(R.id.watermark_landscape)
@@ -129,6 +133,7 @@ class PlayerActivity : AppCompatActivity() ,Player.Listener, TelephonyReceiver.O
             shareDeepLink(newDeepLink.toString())
             player.pause()
         }
+        updateCustomPlayPauseClickEvent() // custom play/pause click listeners
 
         // Handled the calculations to show alert when 90 percent of the video runs
         val run = object : Runnable {
@@ -243,6 +248,8 @@ class PlayerActivity : AppCompatActivity() ,Player.Listener, TelephonyReceiver.O
         }
     }
 
+
+
     private fun fullscreenLayout() {
         val view = findViewById<ConstraintLayout>(R.id.constraint1)
         if (isLandscapeview) {
@@ -355,7 +362,7 @@ class PlayerActivity : AppCompatActivity() ,Player.Listener, TelephonyReceiver.O
         player.prepare()
     }
 
-    // It handles loading state of the player
+    // It handles state of the player
     override fun onPlaybackStateChanged(state: Int) {
         when (state) {
             Player.STATE_IDLE -> {
@@ -369,6 +376,7 @@ class PlayerActivity : AppCompatActivity() ,Player.Listener, TelephonyReceiver.O
 
             Player.STATE_READY -> {
                 Log.i("player-","player ready state")
+                player.play()
                 progressBar.visibility = View.INVISIBLE
                 settings.visibility=View.VISIBLE
 
@@ -388,6 +396,34 @@ class PlayerActivity : AppCompatActivity() ,Player.Listener, TelephonyReceiver.O
                 loadFullScreenAds()
             }
 
+        }
+    }
+
+    // Handles the play/pause based on player state
+    override fun onPlayWhenReadyChanged(playWhenReady: Boolean, reason: Int) {
+        super.onPlayWhenReadyChanged(playWhenReady, reason)
+        if (playWhenReady) {
+            Log.i("player-", "updateFooterPlayPause- is playing")
+            footerPlay.visibility = View.INVISIBLE
+            footerPause.visibility = View.VISIBLE
+        } else {
+            Log.i("player-", "updateFooterPlayPause- is no playing")
+            footerPlay.visibility = View.VISIBLE
+            footerPause.visibility = View.INVISIBLE
+        }
+    }
+
+    // Handled custom play/pause click events
+    private fun updateCustomPlayPauseClickEvent() {
+        footerPlay.setOnClickListener {
+            player.playWhenReady = true
+            footerPlay.visibility = View.INVISIBLE
+            footerPause.visibility = View.VISIBLE
+        }
+        footerPause.setOnClickListener {
+            player.playWhenReady = false
+            footerPlay.visibility = View.VISIBLE
+            footerPause.visibility = View.INVISIBLE
         }
     }
 
