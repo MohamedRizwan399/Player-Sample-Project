@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
@@ -70,6 +71,7 @@ class HomeFragment : Fragment() ,OnclickListener, NetworkObserveReceiver.Network
     private var layoutManager: RecyclerView.LayoutManager? = null
 
     private lateinit var mShimmer:ShimmerFrameLayout
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private lateinit var adManagerAdView: AdManagerAdView
     //private var storedData: Bundle? = null
 
@@ -113,6 +115,7 @@ class HomeFragment : Fragment() ,OnclickListener, NetworkObserveReceiver.Network
         recyclerview = view.findViewById(R.id.recyclerView)
         recyclerview1 = view.findViewById(R.id.recy_view)
         mShimmer = view.findViewById(R.id.shimmer1)
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefresh_home)
         seeAll = view.findViewById(R.id.see_all)
         seeAll1 = view.findViewById(R.id.see_all1)
         title=view.findViewById(R.id.title)
@@ -125,13 +128,24 @@ class HomeFragment : Fragment() ,OnclickListener, NetworkObserveReceiver.Network
         appController = AppController(requireContext())
         val mainActivity = activity as MainActivity
 
+        swipeRefreshLayout.setOnRefreshListener {
+            appController.clearPreferencesApiData()
+            swipeRefreshLayout.isRefreshing = true
+            sliderAdapter.clearDataList()
+            title.visibility = View.GONE
+            seeAll.visibility = View.GONE
+            title1.visibility = View.GONE
+            seeAll1.visibility = View.GONE
+            adManagerAdView.visibility = View.GONE
+            fetchApiData()
+        }
         navdrawer.setOnClickListener {
             if(activity is MainActivity) {
                 mainActivity.openDrawer()
             }
         }
         seeAll.setOnClickListener {
-          val intent = Intent(activity, SeeAllActivity::class.java)
+            val intent = Intent(activity, SeeAllActivity::class.java)
             intent.putExtra("title", getString(R.string.trending_musics))
             startActivity(intent)
         }
@@ -140,7 +154,6 @@ class HomeFragment : Fragment() ,OnclickListener, NetworkObserveReceiver.Network
             intent.putExtra("title", getString(R.string.latest_movies))
             startActivity(intent)
         }
-
 
         // Restore adapter data if available
         /*val savedDataSlider: ArrayList<Data>? = storedData?.getParcelableArrayList("adapter1_data")
@@ -151,24 +164,27 @@ class HomeFragment : Fragment() ,OnclickListener, NetworkObserveReceiver.Network
         }*/
 
         activity?.let {
-            enableShimmer(true) // initially shimmer will show until get results
-            sliderItems() //for set all the adapters
-            val isFetchedApi = appController.getPreferenceApiData("homePageResponse", "") ?: false
-            var isPrefsExists: Boolean = false;
-
-            if (isFetchedApi != "" && isFetchedApi != false) {
-                isPrefsExists = true // means prefs data exists
-            }
-
-            coroutineScope.launch {
-                getResult(isPrefsExists)
-                if (Utils.checkNetConnection(activity)) { showAds() }
-                else adManagerAdView.visibility = View.GONE
-
-                Thread.sleep(2000)
-            }
+            fetchApiData() // fetch ApiData
         }
+    }
 
+    // Api fetch and Ad load to setup Home userInterface
+    private fun fetchApiData() {
+        enableShimmer(true) // initially shimmer will show until get results
+        sliderItems() //for set all the adapters
+        val isFetchedApi = appController.getPreferenceApiData("homePageResponse", "") ?: false
+        var isPrefsExists: Boolean = false;
+
+        if (isFetchedApi != "" && isFetchedApi != false) {
+            isPrefsExists = true // means prefs data exists
+        }
+        coroutineScope.launch {
+            getResult(isPrefsExists)
+            if (Utils.checkNetConnection(activity)) { showAds() }
+            else adManagerAdView.visibility = View.GONE
+
+            Thread.sleep(2000)
+        }
     }
 
     override fun onStart() {
@@ -229,6 +245,7 @@ class HomeFragment : Fragment() ,OnclickListener, NetworkObserveReceiver.Network
             override fun onAdLoaded() {
                 super.onAdLoaded()
                 Log.i("loaded","Ad loaded success")
+                adManagerAdView.visibility = View.VISIBLE
             }
 
             override fun onAdOpened() {
@@ -314,6 +331,7 @@ class HomeFragment : Fragment() ,OnclickListener, NetworkObserveReceiver.Network
                 sliderAdapter.notifyDataSetChanged()
                 circularAdapter.notifyDataSetChanged()
                 enableShimmer(false)
+                swipeRefreshLayout.isRefreshing = false
                 title.visibility = View.VISIBLE
                 seeAll.visibility = View.VISIBLE
                 title1.visibility = View.VISIBLE
