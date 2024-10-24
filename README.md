@@ -11,18 +11,21 @@ Android development techniques such as MVVM and MVP architecture.
 - **Architecture**:
     - MVVM (Model-View-ViewModel) architecture for clean separation of concerns.
     - MVP (Model-View-Presenter) for modular and testable code structure.
-- **Ad Integration**:
-    - **AdManager** for displaying banner ads and interstitial ads.
-    - **FullScreen Ads** for monetization.
-    - **Sample Video Ads** using ad providers to display sample video ad.
-- **Media Playback**:
-    - Integrated **ExoPlayer** for seamless video playback.
-    - **Playback controls** Full media control with playback actions (play, pause, seek, etc.).
 - **User Interface**:
     - **ViewPager2 with Slider** Sliding UI components implemented using ViewPager2 with autoSwiping between content.
     - **BottomSheet** for displaying additional content or actions.
     - **Alert Dialogs** for prompting user actions.
     - **RecyclerView** for displaying lists of data with both vertical and horizontal scrolls.
+- **Media Playback**:
+    - Integrated **ExoPlayer** for seamless video playback with HLS.
+    - **Playback controls** Full media control with playback actions (play, pause, seek, etc.).
+    - **Telephony Receiver** Observe incoming calls during playback and handle player state accordingly.
+- **Ad Integration**:
+    - **AdManager** for displaying banner ads and interstitial ads.
+    - **FullScreen Ads** for monetization.
+    - **Sample Video Ads** using ad providers to display sample video ad.
+- **Swipe-to-Refresh**:
+  - **SwipeRefreshLayout** integrated into the home screen to allow users to refresh and reload dynamic content.
 - **Subscription Management**: Handle in-app purchases and subscriptions(**Currently not activated due to playConsole deactivation**).
 - **Session Management**:
     - Store and manage user Api data using **SharedPreferences**.
@@ -30,6 +33,8 @@ Android development techniques such as MVVM and MVP architecture.
 - **Navigation**:
     - BottomNavigation tab handles user navigation between different fragments.
     - Back stack management for a smooth user experience.
+- **Network Monitoring**:
+  - **BroadcastReceiver** to observe network changes and update user interface.
 
 
 ## Installation
@@ -39,10 +44,7 @@ You need to setup the Android Sdk for proper gradle sync to launch the applicati
 ## Prerequisites
 - **Android Studio**: Jellyfish or higher recommended.
 - **Gradle**: Version 8.1.0 or higher.
-- **Firebase**: Configuration for User authentication and dynamic links.
-- **Google AdManager**: Add your AdManager configuration for ads integration.
-- **Retrofit**: For Api handling
-- **Exoplayer**: Setup for Media playback
+- **Google AdManager**: Configuration AdManager for ads integration.
 
 ### Steps
 **Step 1:** Clone the repo
