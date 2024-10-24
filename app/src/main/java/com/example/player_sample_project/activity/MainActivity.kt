@@ -1,5 +1,6 @@
 package com.example.player_sample_project.activity
 
+import android.app.ActivityManager
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
@@ -13,6 +14,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
@@ -67,6 +69,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         supportActionBar?.hide()
+
+        // To change the default to preferred color of app description when goes to recent
+        val taskDescription = ActivityManager.TaskDescription(
+            getString(R.string.app_name), null, ContextCompat.getColor(this, R.color.dark_white))
+        setTaskDescription(taskDescription)
 
         // Initialize AppController to handle the required utility methods
         appController = AppController(applicationContext)
