@@ -1,19 +1,24 @@
 package com.example.player_sample_project.fragments
 
+import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.player_sample_project.R
+import com.example.player_sample_project.activity.MainActivity
 import com.example.player_sample_project.adapter.MenuAdapter
 import com.example.player_sample_project.app.AppController
+import com.example.player_sample_project.authentication.LoginBaseActivity
 import com.example.player_sample_project.data_mvvm.StaticDataForTesting
 
 // TODO: Rename parameter arguments, choose names that match
@@ -72,8 +77,30 @@ class MenuFragment : Fragment() {
     }
 
     private fun navigateToMenuItems(selectedItem: String) {
-        Log.i("connection-","Menu Item clicked")
-        Toast.makeText(requireContext(),"Navigate to particular screen", Toast.LENGTH_LONG).show()
+        val mainActivity = activity as MainActivity
+        if (selectedItem == "Logout") {
+            showLogoutDialog(mainActivity)
+        } else {
+            Toast.makeText(requireContext(),"Navigate to particular screen", Toast.LENGTH_LONG).show()
+        }
+    }
+
+    private fun showLogoutDialog(activity: MainActivity) {
+        val logoutDialogView = LayoutInflater.from(requireContext()).inflate(R.layout.logout_custom_alert, null)
+        logoutDialogView.findViewById<TextView>(R.id.logout_title).text = getString(R.string.logout_title)
+        val builder = requireContext().let { it ->
+            AlertDialog.Builder(it, R.style.CustomDialog).setView(logoutDialogView).setCancelable(false)
+        }
+        val alertDialog = builder.show()
+        logoutDialogView.findViewById<Button>(R.id.logout_cancel).setOnClickListener {
+            alertDialog.dismiss()
+        }
+        logoutDialogView.findViewById<Button>(R.id.logout_ok).setOnClickListener {
+            activity.signOutGoogle()
+            val intent = Intent(requireContext(), LoginBaseActivity::class.java)
+            startActivity(intent)
+            requireActivity().finish() // parent Activity removed
+        }
     }
 
     companion object {

@@ -23,7 +23,8 @@ android {
     namespace "com.example.player_sample_project"
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             debuggable false
         }
@@ -78,6 +79,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics-ktx'
 
     implementation 'com.facebook.shimmer:shimmer:0.3.0'
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     implementation 'com.android.support:multidex:1.0.3'
 
     implementation 'com.google.android.gms:play-services-ads:21.0.0'
