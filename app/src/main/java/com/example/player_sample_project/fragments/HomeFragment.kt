@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
@@ -62,6 +63,7 @@ class HomeFragment : Fragment() ,OnclickListener, NetworkObserveReceiver.Network
     private lateinit var recyclerview: RecyclerView
     private lateinit var recyclerview1: RecyclerView
     private lateinit var seeAll: ImageView
+    private lateinit var seeAll1: ImageView
     private lateinit var title: TextView
     private lateinit var title1: TextView
 
@@ -69,13 +71,12 @@ class HomeFragment : Fragment() ,OnclickListener, NetworkObserveReceiver.Network
     private var layoutManager: RecyclerView.LayoutManager? = null
 
     private lateinit var mShimmer:ShimmerFrameLayout
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private lateinit var adManagerAdView: AdManagerAdView
-
     //private var storedData: Bundle? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.i("connection-", "onCreate")
     }
 
     override fun onCreateView(
@@ -84,7 +85,6 @@ class HomeFragment : Fragment() ,OnclickListener, NetworkObserveReceiver.Network
     ): View? {
         viewModel = ViewModelProvider(this).get(ViewModel::class.java)
 
-        Log.i("connection-", "onCreateView")
         sliderAdapter.clearDataList() // clear the Data class to avoid UI looks stuck, when use SharedPrefs to retain the response data
 
         // Inflate the layout for this fragment
@@ -95,10 +95,8 @@ class HomeFragment : Fragment() ,OnclickListener, NetworkObserveReceiver.Network
     // Using this implement function to get status of internet
     override fun connectionReceived(isConnect: Boolean) {
         val isFetchedApi = appController.getPreferenceApiData("homePageResponse", "") ?: false
-        Log.i("connection-","connReceiver---$isConnect" +"and isApiCalled is--$isApiCalled \nisFetchedApi is-->$isFetchedApi")
         if (isConnect) {
             if ((isFetchedApi == "" || isFetchedApi == false) && !isApiCalled) {
-                Log.i("connection-","AGAIN API HITS")
                 coroutineScope.launch {
                     getResult(false)
                     showAds()
@@ -114,10 +112,12 @@ class HomeFragment : Fragment() ,OnclickListener, NetworkObserveReceiver.Network
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        recyclerview=view.findViewById(R.id.recyclerView)
-        recyclerview1=view.findViewById(R.id.recy_view)
-        mShimmer=view.findViewById(R.id.shimmer1);
-        seeAll=view.findViewById(R.id.see_all)
+        recyclerview = view.findViewById(R.id.recyclerView)
+        recyclerview1 = view.findViewById(R.id.recy_view)
+        mShimmer = view.findViewById(R.id.shimmer1)
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefresh_home)
+        seeAll = view.findViewById(R.id.see_all)
+        seeAll1 = view.findViewById(R.id.see_all1)
         title=view.findViewById(R.id.title)
         title1=view.findViewById(R.id.title1)
         viewPager2 = view.findViewById(R.id.viewPagerImgSlider)
@@ -128,19 +128,32 @@ class HomeFragment : Fragment() ,OnclickListener, NetworkObserveReceiver.Network
         appController = AppController(requireContext())
         val mainActivity = activity as MainActivity
 
-        Log.i("connection-", "onViewCreated IF")
-
+        swipeRefreshLayout.setOnRefreshListener {
+            appController.clearPreferencesApiData()
+            swipeRefreshLayout.isRefreshing = true
+            sliderAdapter.clearDataList()
+            title.visibility = View.GONE
+            seeAll.visibility = View.GONE
+            title1.visibility = View.GONE
+            seeAll1.visibility = View.GONE
+            adManagerAdView.visibility = View.GONE
+            fetchApiData()
+        }
         navdrawer.setOnClickListener {
             if(activity is MainActivity) {
                 mainActivity.openDrawer()
             }
         }
         seeAll.setOnClickListener {
-          val intent = Intent(activity, SeeAllActivity::class.java)
+            val intent = Intent(activity, SeeAllActivity::class.java)
             intent.putExtra("title", getString(R.string.trending_musics))
             startActivity(intent)
         }
-
+        seeAll1.setOnClickListener {
+            val intent = Intent(activity, SeeAllActivity::class.java)
+            intent.putExtra("title", getString(R.string.latest_movies))
+            startActivity(intent)
+        }
 
         // Restore adapter data if available
         /*val savedDataSlider: ArrayList<Data>? = storedData?.getParcelableArrayList("adapter1_data")
@@ -151,26 +164,27 @@ class HomeFragment : Fragment() ,OnclickListener, NetworkObserveReceiver.Network
         }*/
 
         activity?.let {
-            enableShimmer(true) // initially shimmer will show until get results
-            sliderItems() //for set all the adapters
-            val isFetchedApi = appController.getPreferenceApiData("homePageResponse", "") ?: false
-            var isPrefsExists: Boolean = false;
-
-            if (isFetchedApi != "" && isFetchedApi != false) {
-                Log.i("connection-", "onViewCreated IF line 163")
-                isPrefsExists = true // means prefs data exists
-            }
-
-            coroutineScope.launch {
-                Log.i("connection-", "onviewcreated..coroutine scope")
-                getResult(isPrefsExists)
-                if (Utils.checkNetConnection(activity)) { showAds() }
-                else adManagerAdView.visibility = View.GONE
-
-                Thread.sleep(2000)
-            }
+            fetchApiData() // fetch ApiData
         }
+    }
 
+    // Api fetch and Ad load to setup Home userInterface
+    private fun fetchApiData() {
+        enableShimmer(true) // initially shimmer will show until get results
+        sliderItems() //for set all the adapters
+        val isFetchedApi = appController.getPreferenceApiData("homePageResponse", "") ?: false
+        var isPrefsExists: Boolean = false;
+
+        if (isFetchedApi != "" && isFetchedApi != false) {
+            isPrefsExists = true // means prefs data exists
+        }
+        coroutineScope.launch {
+            getResult(isPrefsExists)
+            if (Utils.checkNetConnection(activity)) { showAds() }
+            else adManagerAdView.visibility = View.GONE
+
+            Thread.sleep(2000)
+        }
     }
 
     override fun onStart() {
@@ -208,7 +222,7 @@ class HomeFragment : Fragment() ,OnclickListener, NetworkObserveReceiver.Network
 
     override fun onStop() {
         super.onStop()
-        Log.i("connection-", "onStop after onPause")
+        Log.i("connection-", "onStop")
         sliderhandler.removeCallbacks(sliderRun)
 
     }
@@ -231,7 +245,7 @@ class HomeFragment : Fragment() ,OnclickListener, NetworkObserveReceiver.Network
             override fun onAdLoaded() {
                 super.onAdLoaded()
                 Log.i("loaded","Ad loaded success")
-//                Toast.makeText(context, "Ad Successfully Loaded", Toast.LENGTH_SHORT).show()
+                adManagerAdView.visibility = View.VISIBLE
             }
 
             override fun onAdOpened() {
@@ -241,14 +255,13 @@ class HomeFragment : Fragment() ,OnclickListener, NetworkObserveReceiver.Network
 
             override fun onAdClosed() {
                 super.onAdClosed()
-                Log.i("closed","Ad closed")
+                adManagerAdView.visibility=View.GONE
                 Toast.makeText(context, "Ad Closed", Toast.LENGTH_LONG).show()
             }
 
             override fun onAdClicked() {
                 super.onAdClicked()
                 adManagerAdView.visibility=View.GONE
-                Log.i("clicked","Ad clicked")
             }
 
             override fun onAdFailedToLoad(p0: LoadAdError) {
@@ -261,11 +274,10 @@ class HomeFragment : Fragment() ,OnclickListener, NetworkObserveReceiver.Network
     private fun sliderItems() {
         layoutManager = GridLayoutManager(requireContext(), 2)
         recyclerview1.layoutManager = layoutManager
-        recyclerAdapter = RecyclerAdapter(this)
-        recyclerview1.adapter=recyclerAdapter
+        recyclerview1.adapter = recyclerAdapter
 
-        recyclerview.layoutManager=LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
-        recyclerview.adapter=circularAdapter
+        recyclerview.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
+        recyclerview.adapter = circularAdapter
 
         viewPager2.adapter = sliderAdapter
         viewPager2.clipToPadding = false
@@ -286,7 +298,6 @@ class HomeFragment : Fragment() ,OnclickListener, NetworkObserveReceiver.Network
                 Thread.sleep(3000)
                 viewPager2.setCurrentItem(0, true)
             } else viewPager2.currentItem += 1
-            Log.i("pager", "currentItem--"+ viewPager2.currentItem + " totalCount--" +viewPager2.adapter?.itemCount)
         }
         viewPager2.registerOnPageChangeCallback(
             object : ViewPager2.OnPageChangeCallback() {
@@ -309,7 +320,6 @@ class HomeFragment : Fragment() ,OnclickListener, NetworkObserveReceiver.Network
 
         viewModel.getLiveDataObserver().observe(viewLifecycleOwner) { // response data is observed here using livedata
             // Note: Livedata observes the data change
-            Log.i("connection-","ON UI data-- " +it)
 
             if (it != null) {
                 Log.i("connection-","UI data 200")
@@ -321,9 +331,11 @@ class HomeFragment : Fragment() ,OnclickListener, NetworkObserveReceiver.Network
                 sliderAdapter.notifyDataSetChanged()
                 circularAdapter.notifyDataSetChanged()
                 enableShimmer(false)
+                swipeRefreshLayout.isRefreshing = false
                 title.visibility = View.VISIBLE
                 seeAll.visibility = View.VISIBLE
                 title1.visibility = View.VISIBLE
+                seeAll1.visibility = View.VISIBLE
             } else {
                 enableShimmer(true)
                 Log.i("connection-","UI something is null")
@@ -348,13 +360,12 @@ class HomeFragment : Fragment() ,OnclickListener, NetworkObserveReceiver.Network
     *To handle the shimmer functionality is to start/stop
     */
     private fun enableShimmer(isEnabled: Boolean) {
-        Log.i("connection-","shimmer$isEnabled")
         if (isEnabled) {
-            mShimmer.visibility=View.VISIBLE
+            mShimmer.visibility = View.VISIBLE
             mShimmer.startShimmer()
         } else {
             mShimmer.stopShimmer()
-            mShimmer.visibility=View.GONE
+            mShimmer.visibility = View.GONE
         }
     }
 
