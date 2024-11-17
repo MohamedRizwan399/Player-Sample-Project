@@ -14,6 +14,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.player_sample_project.R
 import com.example.player_sample_project.activity.MainActivity
 import com.example.player_sample_project.adapter.MenuAdapter
@@ -74,6 +75,14 @@ class MenuFragment : Fragment() {
         val getLoggedInUsername = appController.getLoginStatus("userName", null.toString())
         if (getLoggedInUsername != null) profileName.text = getString(R.string.welcome_message, getLoggedInUsername)
         else profileName.text = getString(R.string.welcome_message, "Guest")
+
+        val getProfileUrl = appController.getLoginStatus("photoUrl", "")
+        if (getProfileUrl != null) {
+            Glide.with(this)
+                .load(getProfileUrl)
+                .error(R.drawable.union_1)
+                .into(profileIcon)
+        }
     }
 
     private fun navigateToMenuItems(selectedItem: String) {

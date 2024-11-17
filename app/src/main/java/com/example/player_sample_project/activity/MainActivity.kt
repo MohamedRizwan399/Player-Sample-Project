@@ -18,6 +18,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.example.player_sample_project.R
 import com.example.player_sample_project.app.AppController
 import com.example.player_sample_project.app.FirebaseAuthInstance
@@ -103,15 +104,21 @@ class MainActivity : AppCompatActivity() {
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
         val getLoggedInUsername = appController.getLoginStatus("userName", null.toString())
-        Log.i("Login-", "MainActivity oncreate--getLoggedInData--" + getLoggedInUsername)
         if (getLoggedInUsername != null) usernameText.text = getString(R.string.welcome_message, getLoggedInUsername)
         else usernameText.text = getString(R.string.welcome_message, "Guest")
+
+        val getProfileUrl = appController.getLoginStatus("photoUrl", "")
+        if (getProfileUrl != null) {
+            Glide.with(this)
+                .load(getProfileUrl)
+                .error(R.drawable.union_1)
+                .into(image)
+        }
 
         signin?.setOnClickListener {
             closeDrawer()
             Toast.makeText(this, "Update Screen not yet implemented", Toast.LENGTH_SHORT).show()
         }
-
 
         /**
          * listeners to handle the NavigationView item
@@ -140,9 +147,7 @@ class MainActivity : AppCompatActivity() {
                     startActivity(intent)
                 }
                 R.id.logout-> {
-                    Log.i("connection--","Logout clicked")
                     this.let {
-                        Log.i("connection--","Alert Builder executes")
                         AlertDialog.Builder(this@MainActivity)
                             .setTitle(getString(R.string.logout_title))
                             .setCancelable(true)

@@ -1,5 +1,6 @@
 package com.example.player_sample_project.authentication
 
+import android.app.ActivityManager
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +11,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.example.player_sample_project.R
 import com.example.player_sample_project.activity.MainActivity
 import com.example.player_sample_project.app.AppController
@@ -68,6 +70,12 @@ class LoginBaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login_base)
+
+        // To change the default to preferred color of app description when goes to recent
+        val taskDescription = ActivityManager.TaskDescription(
+            getString(R.string.app_name), null, ContextCompat.getColor(this, R.color.dark_white))
+        setTaskDescription(taskDescription)
+
         setupViews()
         onclickSignInText()
         onclickSignUpText()
@@ -150,7 +158,12 @@ class LoginBaseActivity : AppCompatActivity() {
                     val user = auth.currentUser
                     if (user != null) {
                         Log.i("Login-", "user-->${user.uid} \n ${user.displayName}" + "\n" + "photoUrl is--${user.photoUrl}")
-                        appController.storeLoginStatus("userId", user.uid, "userName", user.displayName.toString())
+                        // Alternative option to usage of hashmap is .put("key", "value") instead of hashMap["key"]
+                        val hashMap: HashMap<String, String> = HashMap()
+                        hashMap["userId"] = user.uid
+                        hashMap["userName"] = user.displayName.toString()
+                        hashMap["photoUrl"] = user.photoUrl.toString()
+                        appController.storeLoginStatus(hashMap)
                         Toast.makeText(this, "Signed in as ${user.displayName}", Toast.LENGTH_LONG).show()
                         val intent = Intent(this, MainActivity::class.java)
                         startActivity(intent) // Navigate to MainScreen
@@ -179,6 +192,10 @@ class LoginBaseActivity : AppCompatActivity() {
         orView = findViewById(R.id.or_view)
         googleLoginButton = findViewById(R.id.google_signIn_button)
         fbLogin = findViewById(R.id.facebook_signIn)
+
+        fbLogin.setOnClickListener(View.OnClickListener {
+            Toast.makeText(applicationContext, "Right now not implemented.Check with GoogleLogin or sign In here", Toast.LENGTH_LONG).show()
+        })
     }
 
     private fun onclickSignInText() {
@@ -190,6 +207,9 @@ class LoginBaseActivity : AppCompatActivity() {
 
                 signIn_text.visibility = View.GONE
                 signUp_text.visibility = View.VISIBLE
+
+                //initial focus
+                textView2.requestFocus()
             }
         })
     }
@@ -202,6 +222,9 @@ class LoginBaseActivity : AppCompatActivity() {
 
             signIn_text.visibility = View.VISIBLE
             signUp_text.visibility = View.GONE
+
+            //initial focus
+            textview1.requestFocus()
         })
     }
 
