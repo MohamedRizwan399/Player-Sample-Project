@@ -2,7 +2,6 @@ package com.example.player_sample_project.app
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.google.firebase.auth.FirebaseAuth
 
 /**
  * Used this AppController class to handled the preference data for Login and Api
@@ -13,10 +12,11 @@ class AppController(context: Context) {
     private val sharedPrefApi: SharedPreferences = context.getSharedPreferences("ApiPrefs", Context.MODE_PRIVATE)
 
     // key - "loginStatus"
-    fun storeLoginStatus(key1: String, value1: String, key2: String, value2: String) { //update with Map
+    fun storeLoginStatus(hashMap: HashMap<String, String>) { //update with Map
         val editor = sharedPrefLogin.edit()
-        editor.putString(key1, value1)
-        editor.putString(key2, value2)
+        for (itemKey in hashMap.keys) {
+            editor.putString(itemKey, hashMap[itemKey])
+        }
         editor.apply()
     }
 

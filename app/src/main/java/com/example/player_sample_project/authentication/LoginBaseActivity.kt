@@ -158,7 +158,12 @@ class LoginBaseActivity : AppCompatActivity() {
                     val user = auth.currentUser
                     if (user != null) {
                         Log.i("Login-", "user-->${user.uid} \n ${user.displayName}" + "\n" + "photoUrl is--${user.photoUrl}")
-                        appController.storeLoginStatus("userId", user.uid, "userName", user.displayName.toString())
+                        // Alternative option to usage of hashmap is .put("key", "value") instead of hashMap["key"]
+                        val hashMap: HashMap<String, String> = HashMap()
+                        hashMap["userId"] = user.uid
+                        hashMap["userName"] = user.displayName.toString()
+                        hashMap["photoUrl"] = user.photoUrl.toString()
+                        appController.storeLoginStatus(hashMap)
                         Toast.makeText(this, "Signed in as ${user.displayName}", Toast.LENGTH_LONG).show()
                         val intent = Intent(this, MainActivity::class.java)
                         startActivity(intent) // Navigate to MainScreen
