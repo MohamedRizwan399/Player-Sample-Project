@@ -22,7 +22,7 @@ Android development techniques such as MVVM and MVP architecture.
     - **Telephony Receiver** Observe incoming calls during playback and handle player state accordingly.
 - **Ad Integration**:
     - **AdManager** for displaying banner ads and interstitial ads.
-    - **FullScreen Ads** for monetization.
+    - **FullScreen Ads** using AdManagerInterstitialAd to display fullscreen ad.
     - **Sample Video Ads** using ad providers to display sample video ad.
 - **Swipe-to-Refresh**:
   - **SwipeRefreshLayout** integrated into the home screen to allow users to refresh and reload dynamic content.
@@ -42,7 +42,6 @@ Android development techniques such as MVVM and MVP architecture.
 You need to setup the Android Sdk for proper gradle sync to launch the application.
 
 ## Prerequisites
-- **Android Studio**: Jellyfish or higher recommended.
 - **Gradle**: Version 8.1.0 or higher.
 - **Google AdManager**: Configuration AdManager for ads integration.
 
