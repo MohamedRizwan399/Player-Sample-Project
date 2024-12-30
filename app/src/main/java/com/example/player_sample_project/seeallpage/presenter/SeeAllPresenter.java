@@ -1,8 +1,8 @@
 package com.example.player_sample_project.seeallpage.presenter;
 
+import com.example.player_sample_project.data_mvvm.Data;
 import com.example.player_sample_project.seeallpage.model.ISeeAllModel;
 import com.example.player_sample_project.seeallpage.model.SeeAllModel;
-import com.example.player_sample_project.seeallpage.modelclassPoJo.NewResponseData;
 import com.example.player_sample_project.seeallpage.view.ISeeAllView;
 import java.util.List;
 
@@ -21,7 +21,7 @@ public class SeeAllPresenter implements ISeeAllPresenter, ISeeAllModel.OnFinishe
     }
 
     @Override
-    public void onSuccess(List<NewResponseData> dataArrayList) {
+    public void onSuccess(List<Data> dataArrayList) {
         dataListViews.setDataToRecyclerview(dataArrayList);
     }
 

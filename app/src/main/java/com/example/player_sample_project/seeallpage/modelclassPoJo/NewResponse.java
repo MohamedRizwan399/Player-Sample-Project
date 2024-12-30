@@ -2,7 +2,6 @@ package com.example.player_sample_project.seeallpage.modelclassPoJo;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
 
 public class NewResponse {
