@@ -10,17 +10,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.player_sample_project.R;
-import com.example.player_sample_project.seeallpage.modelclassPoJo.NewResponseData;
+import com.example.player_sample_project.data_mvvm.Data;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import java.util.List;
 
 public class SeeAllAdapter extends RecyclerView.Adapter<SeeAllAdapter.MyViewHolder> {
     private static final Log log = LogFactory.getLog(SeeAllAdapter.class);
-    private final List<NewResponseData> dataList;
+    private final List<Data> dataList;
     private final Context context;
 
-    public SeeAllAdapter(List<NewResponseData> dataList, Context context) {
+    public SeeAllAdapter(List<Data> dataList, Context context) {
         this.dataList = dataList;
         this.context = context;
     }
@@ -30,7 +30,7 @@ public class SeeAllAdapter extends RecyclerView.Adapter<SeeAllAdapter.MyViewHold
         TextView tvTitle;
         public MyViewHolder(View itemView) {
             super(itemView);
-            ivThumb = itemView.findViewById(R.id.img_view);
+            ivThumb = itemView.findViewById(R.id.seeAll_img_view);
             tvTitle = itemView.findViewById(R.id.see_all_title);
         }
     }
@@ -44,10 +44,10 @@ public class SeeAllAdapter extends RecyclerView.Adapter<SeeAllAdapter.MyViewHold
 
     @Override
     public void onBindViewHolder(@NonNull SeeAllAdapter.MyViewHolder holder, int position) {
-        if (dataList.get(position).getUrlToImage() != null) {
-            holder.tvTitle.setText(dataList.get(position).getTitle());
+        if (!dataList.get(position).getImg_url().isEmpty()) {
+            holder.tvTitle.setText(dataList.get(position).getName());
             Glide.with(context)
-                    .load(dataList.get(position).getUrlToImage())
+                    .load(dataList.get(position).getImg_url())
                     .placeholder(R.drawable.union_1)
                     .into(holder.ivThumb);
         }

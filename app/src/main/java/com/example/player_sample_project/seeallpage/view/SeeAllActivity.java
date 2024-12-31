@@ -8,13 +8,14 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.player_sample_project.R;
-import com.example.player_sample_project.ads.AdsactivityDemo;
-import com.example.player_sample_project.seeallpage.modelclassPoJo.NewResponseData;
+import com.example.player_sample_project.ads.AdsActivityDemo;
+import com.example.player_sample_project.data_mvvm.Data;
 import com.example.player_sample_project.seeallpage.presenter.SeeAllPresenter;
 import com.google.android.gms.ads.FullScreenContentCallback;
 import com.google.android.gms.ads.LoadAdError;
@@ -28,7 +29,7 @@ public class SeeAllActivity extends AppCompatActivity implements ISeeAllView {
     Activity activity;
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView recyclerView;
-    private List<NewResponseData> dataList;
+    private List<Data> dataList;
     private SeeAllPresenter seeAllPresenter;
     private SeeAllAdapter seeAllAdapter;
     private ProgressBar seeAllProgress;
@@ -88,7 +89,7 @@ public class SeeAllActivity extends AppCompatActivity implements ISeeAllView {
                             public void onAdDismissedFullScreenContent() {
                                 super.onAdDismissedFullScreenContent();
                                 Log.i("close", "closed");
-                                Intent intent=new Intent(getApplicationContext(), AdsactivityDemo.class);
+                                Intent intent=new Intent(getApplicationContext(), AdsActivityDemo.class);
                                 startActivity(intent);
                             }
 
@@ -108,7 +109,7 @@ public class SeeAllActivity extends AppCompatActivity implements ISeeAllView {
     }
 
     @Override
-    public void setDataToRecyclerview(List<NewResponseData> dataListArray) {
+    public void setDataToRecyclerview(List<Data> dataListArray) {
         dataList.addAll(dataListArray);
         seeAllAdapter = new SeeAllAdapter(dataList,SeeAllActivity.this);
         recyclerView.setAdapter(seeAllAdapter);
@@ -117,6 +118,7 @@ public class SeeAllActivity extends AppCompatActivity implements ISeeAllView {
 
     @Override
     public void onApiResponseFailure(Throwable throwable) {
-        seeAllProgress.setVisibility(View.VISIBLE);
+        Toast.makeText(activity, "Response failed due to Api services", Toast.LENGTH_LONG).show();
+        seeAllProgress.setVisibility(View.GONE);
     }
 }
