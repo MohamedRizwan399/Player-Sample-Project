@@ -32,11 +32,11 @@ class LoginBaseActivity : AppCompatActivity() {
     private lateinit var fbLogin:ImageButton
 
     private lateinit var textviewHaveAcc:TextView
-    private lateinit var signUp_SignIn_Button:MaterialButton
+    private lateinit var signUpSignInButton:MaterialButton
     private lateinit var orView:TextView
 
-    private lateinit var signIn_text:TextView
-    private lateinit var signUp_text:TextView
+    private lateinit var signInText:TextView
+    private lateinit var signUpText:TextView
 
     private lateinit var textview1:TextInputLayout
     private lateinit var textView2:TextInputLayout
@@ -85,7 +85,6 @@ class LoginBaseActivity : AppCompatActivity() {
         auth = FirebaseAuthInstance.auth //FirebaseAuth.getInstance()
 
         Log.i("Login-", "LoginPage onCreate")
-
 
         // onClick for GoogleLogin
         googleLoginButton.setOnClickListener {
@@ -180,10 +179,10 @@ class LoginBaseActivity : AppCompatActivity() {
     // View Initialization is handled in this method
     private fun setupViews() {
         progress = findViewById(R.id.login_progress)
-        signIn_text = findViewById(R.id.signIn_text)
-        signUp_text = findViewById(R.id.signUp_text)
+        signInText = findViewById(R.id.signIn_text)
+        signUpText = findViewById(R.id.signUp_text)
         textviewHaveAcc = findViewById(R.id.txt_view)
-        signUp_SignIn_Button = findViewById(R.id.btn_Signup_SignIn)
+        signUpSignInButton = findViewById(R.id.btn_Signup_SignIn)
 
         textview1 = findViewById(R.id.nameTextview)
         textView2 = findViewById(R.id.emailTextview)
@@ -199,14 +198,14 @@ class LoginBaseActivity : AppCompatActivity() {
     }
 
     private fun onclickSignInText() {
-        signIn_text.setOnClickListener(object :View.OnClickListener{
+        signInText.setOnClickListener(object :View.OnClickListener{
             override fun onClick(p0: View?) {
                 textview1.visibility=View.GONE
-                signUp_SignIn_Button.setText(R.string.sign_in)
+                signUpSignInButton.setText(R.string.sign_in)
                 textviewHaveAcc.setText(R.string.don_t_have_an_account)
 
-                signIn_text.visibility = View.GONE
-                signUp_text.visibility = View.VISIBLE
+                signInText.visibility = View.GONE
+                signUpText.visibility = View.VISIBLE
 
                 //initial focus
                 textView2.requestFocus()
@@ -215,13 +214,13 @@ class LoginBaseActivity : AppCompatActivity() {
     }
 
     private fun onclickSignUpText() {
-        signUp_text.setOnClickListener(View.OnClickListener {
+        signUpText.setOnClickListener(View.OnClickListener {
             textview1.visibility = View.VISIBLE
-            signUp_SignIn_Button.setText(R.string.sign_up)
+            signUpSignInButton.setText(R.string.sign_up)
             textviewHaveAcc.setText(R.string.already_have_an_account)
 
-            signIn_text.visibility = View.VISIBLE
-            signUp_text.visibility = View.GONE
+            signInText.visibility = View.VISIBLE
+            signUpText.visibility = View.GONE
 
             //initial focus
             textview1.requestFocus()

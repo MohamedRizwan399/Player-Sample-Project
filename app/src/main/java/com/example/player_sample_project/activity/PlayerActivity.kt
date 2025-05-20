@@ -1,6 +1,7 @@
 package com.example.player_sample_project.activity
 
 import android.Manifest
+import android.app.ActivityManager
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.ActivityInfo
@@ -40,7 +41,6 @@ import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.source.hls.HlsMediaSource
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
-import com.google.android.exoplayer2.ui.DefaultTimeBar
 import com.google.android.exoplayer2.ui.PlayerView
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
@@ -87,6 +87,11 @@ class PlayerActivity : AppCompatActivity() ,Player.Listener, TelephonyReceiver.O
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_player)
         supportActionBar?.hide()
+
+        // To change the default to preferred color of app description when goes to phone recent
+        val appDescription = ActivityManager.TaskDescription(
+            getString(R.string.app_name), null, ContextCompat.getColor(this, R.color.dark_white))
+        setTaskDescription(appDescription)
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_PHONE_STATE), 1)
