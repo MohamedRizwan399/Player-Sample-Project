@@ -97,5 +97,6 @@
     <string name="logout_title">Are you sure want to logout?</string>
     <string name="poster_image">Poster_image</string>
     <string name="new_activity">New Activity</string>
+    <string name="profile_icon">profile_icon</string>
 
 </resources>

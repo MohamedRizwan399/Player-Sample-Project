@@ -5,7 +5,9 @@ Android development techniques such as MVVM and MVP architecture.
 
 ## Features
 
-- **User authentication with Google Sign-In**: Users can sign in using their Google accounts for secure access.
+- **User authentication**:
+    - Authenticate using Google Sign-In**: Users can sign in using their Google accounts for secure access.
+    - SignUp/Login authentication: Users can Signup using your credentials to access it.
 - **Dynamic Links**: Handle deep linking with Firebase Dynamic Links.
 - **API integration with Retrofit**: Seamless data fetching and API handling using Retrofit.
 - **Architecture**:

@@ -349,7 +349,7 @@ class HomeFragment : Fragment() ,OnclickListener, NetworkObserveReceiver.Network
      */
     override fun onclick(position: Int){
         activity.let {
-            val intent= Intent(it, PlayerActivity::class.java)
+            val intent = Intent(it, PlayerActivity::class.java)
             if (it != null) {
                 it.startActivity(intent)
             }
