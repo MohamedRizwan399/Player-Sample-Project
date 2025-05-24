@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.player_sample_project">
         <activity
-            android:name=".ads.AdsactivityDemo"
+            android:name=".ads.AdsActivityDemo"
             android:exported="true" />
         <activity
             android:name=".ads.AdsActivity"
