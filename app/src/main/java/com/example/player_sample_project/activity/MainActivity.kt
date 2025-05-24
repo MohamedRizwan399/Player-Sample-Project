@@ -71,10 +71,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         supportActionBar?.hide()
 
-        // To change the default to preferred color of app description when goes to recent
-        val taskDescription = ActivityManager.TaskDescription(
+        // To change the default to preferred color of app description when goes to phone recent
+        val appDescription = ActivityManager.TaskDescription(
             getString(R.string.app_name), null, ContextCompat.getColor(this, R.color.dark_white))
-        setTaskDescription(taskDescription)
+        setTaskDescription(appDescription)
 
         // Initialize AppController to handle the required utility methods
         appController = AppController(applicationContext)

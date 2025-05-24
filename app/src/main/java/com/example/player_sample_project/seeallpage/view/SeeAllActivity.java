@@ -1,6 +1,7 @@
 package com.example.player_sample_project.seeallpage.view;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.player_sample_project.R;
@@ -39,6 +41,11 @@ public class SeeAllActivity extends AppCompatActivity implements ISeeAllView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_see_allactivity);
+
+        // To change the default to preferred color of app description when goes to phone recent
+        ActivityManager.TaskDescription appDescription = new ActivityManager.TaskDescription(getString(R.string.app_name), null,
+                ContextCompat.getColor(this, R.color.dark_white));
+        setTaskDescription(appDescription);
 
         dataList = new ArrayList<>();
         ImageView back = findViewById(R.id.toolbar_back);
