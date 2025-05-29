@@ -21,8 +21,17 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     namespace "com.example.player_sample_project"
+    signingConfigs {
+        release {
+            storeFile file("player-sample-project_keystore.jks")
+            storePassword KEYSTORE_PASSWORD
+            keyAlias "keystore_sampleproject"
+            keyPassword KEY_PASSWORD
+        }
+    }
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'

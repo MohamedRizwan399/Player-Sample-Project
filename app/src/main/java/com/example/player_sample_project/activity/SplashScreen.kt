@@ -1,10 +1,12 @@
 package com.example.player_sample_project.activity
 
+import android.app.ActivityManager
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.motion.widget.MotionLayout
+import androidx.core.content.ContextCompat
 import com.example.player_sample_project.R
 import com.example.player_sample_project.app.AppController
 import com.example.player_sample_project.authentication.LoginBaseActivity
@@ -15,8 +17,13 @@ class SplashScreen : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_splash_screen)
+
+        // To change the default to preferred color of app description when goes to recent
+        val taskDescription = ActivityManager.TaskDescription(
+            getString(R.string.app_name), null, ContextCompat.getColor(this, R.color.dark_white))
+        setTaskDescription(taskDescription)
+
         appController = AppController(this)
 
         motionLayout=findViewById(R.id.splashLayout)
@@ -41,7 +48,7 @@ class SplashScreen : AppCompatActivity() {
             override fun onTransitionCompleted(motionLayout: MotionLayout?, currentId: Int) {
                 val isLoggedInData = appController.getLoginStatus("userId", null.toString())
                 if (isLoggedInData != null && isLoggedInData != "null" ) {
-                    startActivity(Intent(this@SplashScreen,MainActivity::class.java))
+                    startActivity(Intent(this@SplashScreen, MainActivity::class.java))
                 } else {
                     startActivity(Intent(this@SplashScreen, LoginBaseActivity::class.java))
                 }

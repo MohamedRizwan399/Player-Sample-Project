@@ -27,7 +27,7 @@ class BaseApi {
 
     interface BaseApiInterface {
         @GET("/api/v0/location")
-        fun searchData(): retrofit2.Call<Data>
+        fun searchData(): Call<Data>
 
         @GET("/api/v0/character")
         fun getApiSeeAllResults(): Call<List<Data>>
