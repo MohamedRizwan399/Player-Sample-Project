@@ -1,6 +1,7 @@
 package com.example.player_sample_project.authentication
 
 import android.app.ActivityManager
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -8,6 +9,7 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
 import android.widget.ImageButton
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -108,6 +110,10 @@ class LoginBaseActivity : AppCompatActivity() {
         // onclick for signup/signIn
         signUpSignInButton.setOnClickListener {
             Log.i("Login-", "${signUpSignInButton.text} clicked")
+            //Hide keyboard
+            val hideKeyboard = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            hideKeyboard.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
+
             if (Utils.checkNetworkAndShowDialog(this)) {
                 if (signUpSignInButton.text.equals("Sign Up")) { // SignUp
                     if (inputTextName.editText?.text.toString().isEmpty() || inputTextEmail.editText?.text.toString().isEmpty() ||
@@ -322,7 +328,7 @@ class LoginBaseActivity : AppCompatActivity() {
         }
     }
 
-    // Stores the auth data and navigates to Homescreen
+    // Stores the auth data and navigates to HomeScreen
     private fun storeLoggedInDataToHomeScreen() {
         val loggedInUser = auth.currentUser
         if (loggedInUser != null) {

@@ -2,7 +2,7 @@
   "project_info": {
     "project_number": "660483396450",
     "project_id": "sampleprojectandroid-f3b71",
-    "storage_bucket": "sampleprojectandroid-f3b71.appspot.com"
+    "storage_bucket": "sampleprojectandroid-f3b71.firebasestorage.app"
   },
   "client": [
     {
@@ -19,6 +19,14 @@
           "android_info": {
             "package_name": "com.example.player_sample_project",
             "certificate_hash": "ae57e0c495c7b076745364e41ec5a50e2349e63e"
+          }
+        },
+        {
+          "client_id": "660483396450-skrnfoe9nhkca212cs59l0jmkm0p9id4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.player_sample_project",
+            "certificate_hash": "da41df371228c3fa974281d53d907257198b02bf"
           }
         },
         {
