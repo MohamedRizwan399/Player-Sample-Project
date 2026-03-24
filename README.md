@@ -1,6 +1,6 @@
 # Player Sample Project
 
-An Android application to demonstrate the robust features such as Google Authentication, Exoplayer, Api handling using retrofit, AdManager and more using modern \n
+An Android application to demonstrate the robust features such as Google Authentication, Exoplayer, Api handling using retrofit, AdManager and more using modern 
 Android development techniques such as MVVM and MVP architecture.
 
 ## Features
@@ -8,7 +8,8 @@ Android development techniques such as MVVM and MVP architecture.
 - **User authentication**:
     - Authenticate using Google Sign-In: Users can sign in using their Google accounts for secure access.
     - SignUp/Login authentication: Users can Signup using your credentials to access it.
-- **Dynamic Links**: Handle deep linking with Firebase Dynamic Links.
+- **Dynamic Share**: 
+    - ~~Handle deep link with Firebase Dynamic Links~~(Deprecated). Instead using predefined share Intent.
 - **API integration with Retrofit**: Seamless data fetching and API handling using Retrofit.
 - **Architecture**:
     - MVVM (Model-View-ViewModel) architecture for clean separation of concerns.

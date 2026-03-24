@@ -17,10 +17,10 @@ import retrofit2.Response
 
 class ViewModel(application: Application): AndroidViewModel(application) {
     private val appController: AppController = AppController(application)
-    var data: MutableLiveData<MutableList<Data>> = MutableLiveData()
+    var data: MutableLiveData<MutableList<Data>?> = MutableLiveData()
 
     fun getLiveDataObserver(): MutableLiveData<MutableList<Data>> {
-        return data
+        return data as MutableLiveData<MutableList<Data>>
     }
 
     fun apiCallHomeScreen(context: Context, isPrefExists: Boolean) {
