@@ -97,5 +97,7 @@
     <string name="poster_image">Poster_image</string>
     <string name="new_activity">New Activity</string>
     <string name="profile_icon">profile_icon</string>
+    <string name="you_are_not_subscribed">You are not subscribed</string>
+    <string name="you_are_a_premium_subscriber">You are a premium subscriber</string>
 
 </resources>

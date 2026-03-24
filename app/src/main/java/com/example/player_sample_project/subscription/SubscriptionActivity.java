@@ -31,9 +31,9 @@ public class SubscriptionActivity extends AppCompatActivity {
         txt_subscribed = findViewById(R.id.txt_subscribed);
 
         if (prefs.getPremium() == 1) {
-            txt_subscribed.setText("You are a premium subscriber");
+            txt_subscribed.setText(R.string.you_are_a_premium_subscriber);
         } else {
-            txt_subscribed.setText("You are not subscribed");
+            txt_subscribed.setText(R.string.you_are_not_subscribed);
         }
         Toast.makeText(this, "Billing is disabled due to SampleApp, It will implement soon in Production", Toast.LENGTH_LONG).show();
 
