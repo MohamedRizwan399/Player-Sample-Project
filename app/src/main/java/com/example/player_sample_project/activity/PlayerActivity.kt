@@ -2,12 +2,12 @@ package com.example.player_sample_project.activity
 
 import android.Manifest
 import android.app.ActivityManager
+import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
 import android.content.res.Configuration
-import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.util.DisplayMetrics
@@ -28,7 +28,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.player_sample_project.R
-import com.example.player_sample_project.activity.DynamicLinkShare.Companion.DEEP_LINK_URL
 import com.example.player_sample_project.app.CacheManagerInstance
 import com.google.android.exoplayer2.DefaultLoadControl
 import com.google.android.exoplayer2.DefaultRenderersFactory
@@ -70,7 +69,6 @@ class PlayerActivity : AppCompatActivity() ,Player.Listener, TelephonyReceiver.O
     private lateinit var footerPause: ImageView
     //private var shoTrackSelector: DefaultTrackSelector? = null
     private var telephonyReceiver = TelephonyReceiver(this)
-    private var dynamicshare: DynamicLinkShare = DynamicLinkShare()
     private lateinit var watermark: TextView
     private lateinit var watermark_Landscape: TextView
 
@@ -134,8 +132,7 @@ class PlayerActivity : AppCompatActivity() ,Player.Listener, TelephonyReceiver.O
             else Toast.makeText(this, "InApp Purchase not implemented", Toast.LENGTH_LONG).show()
         }
         buttonShare.setOnClickListener {
-            val newDeepLink = dynamicshare.buildDeepLink(Uri.parse(DEEP_LINK_URL))
-            shareDeepLink(newDeepLink.toString())
+            shareMyApp(this)
             player.pause()
         }
         updateCustomPlayPauseClickEvent() // custom play/pause click listeners
@@ -211,13 +208,29 @@ class PlayerActivity : AppCompatActivity() ,Player.Listener, TelephonyReceiver.O
             })
     }
 
-    private fun shareDeepLink(deepLink: String) {
+    /*
+    * Deprecated due to Firebase Dynamic Links Shutdown
+    * */
+    /*private fun shareDeepLink(deepLink: String) {
         val intent = Intent(Intent.ACTION_SEND)
         intent.type = "text/plain"
         intent.putExtra(Intent.EXTRA_SUBJECT, "FirebaseDeepLink")
         intent.putExtra(Intent.EXTRA_TEXT, deepLink)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(Intent.createChooser(intent,"Share Via"))
+    }*/
+
+    private fun shareMyApp(context: Context) {
+        val githubApkUrl = "https://github.com/MohamedRizwan399/Player-Sample-Project/releases/"
+        val shareMessage = "Hey! Check out my Player Sample Project. You can download the latest version directly from GitHub here: \n\n$githubApkUrl"
+
+        val shareIntent = Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_TEXT, shareMessage)
+            putExtra(Intent.EXTRA_TITLE, "Download Sample Android App Here!")
+        }
+        val chooser = Intent.createChooser(shareIntent, "Share App via")
+        context.startActivity(chooser)
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
