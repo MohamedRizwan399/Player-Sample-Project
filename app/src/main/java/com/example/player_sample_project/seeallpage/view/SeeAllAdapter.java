@@ -11,12 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.player_sample_project.R;
 import com.example.player_sample_project.data_mvvm.Data;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import java.util.List;
 
 public class SeeAllAdapter extends RecyclerView.Adapter<SeeAllAdapter.MyViewHolder> {
-    private static final Log log = LogFactory.getLog(SeeAllAdapter.class);
     private final List<Data> dataList;
     private final Context context;
 
