@@ -7,11 +7,10 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
-import android.view.Window
-import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -29,7 +28,6 @@ import com.example.player_sample_project.fragments.HomeFragment
 import com.example.player_sample_project.fragments.MenuFragment
 import com.example.player_sample_project.fragments.NewFragment
 import com.example.player_sample_project.fragments.SearchFragment
-import com.example.player_sample_project.subscription.SubscriptionActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -40,8 +38,8 @@ import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
     private lateinit var appController: AppController
-    private val homeFragment= HomeFragment()
-    private val newFragment=NewFragment()
+    private val homeFragment = HomeFragment()
+    private val newFragment = NewFragment()
     private val searchFragment = SearchFragment()
     private val downloadsFragment = DownloadsFragment()
     private val menuFragment = MenuFragment()
@@ -50,26 +48,54 @@ class MainActivity : AppCompatActivity() {
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
 
-    private lateinit var fragmentBackStack:FragmentBackStack
-    private lateinit var bundle:Bundle
-    private var signin:ImageView?=null
-    private lateinit var usernameText:TextView
-    private lateinit var image:ImageView
+    private lateinit var fragmentBackStack: FragmentBackStack
+    private lateinit var bundle: Bundle
+    private var signIn: ImageView?= null
+    private lateinit var usernameText: TextView
+    private lateinit var image: ImageView
 
     private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        requestWindowFeature(Window.FEATURE_NO_TITLE)
-        this.window.setFlags(
-            WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN
-        )
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         supportActionBar?.hide()
+
+        /*
+        * Create the callback for backstack handling
+        * OnBackPressed Override function is deprecated
+        */
+        val backCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                    closeDrawer()
+                    return
+                }
+
+                // Check your Fragment Logic
+                val returnedStack = fragmentBackStack.backHandling()
+                if (returnedStack == FragmentBackStack.CHILD_TAG) {
+                    Log.i("connection-", "Backstack Child Tag")
+                    return
+                }
+
+                if (returnedStack == FragmentBackStack.DO_BACK_STACK) {
+                    Toast.makeText(this@MainActivity, "BackStack handled", Toast.LENGTH_SHORT).show()
+                    // If you just want to go back normally after logic:
+                    isEnabled = false // Disable this callback
+                    onBackPressedDispatcher.onBackPressed() // Trigger system back
+                    isEnabled = true // Re-enable for next time
+                    return
+                }
+
+                // 2. Default behavior: Close the Activity
+                isEnabled = false
+                onBackPressedDispatcher.onBackPressed()
+            }
+        }
+        onBackPressedDispatcher.addCallback(this, backCallback)
 
         // To change the default to preferred color of app description when goes to phone recent
         val appDescription = ActivityManager.TaskDescription(
@@ -85,14 +111,14 @@ class MainActivity : AppCompatActivity() {
             // If Network unavailable means, data get from Preferences if not null
             replaceFragment(homeFragment)
         }
-        bottomNavigationView=findViewById(R.id.bottomNav)
-        navigationView=findViewById(R.id.nav)
-        drawerLayout=findViewById(R.id.drawerLayout)
+        bottomNavigationView = findViewById(R.id.bottomNav)
+        navigationView = findViewById(R.id.nav)
+        drawerLayout = findViewById(R.id.drawerLayout)
 
         val view:View = navigationView.getHeaderView(0)
-        signin=view.findViewById(R.id.iv_edit_profile)
-        usernameText=view.findViewById(R.id.textView)
-        image=view.findViewById(R.id.imageView)
+        signIn = view.findViewById(R.id.iv_edit_profile)
+        usernameText = view.findViewById(R.id.textView)
+        image = view.findViewById(R.id.imageView)
 
 
         auth = FirebaseAuthInstance.auth
@@ -115,7 +141,7 @@ class MainActivity : AppCompatActivity() {
                 .into(image)
         }
 
-        signin?.setOnClickListener {
+        signIn?.setOnClickListener {
             closeDrawer()
             Toast.makeText(this, "Update Screen not yet implemented", Toast.LENGTH_SHORT).show()
         }
@@ -143,8 +169,7 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(this@MainActivity, "Navigate to Rating", Toast.LENGTH_SHORT).show()
                 }
                 R.id.subscription-> {
-                    val intent = Intent(this@MainActivity,SubscriptionActivity::class.java)
-                    startActivity(intent)
+                    Toast.makeText(this@MainActivity, "Purchase disabled due to app not in production. Stay with us!!!", Toast.LENGTH_LONG).show()
                 }
                 R.id.logout-> {
                     this.let {
@@ -262,33 +287,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun replaceFragment(fragment: Fragment) {
-        if (fragment != null) {
-            val transaction = supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.container, fragment)
-            transaction.addToBackStack(null)
-            transaction.commit()
-        }
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.container, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
-
-
-    override fun onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            closeDrawer() // close the navDrawer
-            return
-        }
-
-        val returnedStack = fragmentBackStack.backHandling()
-        if (returnedStack.equals(FragmentBackStack.CHILD_TAG)) {
-            Log.i("connection-", "Backstack Child Tag")
-            return
-        }
-        if (returnedStack.equals(FragmentBackStack.DO_BACK_STACK)) {
-            Toast.makeText(this, "BackStack handled to navigate previous order", Toast.LENGTH_SHORT).show()
-        }
-        super.onBackPressed()
-    }
-
-
 }
 
 
