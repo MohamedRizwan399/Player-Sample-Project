@@ -129,14 +129,15 @@ class HomeFragment : Fragment() ,OnclickListener, NetworkObserveReceiver.Network
         val mainActivity = activity as MainActivity
 
         swipeRefreshLayout.setOnRefreshListener {
-            appController.clearPreferencesApiData()
             swipeRefreshLayout.isRefreshing = true
+            appController.clearPreferencesApiData()
             sliderAdapter.clearDataList()
             title.visibility = View.GONE
             seeAll.visibility = View.GONE
             title1.visibility = View.GONE
             seeAll1.visibility = View.GONE
             adManagerAdView.visibility = View.GONE
+            swipeRefreshLayout.isRefreshing = false
             fetchApiData()
         }
         navdrawer.setOnClickListener {
@@ -183,7 +184,7 @@ class HomeFragment : Fragment() ,OnclickListener, NetworkObserveReceiver.Network
             if (Utils.checkNetConnection(activity)) { showAds() }
             else adManagerAdView.visibility = View.GONE
 
-            Thread.sleep(2000)
+            //Thread.sleep(2000)
         }
     }
 
@@ -331,7 +332,6 @@ class HomeFragment : Fragment() ,OnclickListener, NetworkObserveReceiver.Network
                 sliderAdapter.notifyDataSetChanged()
                 circularAdapter.notifyDataSetChanged()
                 enableShimmer(false)
-                swipeRefreshLayout.isRefreshing = false
                 title.visibility = View.VISIBLE
                 seeAll.visibility = View.VISIBLE
                 title1.visibility = View.VISIBLE
@@ -361,8 +361,8 @@ class HomeFragment : Fragment() ,OnclickListener, NetworkObserveReceiver.Network
     */
     private fun enableShimmer(isEnabled: Boolean) {
         if (isEnabled) {
-            mShimmer.visibility = View.VISIBLE
             mShimmer.startShimmer()
+            mShimmer.visibility = View.VISIBLE
         } else {
             mShimmer.stopShimmer()
             mShimmer.visibility = View.GONE

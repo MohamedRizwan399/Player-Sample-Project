@@ -58,9 +58,6 @@
             android:screenOrientation="sensorPortrait"
             android:exported="true">
         </activity>
-        <activity
-            android:name=".activity.DynamicLinkShare"
-            android:exported="true" />
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
