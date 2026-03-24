@@ -27,6 +27,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import com.example.player_sample_project.R
 import com.example.player_sample_project.app.CacheManagerInstance
 import com.google.android.exoplayer2.DefaultLoadControl
@@ -71,20 +74,16 @@ class PlayerActivity : AppCompatActivity() ,Player.Listener, TelephonyReceiver.O
     private var telephonyReceiver = TelephonyReceiver(this)
     private lateinit var watermark: TextView
     private lateinit var watermark_Landscape: TextView
+    private lateinit var backButton: ImageView
 
     private var mAdManagerInterstitialAd: AdManagerInterstitialAd? = null
     private var handler: Handler = Handler()
-    var isLandscapeview: Boolean = true
+    var isLandscapeView: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        requestWindowFeature(Window.FEATURE_NO_TITLE)
-        this.window.setFlags(
-            WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN
-        )
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_player)
-        supportActionBar?.hide()
+        hideSystemUI()
 
         // To change the default to preferred color of app description when goes to phone recent
         val appDescription = ActivityManager.TaskDescription(
@@ -109,6 +108,7 @@ class PlayerActivity : AppCompatActivity() ,Player.Listener, TelephonyReceiver.O
         buttonShare = findViewById(R.id.share)
         watermark = findViewById(R.id.watermark)
         watermark_Landscape = findViewById(R.id.watermark_landscape)
+        backButton = findViewById(R.id.backButton)
 
         setupPlayer()
         mediaFiles()
@@ -124,6 +124,7 @@ class PlayerActivity : AppCompatActivity() ,Player.Listener, TelephonyReceiver.O
         forward.setOnClickListener {
             player.seekTo(player.currentPosition+10000)
         }
+        backButton.setOnClickListener { finish() }
         fullscreenclick.setOnClickListener {
             fullscreenLayout()
         }
@@ -189,6 +190,16 @@ class PlayerActivity : AppCompatActivity() ,Player.Listener, TelephonyReceiver.O
         player.removeListener(this)
     }
 
+    // Using this function to hide the status bars
+    private fun hideSystemUI() {
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        WindowInsetsControllerCompat(window, window.decorView).let { controller ->
+            controller.hide(WindowInsetsCompat.Type.systemBars())
+            controller.systemBarsBehavior =
+                WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+        }
+    }
+
     // Using this function to show the interstitial(fullscreen) ads after player ends
     private fun loadFullScreenAds() {
         var adRequest = AdManagerAdRequest.Builder().build()
@@ -246,23 +257,23 @@ class PlayerActivity : AppCompatActivity() ,Player.Listener, TelephonyReceiver.O
             val metrics = DisplayMetrics()
             windowManager.defaultDisplay.getMetrics(metrics)
             val videoView = findViewById<FrameLayout>(R.id.video_layout)
-            val params = videoView.getLayoutParams()
+            val params = videoView.layoutParams
             params.width = metrics.widthPixels
             params.height = metrics.heightPixels
-            videoView.setLayoutParams(params)
-            watermark.visibility=View.INVISIBLE
-            watermark_Landscape.visibility=View.VISIBLE
+            videoView.layoutParams = params
+            watermark.visibility = View.INVISIBLE
+            watermark_Landscape.visibility = View.VISIBLE
         } else {
-            watermark.visibility=View.VISIBLE
-            watermark_Landscape.visibility=View.INVISIBLE
+            watermark.visibility = View.VISIBLE
+            watermark_Landscape.visibility = View.INVISIBLE
             view.visibility = View.VISIBLE
             val metrics = DisplayMetrics()
             windowManager.defaultDisplay.getMetrics(metrics)
             val videoView = findViewById<FrameLayout>(R.id.video_layout)
-            val params = videoView.getLayoutParams()
+            val params = videoView.layoutParams
             params.width = metrics.widthPixels
             params.height = (230 * metrics.density).toInt()
-            videoView.setLayoutParams(params)
+            videoView.layoutParams = params
         }
     }
 
@@ -270,29 +281,29 @@ class PlayerActivity : AppCompatActivity() ,Player.Listener, TelephonyReceiver.O
 
     private fun fullscreenLayout() {
         val view = findViewById<ConstraintLayout>(R.id.constraint1)
-        if (isLandscapeview) {
-            isLandscapeview = false
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE)
+        if (isLandscapeView) {
+            isLandscapeView = false
+            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
             view.visibility = View.INVISIBLE
 
             val metrics = DisplayMetrics()
             windowManager.defaultDisplay.getMetrics(metrics)
             val videoView = findViewById<FrameLayout>(R.id.video_layout)
-            val params = videoView.getLayoutParams()
+            val params = videoView.layoutParams
             params.width = metrics.widthPixels
             params.height = metrics.heightPixels
-            videoView.setLayoutParams(params)
+            videoView.layoutParams = params
         } else {
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT)
+            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT
             view.visibility = View.VISIBLE
             val metrics = DisplayMetrics()
             windowManager.defaultDisplay.getMetrics(metrics)
             val videoView = findViewById<FrameLayout>(R.id.video_layout)
-            val params = videoView.getLayoutParams()
+            val params = videoView.layoutParams
             params.width = metrics.widthPixels
             params.height = (230 * metrics.density).toInt()
-            videoView.setLayoutParams(params)
-            isLandscapeview=true
+            videoView.layoutParams = params
+            isLandscapeView = true
         }
     }
 

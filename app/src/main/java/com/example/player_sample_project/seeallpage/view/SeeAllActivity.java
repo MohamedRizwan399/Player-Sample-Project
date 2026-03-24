@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.player_sample_project.R;
 import com.example.player_sample_project.ads.AdsActivityDemo;
+import com.example.player_sample_project.app.Utils;
 import com.example.player_sample_project.data_mvvm.Data;
 import com.example.player_sample_project.seeallpage.presenter.SeeAllPresenter;
 import com.google.android.gms.ads.FullScreenContentCallback;
@@ -41,6 +42,7 @@ public class SeeAllActivity extends AppCompatActivity implements ISeeAllView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_see_allactivity);
+        Utils.hideSystemUI(activity);
 
         // To change the default to preferred color of app description when goes to phone recent
         ActivityManager.TaskDescription appDescription = new ActivityManager.TaskDescription(getString(R.string.app_name), null,

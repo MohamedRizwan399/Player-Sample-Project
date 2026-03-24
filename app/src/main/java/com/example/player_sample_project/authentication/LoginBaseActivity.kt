@@ -80,6 +80,7 @@ class LoginBaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login_base)
+        Utils.hideSystemUI(this)
 
         // To change the default to preferred color of app description when goes to recent
         val taskDescription = ActivityManager.TaskDescription(
