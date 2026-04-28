@@ -235,7 +235,7 @@ class HomeFragment : Fragment() ,OnclickListener, NetworkObserveReceiver.Network
     }
 
     private suspend fun showAds() {
-        var adRequest = AdManagerAdRequest.Builder().build()
+        val adRequest = AdManagerAdRequest.Builder().build()
 
         /*val customAdSize = AdSize(80, 250)
         val adView = context?.let { AdManagerAdView(it) }

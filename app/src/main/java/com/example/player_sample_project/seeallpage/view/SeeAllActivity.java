@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.player_sample_project.R;
 import com.example.player_sample_project.ads.AdsActivityDemo;
-import com.example.player_sample_project.app.Utils;
 import com.example.player_sample_project.data_mvvm.Data;
 import com.example.player_sample_project.seeallpage.presenter.SeeAllPresenter;
 import com.google.android.gms.ads.FullScreenContentCallback;
@@ -123,7 +122,12 @@ public class SeeAllActivity extends AppCompatActivity implements ISeeAllView {
 
     @Override
     public void onApiResponseFailure(Throwable throwable) {
-        Toast.makeText(activity, "Response failed due to Api services", Toast.LENGTH_LONG).show();
-        seeAllProgress.setVisibility(View.GONE);
+        try {
+            Toast.makeText(activity, "Response failed due to Api services", Toast.LENGTH_LONG).show();
+            seeAllProgress.setVisibility(View.GONE);
+        } catch (Exception e) {
+            seeAllProgress.setVisibility(View.GONE);
+            throw new RuntimeException(e);
+        }
     }
 }

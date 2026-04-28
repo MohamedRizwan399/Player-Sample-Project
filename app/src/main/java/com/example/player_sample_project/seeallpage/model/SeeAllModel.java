@@ -1,6 +1,5 @@
 package com.example.player_sample_project.seeallpage.model;
 
-import android.util.Log;
 import androidx.annotation.NonNull;
 import com.example.player_sample_project.api.BaseApi;
 import com.example.player_sample_project.data_mvvm.Data;
@@ -21,7 +20,6 @@ public class SeeAllModel implements ISeeAllModel {
             @Override
             public void onResponse(@NonNull Call<List<Data>> call, @NonNull Response<List<Data>> response) {
                 if (response.body() != null) {
-                    Log.i("seeall-", "response--" + response.body());
                     data = response.body();
                     onFinishedListener.onSuccess(data);
                 } else onFinishedListener.onFailure(new Error());
@@ -29,7 +27,6 @@ public class SeeAllModel implements ISeeAllModel {
 
             @Override
             public void onFailure(@NonNull Call<List<Data>> call, @NonNull Throwable t) {
-                Log.i("seeall-", "failure--" + t);
                 onFinishedListener.onFailure(t);
             }
         });
