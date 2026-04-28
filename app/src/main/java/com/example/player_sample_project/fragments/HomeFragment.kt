@@ -174,7 +174,7 @@ class HomeFragment : Fragment() ,OnclickListener, NetworkObserveReceiver.Network
         enableShimmer(true) // initially shimmer will show until get results
         sliderItems() //for set all the adapters
         val isFetchedApi = appController.getPreferenceApiData("homePageResponse", "") ?: false
-        var isPrefsExists: Boolean = false;
+        var isPrefsExists = false
 
         if (isFetchedApi != "" && isFetchedApi != false) {
             isPrefsExists = true // means prefs data exists
@@ -314,8 +314,6 @@ class HomeFragment : Fragment() ,OnclickListener, NetworkObserveReceiver.Network
 
     @SuppressLint("NotifyDataSetChanged")
     suspend fun getResult(isPrefsExists: Boolean) {
-        Log.i("connection-", " IF api called yes")
-
         // Call the api
         viewModel.apiCallHomeScreen(requireContext(), isPrefsExists)
 

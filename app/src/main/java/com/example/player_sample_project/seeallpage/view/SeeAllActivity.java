@@ -59,20 +59,9 @@ public class SeeAllActivity extends AppCompatActivity implements ISeeAllView {
         seeAllPresenter.requestData();
         seeAllProgress.setVisibility(View.VISIBLE);
 
-        adsClick.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                loadInterstitialAds();
-            }
-        });
+        adsClick.setOnClickListener(view -> loadInterstitialAds());
 
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-
+        back.setOnClickListener(view -> finish());
     }
 
     public void loadInterstitialAds(){
