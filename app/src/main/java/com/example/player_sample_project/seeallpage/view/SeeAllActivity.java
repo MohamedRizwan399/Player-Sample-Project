@@ -30,11 +30,8 @@ import java.util.List;
 
 public class SeeAllActivity extends AppCompatActivity implements ISeeAllView {
     Activity activity;
-    private RecyclerView.LayoutManager layoutManager;
     private RecyclerView recyclerView;
     private List<Data> dataList;
-    private SeeAllPresenter seeAllPresenter;
-    private SeeAllAdapter seeAllAdapter;
     private ProgressBar seeAllProgress;
     private AdManagerInterstitialAd mAdManagerInterstitialAd;
 
@@ -42,7 +39,6 @@ public class SeeAllActivity extends AppCompatActivity implements ISeeAllView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_see_allactivity);
-        Utils.hideSystemUI(activity);
 
         // To change the default to preferred color of app description when goes to phone recent
         ActivityManager.TaskDescription appDescription = new ActivityManager.TaskDescription(getString(R.string.app_name), null,
@@ -58,9 +54,9 @@ public class SeeAllActivity extends AppCompatActivity implements ISeeAllView {
 
         String receivedHeaderTitle = getIntent().getStringExtra("title");
         textView.setText(receivedHeaderTitle);
-        layoutManager = new LinearLayoutManager(this);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        seeAllPresenter = new SeeAllPresenter(this);
+        SeeAllPresenter seeAllPresenter = new SeeAllPresenter(this);
         seeAllPresenter.requestData();
         seeAllProgress.setVisibility(View.VISIBLE);
 
@@ -120,7 +116,7 @@ public class SeeAllActivity extends AppCompatActivity implements ISeeAllView {
     @Override
     public void setDataToRecyclerview(List<Data> dataListArray) {
         dataList.addAll(dataListArray);
-        seeAllAdapter = new SeeAllAdapter(dataList,SeeAllActivity.this);
+        SeeAllAdapter seeAllAdapter = new SeeAllAdapter(dataList, SeeAllActivity.this);
         recyclerView.setAdapter(seeAllAdapter);
         seeAllProgress.setVisibility(View.GONE);
     }
